@@ -1,0 +1,75 @@
+{
+  "name": "node-rss-aggregator",
+  "version": "0.1",
+  "description": "RSS Aggregator",
+  "main": "index.js",
+  "author": "Michael Bond <MichaelRBond@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dbm": "ts-node src/scripts/db-migrate.ts",
+    "lint": "tslint -p ./tsconfig.json",
+    "start": "ts-node src/index.ts",
+    "test": "CONFIG_ENV=test yarn run dbm up && CONFIG_ENV=test jest --coverage --runInBand 'tests/integration/.*\\.test(-integ)?.ts$'",
+    "verify": "yarn run build && yarn run lint"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.1.1",
+    "@types/mysql": "^2.15.2",
+    "chai": "^4.1.2",
+    "jest": "^22.1.4",
+    "ts-jest": "^22.0.1",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "tslint-language-service": "^0.9.8",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "@types/boom": "^7.1.1",
+    "db-migrate": "^0.10.5",
+    "db-migrate-mysql": "^1.1.10",
+    "hapi": "^17.2.0",
+    "mysql": "^2.15.0"
+  },
+  "jest": {
+    "mapCoverage": true,
+    "coverageDirectory": ".build/coverage",
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/config/*.ts",
+      "!src/script/migrate.ts",
+      "!src/types/**",
+      "!**/node_modules/**"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "transform": {
+      ".(ts)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": ".*\\.test(-integ)?.ts$",
+    "moduleDirectories": [
+      "<rootDir>/node_modules",
+      "<rootDir>/src/"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/.build"
+    ],
+    "coverageReporters": [
+      "html",
+      "text"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
+    "testEnvironment": "node"
+  }
+}

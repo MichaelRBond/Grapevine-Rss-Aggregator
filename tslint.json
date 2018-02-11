@@ -1,0 +1,33 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    "object-literal-key-quotes": [true, "as-needed"],
+    "object-literal-sort-keys": true,
+    "member-ordering": {
+      "options": {
+        "order": [
+          "public-static-field",
+          "private-static-field",
+          "public-instance-field",
+          "private-instance-field",
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "public-static-method",
+          "public-instance-method",
+          "private-static-method",
+          "private-instance-method"
+        ]
+      }
+    },
+    "max-classes-per-file": [true, 1]
+  },
+  "linterOptions": {
+    "exclude": [
+      "@node_modules",
+      ".build",
+      "src/types/**/*"
+    ]
+  }
+}

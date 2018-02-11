@@ -1,0 +1,25 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: node_rss_aggregator
+      MYSQL_USER: rss
+      MYSQL_PASSWORD: rss
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+  mysql-test:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: node_rss_aggregator
+      MYSQL_USER: rss
+      MYSQL_PASSWORD: test
+    ports:
+      - 3307:3306
+
+volumes:
+  mysql: {}
