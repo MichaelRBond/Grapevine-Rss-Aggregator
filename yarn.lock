@@ -10,17 +10,56 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@types/boom@^4":
+  version "4.3.9"
+  resolved "https://registry.yarnpkg.com/@types/boom/-/boom-4.3.9.tgz#6f9adc1074e81cbf01b8d1ed5878aa1ee89bb22d"
+
 "@types/boom@^7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/boom/-/boom-7.1.1.tgz#2cb2d59600bf67a341d962921cbf2943f758ff6e"
+
+"@types/catbox@*":
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/@types/catbox/-/catbox-7.1.5.tgz#d14e4e132a628da850a042aec1b37f088f89ecae"
+  dependencies:
+    "@types/boom" "^4"
+
+"@types/hapi@^17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@types/hapi/-/hapi-17.0.0.tgz#2fd9ec4e32b82ce894c5d08d744f2e3f3c7a52a0"
+  dependencies:
+    "@types/boom" "^4"
+    "@types/catbox" "*"
+    "@types/iron" "*"
+    "@types/joi" "*"
+    "@types/mimos" "*"
+    "@types/node" "*"
+    "@types/podium" "*"
+    "@types/shot" "*"
+
+"@types/iron@*":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@types/iron/-/iron-5.0.1.tgz#5420bbda8623c48ee51b9a78ebad05d7305b4b24"
+  dependencies:
+    "@types/node" "*"
 
 "@types/jest@^22.1.1":
   version "22.1.1"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.1.1.tgz#231d7c60ed130200af9e96c82469ed25b59a7ea2"
 
-"@types/joi@^13.0.5":
+"@types/joi@*", "@types/joi@^13.0.5":
   version "13.0.5"
   resolved "https://registry.yarnpkg.com/@types/joi/-/joi-13.0.5.tgz#50829402204e8fec8ee287eeb37d79fbff34913c"
+
+"@types/mime-db@*":
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/@types/mime-db/-/mime-db-1.27.0.tgz#9bc014a1fd1fdf47649c1a54c6dd7966b8284792"
+
+"@types/mimos@*":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/mimos/-/mimos-3.0.1.tgz#59d96abe1c9e487e7463fe41e8d86d76b57a441a"
+  dependencies:
+    "@types/mime-db" "*"
 
 "@types/mysql@^2.15.2":
   version "2.15.2"
@@ -31,6 +70,16 @@
 "@types/node@*":
   version "9.4.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.0.tgz#b85a0bcf1e1cc84eb4901b7e96966aedc6f078d1"
+
+"@types/podium@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/podium/-/podium-1.0.0.tgz#bfaa2151be2b1d6109cc69f7faa9dac2cba3bb20"
+
+"@types/shot@*":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@types/shot/-/shot-3.4.0.tgz#459477c5187d3ebd303660ab099e7e9e0f3b656f"
+  dependencies:
+    "@types/node" "*"
 
 "@types/strip-bom@^3.0.0":
   version "3.0.0"
