@@ -1,9 +1,16 @@
 import { Server } from "hapi";
+import { mysqlClientProvider } from "./clients/mysql-client";
 import { config } from "./config";
+import { RssDao } from "./dao/rss";
 import { FeedsController } from "./endpoints/feed-controller";
 import { EndpointController } from "./models/endpoint-controller";
+import { Rss } from "./models/rss";
+import { DateTime } from "./utils/date-time";
 
-const feed: FeedsController = new FeedsController();
+const datetime = new DateTime();
+const rssDao = new RssDao(mysqlClientProvider, datetime);
+const rssModel = new Rss(rssDao);
+const feed: FeedsController = new FeedsController(rssModel);
 
 const endpointControllers: EndpointController[] = [
   feed,

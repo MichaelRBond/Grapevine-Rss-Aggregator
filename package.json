@@ -10,11 +10,13 @@
     "dbm": "ts-node src/scripts/db-migrate.ts",
     "lint": "tslint -p ./tsconfig.json",
     "start": "ts-node src/index.ts",
-    "test": "CONFIG_ENV=test yarn run dbm up && CONFIG_ENV=test jest --coverage --runInBand 'tests/integration/.*\\.test(-integ)?.ts$'",
-    "verify": "yarn run build && yarn run lint"
+    "test": "CONFIG_ENV=test yarn run dbm up && CONFIG_ENV=test jest --coverage --runInBand 'tests/*/.*\\.test(-integ)?.ts$'",
+    "verify": "yarn run build && yarn run lint && yarn run test"
   },
   "devDependencies": {
+    "@types/boom": "^7.1.1",
     "@types/jest": "^22.1.1",
+    "@types/joi": "^13.0.5",
     "@types/mysql": "^2.15.2",
     "chai": "^4.1.2",
     "jest": "^22.1.4",
@@ -25,10 +27,10 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
-    "@types/boom": "^7.1.1",
     "db-migrate": "^0.10.5",
     "db-migrate-mysql": "^1.1.10",
     "hapi": "^17.2.0",
+    "joi": "^13.1.2",
     "mysql": "^2.15.0"
   },
   "jest": {
@@ -38,16 +40,16 @@
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/config/*.ts",
-      "!src/script/migrate.ts",
+      "!src/scripts/db-migrate.ts",
       "!src/types/**",
       "!**/node_modules/**"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 90,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
+        "branches": 27,
+        "functions": 32,
+        "lines": 41,
+        "statements": 37
       }
     },
     "transform": {

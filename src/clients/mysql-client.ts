@@ -2,6 +2,17 @@ import { createPool, MysqlError, Pool} from "mysql";
 import { config } from "../config/index";
 import { Nullable } from "../models/nullable";
 
+export interface OkPacket {
+  fieldCount: number;
+  affectedRows: number;
+  insertId: number;
+  serverStatus: number;
+  warningCount: number;
+  message: string;
+  protocol41: boolean;
+  changedRows: number;
+}
+
 export class MySqlClient {
 
   private pool: Nullable<Pool>;
@@ -33,13 +44,21 @@ export class MySqlClient {
         // TODO: Log error
         throw new Error("Unable to get MySQL pool");
       }
-      this.pool.query(sql, values, (err: MysqlError, results: any[]) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(results);
-      });
+      try {
+        this.pool.query(sql, values, (err: MysqlError, results: any[]) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(results);
+        });
+      } catch (err) {
+        throw new Error(err);
+      }
     });
+  }
+
+  public async insertUpdate(sql: string, values?: any[]): Promise<OkPacket> {
+    return this.query(sql, values);
   }
 
   private createPool(): void {
@@ -50,7 +69,7 @@ export class MySqlClient {
 }
 
 let mysqlClient: MySqlClient;
-export async function mysqlClientProvider(): Promise<MySqlClient> {
+export function mysqlClientProvider(): MySqlClient {
   if (mysqlClient) {
     return mysqlClient;
   }
