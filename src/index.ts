@@ -1,3 +1,4 @@
+import { CronJob } from "cron";
 import { Server } from "hapi";
 import { mysqlClientProvider } from "./clients/mysql-client";
 import { config } from "./config";
@@ -15,6 +16,14 @@ const feed: FeedsController = new FeedsController(rssModel);
 const endpointControllers: EndpointController[] = [
   feed,
 ];
+
+// TODO : Refactor
+const rssFetchJob = new CronJob({
+  cronTime: "*/5 * * * * *", // TODO: move into config.
+  onTick: () => rssModel.fetchFeeds(),
+  start: false,
+});
+rssFetchJob.start();
 
 getHapiServer(endpointControllers).then((server) => {
   server.start();

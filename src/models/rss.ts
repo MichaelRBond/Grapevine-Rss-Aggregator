@@ -45,4 +45,11 @@ export class Rss {
   public async updateFeed(feed: RssFeed): Promise<Nullable<RssFeed>> {
     return this.dao.update(feed);
   }
+
+  public async fetchFeeds(): Promise<void> {
+    const feeds = await this.getFeeds();
+    feeds.forEach((f) => {
+      console.log(f.title);
+    });
+  }
 }
