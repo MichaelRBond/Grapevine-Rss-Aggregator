@@ -3,7 +3,7 @@ import { Nullable } from "../models/nullable";
 import { RssFeed, RssFeedBase } from "../models/rss";
 import { DateTime } from "../utils/date-time";
 
-export class RssDao {
+export class RssFeedDao {
   constructor(
     private mysqlProvider: () => MySqlClient,
     private dateTime: DateTime,

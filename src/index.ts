@@ -2,15 +2,21 @@ import { CronJob } from "cron";
 import { Server } from "hapi";
 import { mysqlClientProvider } from "./clients/mysql-client";
 import { config } from "./config";
-import { RssDao } from "./dao/rss";
+import { RssFeedDao } from "./dao/rss-feed";
+import { RssItemDao } from "./dao/rss-item";
 import { FeedsController } from "./endpoints/feed-controller";
 import { EndpointController } from "./models/endpoint-controller";
 import { Rss } from "./models/rss";
 import { DateTime } from "./utils/date-time";
+import { FeedParser } from "./utils/feed-parser";
+import { Http } from "./utils/http";
 
+const feedParser = new FeedParser();
+const http = new Http();
 const datetime = new DateTime();
-const rssDao = new RssDao(mysqlClientProvider, datetime);
-const rssModel = new Rss(rssDao);
+const rssFeedDao = new RssFeedDao(mysqlClientProvider, datetime);
+const rssItemDao = new RssItemDao(mysqlClientProvider);
+const rssModel = new Rss(rssFeedDao, rssItemDao, feedParser, http);
 const feed: FeedsController = new FeedsController(rssModel);
 
 const endpointControllers: EndpointController[] = [
@@ -20,7 +26,9 @@ const endpointControllers: EndpointController[] = [
 // TODO : Refactor
 const rssFetchJob = new CronJob({
   cronTime: "*/5 * * * * *", // TODO: move into config.
-  onTick: () => rssModel.fetchFeeds(),
+  onTick: () => {
+    rssModel.fetchFeeds();
+  },
   start: false,
 });
 rssFetchJob.start();
