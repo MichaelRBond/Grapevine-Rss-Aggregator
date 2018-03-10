@@ -88,4 +88,56 @@ describe("Integration: feed-item", () => {
     expect(result).toBeNull();
   });
 
+  it("returns null when no guid can be found", async () => {
+    const result = await dao.getByGuid("abcd");
+    expect(result).toBeNull();
+  });
+
+  it("Updates a feed item already saved to the database", async () => {
+    const item: RssItemBase = {
+      author: "Test author",
+      categories: [],
+      comments: "test comments",
+      description: "test description",
+      enclosures: [],
+      guid: "85879eac064de3cf9a5357985286171f78e411b5b5002f19f7b891ef9f5ca854",
+      image: {},
+      link: "http://foo.com/something",
+      published: undefined,
+      summary: "test summary",
+      title: "test title",
+      updated,
+    };
+    const result = await dao.save(item, {id: 1} as RssFeed);
+    expect(result.title).toEqual("test title");
+
+    item.title = "foo";
+
+    const updatedResult = await dao.update(item);
+    expect(updatedResult.title).toEqual("foo");
+  });
+
+  it("Throws an error when trying to update an item that doesn't exist", async () => {
+    const item: RssItemBase = {
+      author: "Test author",
+      categories: [],
+      comments: "test comments",
+      description: "test description",
+      enclosures: [],
+      guid: "85879eac064de3cf9a5357985286171f78e411b5b5002f19f7b891ef9f5ca854",
+      image: {},
+      link: "http://foo.com/something",
+      published: undefined,
+      summary: "test summary",
+      title: "test title",
+      updated,
+    };
+    try {
+      await dao.update(item);
+      expect(true).toBeFalsy();
+    } catch (err) {
+      expect(err.message).toContain("Error updating");
+    }
+  });
+
 });

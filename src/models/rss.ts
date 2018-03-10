@@ -98,7 +98,7 @@ export class Rss {
 
   private async saveItems(feed: RssFeed, items: RssItemBase[]): Promise<Array<Nullable<RssItem>>> {
     const savePromises = items.map(async (i) => {
-      return this.itemDao.save(i, feed);
+      return this.itemDao.getByGuid(getGuid(i)) ? this.itemDao.update(i) : this.itemDao.save(i, feed);
     });
     return Promise.all(savePromises);
   }
