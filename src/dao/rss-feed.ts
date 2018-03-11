@@ -29,13 +29,17 @@ export class RssFeedDao {
     const mysql = this.mysqlProvider();
     const sql = "INSERT INTO `feeds` (`title`, `url`, `addedOn`) VALUES(?, ?, ?)";
     const result = await mysql.insertUpdate(sql, [feed.title, feed.url, this.dateTime.dateNoWInSeconds()]);
+    // TODO : error checking
     return this.getById(result.insertId);
   }
 
   public async update(feed: RssFeed): Promise<Nullable<RssFeed>> {
     const mysql = this.mysqlProvider();
-    const sql = "UPDATE `feeds` SET `title`=?, `url`=? WHERE `id`=?";
-    await mysql.insertUpdate(sql, [feed.title, feed.url, feed.id]);
+    const sql = "UPDATE `feeds` SET `title`=?, `url`=?, `lastUpdated`=? WHERE `id`=?";
+    const result = await mysql.insertUpdate(sql, [feed.title, feed.url, this.dateTime.dateNoWInSeconds(), feed.id]);
+    if (result.affectedRows !== 1) {
+      return null; // TODO : optional
+    }
     return this.getById(feed.id);
   }
 
