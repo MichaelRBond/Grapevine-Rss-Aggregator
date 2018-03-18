@@ -39,7 +39,7 @@ export class FeedsController extends EndpointController {
         const feedPayload = request.payload as RssFeedBase;
         const feed = await this.rss.saveFeed(feedPayload);
         if (isNullOrUndefined(feed)) {
-            throw new Error("Should be 404");
+            throw new Error("Should be 500");
         }
         return Rss.rssFeedToApiResponse(feed);
     }

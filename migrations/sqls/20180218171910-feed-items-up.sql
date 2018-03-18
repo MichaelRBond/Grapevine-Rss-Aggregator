@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `items`(
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  feedId INT(11) UNSIGNED NOT NULL,
+  title VARCHAR(255) DEFAULT NULL,
+  description TEXT DEFAULT NULL,
+  summary TEXT DEFAULT NULL,
+  link VARCHAR(500) NOT NULL,
+  updated INT(11) UNSIGNED DEFAULT NULL,
+  published INT(11) UNSIGNED DEFAULT NULL,
+  author VARCHAR(255) DEFAULT NULL,
+  guid VARCHAR(64) NOT NULL,
+  image JSON DEFAULT NULL,
+  categories VARCHAR(500) DEFAULT NULL,
+  enclosures VARCHAR(500) DEFAULT NULL,
+  `read` TINYINT(1) NOT NULL DEFAULT 0,
+  starred TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  INDEX `feedId` (`feedId`),
+  INDEX `guid` (`guid`),
+  INDEX `starred` (`starred`)
+) engine=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

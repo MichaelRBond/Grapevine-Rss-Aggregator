@@ -18,7 +18,7 @@ describe("Unit: feed-controller", () => {
       payload: {
         title: "test",
         url: "http://test.com",
-      },
+      } as any,
     } as Request;
   });
 
@@ -51,7 +51,7 @@ describe("Unit: feed-controller", () => {
       await api.saveFeed(request);
       expect(true).toBeFalsy();
     } catch (err) {
-      expect(err.message).toContain("Should be 404"); // FIXME:
+      expect(err.message).toContain("Should be 500"); // FIXME:
     }
 
     // verify(rss.save).calledOnce();
@@ -80,10 +80,10 @@ describe("Unit: feed-controller", () => {
     try {
       await api.updateFeed(request);
       expect(true).toBeFalsy();
-    } catch(err) {
+    } catch (err) {
       expect(err.message).toContain("Should be 404"); // FIXME:
     }
-  })
+  });
 
   it("returns an array of routes", () => {
     const routes = api.registerRoutes();
