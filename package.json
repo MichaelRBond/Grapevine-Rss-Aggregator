@@ -48,7 +48,8 @@
       "!src/config/*.ts",
       "!src/scripts/db-migrate.ts",
       "!src/types/**",
-      "!**/node_modules/**"
+      "!**/node_modules/**",
+      "!src/models/nullable.ts"
     ],
     "coverageThreshold": {
       "global": {

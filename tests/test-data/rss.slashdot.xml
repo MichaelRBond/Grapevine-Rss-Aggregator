@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss1full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://rss.slashdot.org/~d/styles/itemcontent.css"?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:admin="http://webns.net/mvcb/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:syn="http://purl.org/rss/1.0/modules/syndication/" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/">
+
+<channel rdf:about="https://slashdot.org/">
+<title>Slashdot</title>
+<link>https://slashdot.org/</link>
+<description>News for nerds, stuff that matters</description>
+<dc:language>en-us</dc:language>
+<dc:rights>Copyright 1997-2016, SlashdotMedia. All Rights Reserved.</dc:rights>
+<dc:date>2018-03-18T19:27:06+00:00</dc:date>
+<dc:publisher>Dice</dc:publisher>
+<dc:creator>help@slashdot.org</dc:creator>
+<dc:subject>Technology</dc:subject>
+<syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+<syn:updateFrequency>1</syn:updateFrequency>
+<syn:updatePeriod>hourly</syn:updatePeriod>
+<items>
+ <rdf:Seq>
+  <rdf:li rdf:resource="https://news.slashdot.org/story/18/03/18/1651212/youtube-kids-has-videos-on-how-reptilians-rule-the-world-moon-landing-was-fake?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://hardware.slashdot.org/story/18/03/18/080234/the-road-to-deep-decarbonization?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/18/03/18/0754237/say-goodbye-to-the-information-age-its-all-about-reputation-now?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://news.slashdot.org/story/18/03/18/0719259/ghanas-windows-blackboard-teacher-and-his-students-have-a-rewarding-outcome?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://news.slashdot.org/story/18/03/18/074238/why-do-people-go-to-wikipedia-a-survey-suggests-its-their-desire-to-go-down-that-random-rabbit-hole?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/18/03/18/0622208/facebook-and-its-executives-are-getting-destroyed-after-botching-the-handling-of-a-massive-data-breach?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/18/03/17/2354255/are-google-and-facebook-surveilling-their-own-employees?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://ask.slashdot.org/story/18/03/18/0046226/ask-slashdot-how-can-i-prove-my-isp-slows-certain-traffic?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://news.slashdot.org/story/18/03/17/0356243/can-problems-from-climate-change-be-addressed-with-science?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://science.slashdot.org/story/18/03/17/0311253/google-open-sources-its-exoplanet-hunting-ai?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/18/03/17/2316200/1-in-3-michigan-workers-tested-opened-a-password-phishing-email?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://tech.slashdot.org/story/18/03/17/2218237/did-cambridge-analytica-harvest-50-million-facebook-profiles?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://news.slashdot.org/story/18/03/17/2128242/how-an-open-source-plugin-tamed-a-chaotic-comments-section-with-a-simple-quiz?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://games.slashdot.org/story/18/03/17/204218/how-hardware-artisans-are-keeping-classic-video-gaming-alive?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+  <rdf:li rdf:resource="https://news.slashdot.org/story/18/03/17/197215/diy-explosives-experimenter-blows-self-up-contaminates-building?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed" />
+ </rdf:Seq>
+</items>
+<image rdf:resource="https://a.fsdn.com/sd/topics/topicslashdot.gif" />
+<textinput rdf:resource="https://slashdot.org/search.pl" />
+<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rdf+xml" href="http://rss.slashdot.org/slashdot/slashdotMain" /><feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" uri="slashdot/slashdotmain" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /></channel>
+<image rdf:about="https://a.fsdn.com/sd/topics/topicslashdot.gif">
+<title>Slashdot</title>
+<url>https://a.fsdn.com/sd/topics/topicslashdot.gif</url>
+<link>https://slashdot.org/</link>
+</image>
+<item rdf:about="https://news.slashdot.org/story/18/03/18/1651212/youtube-kids-has-videos-on-how-reptilians-rule-the-world-moon-landing-was-fake?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>YouTube Kids Has Videos on How Reptilians Rule the World, Moon Landing Was Fake </title>
+<link>https://news.slashdot.org/story/18/03/18/1651212/youtube-kids-has-videos-on-how-reptilians-rule-the-world-moon-landing-was-fake?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>An anonymous reader shares a report: YouTube Kids, the supposedly child-friendly version of YouTube that's been shown to often play host to troves of slop content and disturbing videos, apparently was showing videos from British conspiracy theorist David Icke, a guy who believes reptilian aliens secretly control the world and are responsible for the Holocaust. According to a Saturday report in Business Insider, searching for the term "UFO" on YouTube kids turned up a video purporting "to show a UFO shooting at a chemtrail." The suggested followups for that video featured a number of Icke's clips, including a nearly five-hour lecture on how aliens built the pyramids and secretly run the planet through a ruling class extraterrestrial-human hybrids. The video also delves into a number of other conspiracy theories, including claims Freemasons indulge in human sacrifice and President John F. Kennedy was assassinated by his own government. According to Business Insider, "Two other conspiracy theory videos by Icke appeared in the related videos, meaning it was easy for children to quickly go from watching relatively innocent videos about toys to conspiracy content." Searching for the term "moon landing" also resulted in a number of conspiratorial videos emerging, including one making the claim that CERN's Large Hadron Collider had opened a portal to another world that an unfortunate employee then vanished in.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=YouTube+Kids+Has+Videos+on+How+Reptilians+Rule+the+World%2C+Moon+Landing+Was+Fake+%3A+http%3A%2F%2Fbit.ly%2F2tY4M9B"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F18%2F03%2F18%2F1651212%2Fyoutube-kids-has-videos-on-how-reptilians-rule-the-world-moon-landing-was-fake%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://news.slashdot.org/story/18/03/18/1651212/youtube-kids-has-videos-on-how-reptilians-rule-the-world-moon-landing-was-fake?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/18/03/18/1651212/youtube-kids-has-videos-on-how-reptilians-rule-the-world-moon-landing-was-fake?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11871409&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2018-03-18T19:00:00+00:00</dc:date>
+<dc:subject>youtube</dc:subject>
+<slash:department>holding-accountable</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>13</slash:comments>
+<slash:hit_parade>13,12,5,5,1,1,0</slash:hit_parade>
+</item>
+<item rdf:about="https://hardware.slashdot.org/story/18/03/18/080234/the-road-to-deep-decarbonization?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>The Road to Deep Decarbonization</title>
+<link>https://hardware.slashdot.org/story/18/03/18/080234/the-road-to-deep-decarbonization?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Michael Liebreich, writing for Bloomberg New Energy Finance: In the past fifteen years we have witnessed several pivotal points along the route towards clean energy and transport. In 2004, renewables were poised for explosive growth; in 2008, the world's power system started to go digital; in 2012, it became clear that EVs would take over light ground transportation. Today I believe it is the turn of sectors that have resisted change so far -- heavy ground transportation, industry, chemicals, heat, aviation and shipping, agriculture. One after the other, or more likely as a tightly-coupled system, they are all going to go clean during the coming decades. Astonishing progress is being made on super-efficient industrial processes, connected and shared vehicles, electrification of air transport, precision agriculture, food science, synthetic fuels, industrial biochemistry, new materials like graphene and aerogels, energy and infrastructure blockchain, additive manufacturing, zero-carbon building materials, small nuclear fusion, and so many other areas. These technologies may not be cost-competitive today, but they all benefit from the same fearsome learning curves as we have seen in wind, solar and batteries. In addition, in the same way that ubiquitous sensors, cloud and edge-of-grid computing, big data and machine learning have enabled the transformation of our electrical system, they will unlock sweeping changes to the rest of our energy, transportation and industrial sectors.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=The+Road+to+Deep+Decarbonization%3A+http%3A%2F%2Fbit.ly%2F2tVzVuh"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fhardware.slashdot.org%2Fstory%2F18%2F03%2F18%2F080234%2Fthe-road-to-deep-decarbonization%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://hardware.slashdot.org/story/18/03/18/080234/the-road-to-deep-decarbonization?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://hardware.slashdot.org/story/18/03/18/080234/the-road-to-deep-decarbonization?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870671&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2018-03-18T18:00:00+00:00</dc:date>
+<dc:subject>power</dc:subject>
+<slash:department>up-next</slash:department>
+<slash:section>hardware</slash:section>
+<slash:comments>33</slash:comments>
+<slash:hit_parade>33,32,26,23,1,1,1</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/18/03/18/0754237/say-goodbye-to-the-information-age-its-all-about-reputation-now?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Say Goodbye To the Information Age: It's All About Reputation Now</title>
+<link>https://tech.slashdot.org/story/18/03/18/0754237/say-goodbye-to-the-information-age-its-all-about-reputation-now?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>An anonymous reader shares an essay on Aeon magazine by Gloria Origgi, an Italian philosopher and a tenured senior researcher at CNRS : We are experiencing a fundamental paradigm shift in our relationship to knowledge. From the 'information age', we are moving towards the 'reputation age', in which information will have value only if it is already filtered, evaluated and commented upon by others. Seen in this light, reputation has become a central pillar of collective intelligence today. It is the gatekeeper to knowledge, and the keys to the gate are held by others. The way in which the authority of knowledge is now constructed makes us reliant on what are the inevitably biased judgments of other people, most of whom we do not know. [...] The paradigm shift from the age of information to the age of reputation must be taken into account when we try to defend ourselves from 'fake news' and other misinformation and disinformation techniques that are proliferating through contemporary societies. What a mature citizen of the digital age should be competent at is not spotting and confirming the veracity of the news. Rather, she should be competent at reconstructing the reputational path of the piece of information in question, evaluating the intentions of those who circulated it, and figuring out the agendas of those authorities that leant it credibility.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Say+Goodbye+To+the+Information+Age%3A+It's+All+About+Reputation+Now%3A+http%3A%2F%2Fbit.ly%2F2GGejVB"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F18%2F03%2F18%2F0754237%2Fsay-goodbye-to-the-information-age-its-all-about-reputation-now%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://tech.slashdot.org/story/18/03/18/0754237/say-goodbye-to-the-information-age-its-all-about-reputation-now?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/18/03/18/0754237/say-goodbye-to-the-information-age-its-all-about-reputation-now?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870663&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2018-03-18T17:00:00+00:00</dc:date>
+<dc:subject>internet</dc:subject>
+<slash:department>how-about-that</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>71</slash:comments>
+<slash:hit_parade>71,69,38,32,9,5,2</slash:hit_parade>
+</item>
+<item rdf:about="https://news.slashdot.org/story/18/03/18/0719259/ghanas-windows-blackboard-teacher-and-his-students-have-a-rewarding-outcome?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Ghana's Windows Blackboard Teacher And His Students Have a Rewarding Outcome</title>
+<link>https://news.slashdot.org/story/18/03/18/0719259/ghanas-windows-blackboard-teacher-and-his-students-have-a-rewarding-outcome?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Quartz: A lot has changed in the life of Richard Appiah Akoto in the fortnight since he posted photos of himself on Facebook drawing a Microsoft Word processing window on a blackboard with multi-colored chalk, to teach his students about computers -- which the school did not have. The photos went viral on social media and media stories like Quartz's went all around the world. Akoto, 33, is the information and communication technology (ICT) teacher at Betenase M/A Junior High School in the town of Sekyedomase, about two and half hours drive north of Ghana's second city, Kumasi. The school had no computers even though since 2011, 14 and 15-year-olds in Ghana are expected to write and pass a national exam (without which students cannot progress to high school) with ICT being one of the subjects. The story of the school and Twitter pressure from prominent players in the African tech space drew a promise from Microsoft to "equip [Akoto] with a device from one of our partners, and access to our MCE program &amp;amp; free professional development resources on." To fulfill this promise, the technology giant flew Akoto to Singapore this week where he is participating in the annual Microsoft Education Exchange.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Ghana's+Windows+Blackboard+Teacher+And+His+Students+Have+a+Rewarding+Outcome%3A+http%3A%2F%2Fbit.ly%2F2tXTqCl"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F18%2F03%2F18%2F0719259%2Fghanas-windows-blackboard-teacher-and-his-students-have-a-rewarding-outcome%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://news.slashdot.org/story/18/03/18/0719259/ghanas-windows-blackboard-teacher-and-his-students-have-a-rewarding-outcome?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/18/03/18/0719259/ghanas-windows-blackboard-teacher-and-his-students-have-a-rewarding-outcome?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870613&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2018-03-18T16:00:00+00:00</dc:date>
+<dc:subject>education</dc:subject>
+<slash:department>little-things</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>52</slash:comments>
+<slash:hit_parade>52,50,25,15,1,1,0</slash:hit_parade>
+</item>
+<item rdf:about="https://news.slashdot.org/story/18/03/18/074238/why-do-people-go-to-wikipedia-a-survey-suggests-its-their-desire-to-go-down-that-random-rabbit-hole?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Why Do People Go To Wikipedia? A Survey Suggests It's Their Desire To Go Down that Random Rabbit Hole</title>
+<link>https://news.slashdot.org/story/18/03/18/074238/why-do-people-go-to-wikipedia-a-survey-suggests-its-their-desire-to-go-down-that-random-rabbit-hole?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>What's motivated people to visit the Wikipedia pages they're reading? Wikipedia recently tried to answer that question at scale by asking a sample of Wikipedia readers last June, "Why are you reading this article today?" It seems a lot of people go to Wikipedia for earnest, serious, information-seeking reasons. From a report: The study collected 215,000 responses from visitors to Wikipedia pages across 14 languages (Arabic, Bengali, Chinese, Dutch, English, German, Hebrew, Hindi, Hungarian, Japanese, Romanian, Russian, Spanish, and Ukrainian). The survey offered readers choices from seven types of motivations for why they were reading the Wikipedia page they were reading (e.g., "I have a work or school-related assignment, I need to make a personal decision based on this topic, I want to know more about a current event"). Thirty-five percent of Wikipedia users sampled across the 14 languages in this study said they were on the site to find a specific fact. Thirty-three percent said they were looking for an overview of a topic, while 32 percent said they wanted to get information on a topic in-depth.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Why+Do+People+Go+To+Wikipedia%3F+A+Survey+Suggests+It's+Their+Desire+To+Go+Down+that+Random+Rabbit+Hole%3A+http%3A%2F%2Fbit.ly%2F2GDpSg5"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F18%2F03%2F18%2F074238%2Fwhy-do-people-go-to-wikipedia-a-survey-suggests-its-their-desire-to-go-down-that-random-rabbit-hole%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://news.slashdot.org/story/18/03/18/074238/why-do-people-go-to-wikipedia-a-survey-suggests-its-their-desire-to-go-down-that-random-rabbit-hole?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/18/03/18/074238/why-do-people-go-to-wikipedia-a-survey-suggests-its-their-desire-to-go-down-that-random-rabbit-hole?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870603&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2018-03-18T15:00:00+00:00</dc:date>
+<dc:subject>wikipedia</dc:subject>
+<slash:department>closer-look</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>29</slash:comments>
+<slash:hit_parade>29,28,19,16,9,4,3</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/18/03/18/0622208/facebook-and-its-executives-are-getting-destroyed-after-botching-the-handling-of-a-massive-data-breach?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Facebook and Its Executives Are Getting Destroyed After Botching the Handling of a Massive Data Breach</title>
+<link>https://tech.slashdot.org/story/18/03/18/0622208/facebook-and-its-executives-are-getting-destroyed-after-botching-the-handling-of-a-massive-data-breach?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>The way Facebook has disclosed the abuse of its system by Cambridge Analytica, which has been reported this week, speaks volumes of Facebook's core beliefs. Sample this except from Business Insider: Facebook executives waded into a firestorm of criticism on Saturday, after news reports revealed that a data firm with ties to the Trump campaign harvested private information from millions of Facebook users. Several executives took to Twitter to insist that the data leak was not technically a "breach." But critics were outraged by the response and accused the company of playing semantics and missing the point. Washington Post reporter Hamza Shaban: Facebook insists that the Cambridge Analytica debacle wasn't a data breach, but a "violation" by a third party app that abused user data. This offloading of responsibility says a lot about Facebook's approach to our privacy. Observer reporter Carole Cadwalladr, who broke the news about Cambridge Analytica: Yesterday Facebook threatened to sue us. Today we publish this. Meet the whistleblower blowing the lid off Facebook and Cambridge Analytica. [...] Facebook's chief strategy officer wading in. So, tell us @alexstamos (who expressed his displeasure with the use of "breach" in media reports) why didn't you inform users of this "non-breach" after The Guardian first reported the story in December 2015? Zeynep Tufekci: If your business is building a massive surveillance machinery, the data will eventually be used and misused. Hacked, breached, leaked, pilfered, conned, "targeted", "engaged", "profiled", sold.. There is no informed consent because it's not possible to reasonably inform or consent. [...] Facebook's defense that Cambridge Analytica harvesting of FB user data from millions is not technically a "breach" is a more profound and damning statement of what's wrong with Facebook's business model than a "breach." MIT Professor Dean Eckles: Definitely fascinating that Joseph Chancellor, who contributed to collection and contract-violating retention (?) of Facebook user data, now works for Facebook. Amir Efrati, a reporter at the Information: May seem like a small thing to non-reporters but Facebook loses credibility by issuing a Friday night press release to "front-run" publications that were set to publish negative articles about its platform. If you want us to become more suspicious, mission accomplished. Further reading: Facebook's latest privacy debacle stirs up more regulatory interest from lawmakers (TechCrunch).&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Facebook+and+Its+Executives+Are+Getting+Destroyed+After+Botching+the+Handling+of+a+Massive+Data+Breach%3A+http%3A%2F%2Fbit.ly%2F2u0iiJT"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F18%2F03%2F18%2F0622208%2Ffacebook-and-its-executives-are-getting-destroyed-after-botching-the-handling-of-a-massive-data-breach%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://tech.slashdot.org/story/18/03/18/0622208/facebook-and-its-executives-are-getting-destroyed-after-botching-the-handling-of-a-massive-data-breach?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/18/03/18/0622208/facebook-and-its-executives-are-getting-destroyed-after-botching-the-handling-of-a-massive-data-breach?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870551&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>msmash</dc:creator>
+<dc:date>2018-03-18T14:00:00+00:00</dc:date>
+<dc:subject>facebook</dc:subject>
+<slash:department>everything-wrong-with-Facebook</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>119</slash:comments>
+<slash:hit_parade>119,110,59,48,16,10,8</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/18/03/17/2354255/are-google-and-facebook-surveilling-their-own-employees?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Are Google and Facebook Surveilling Their Own Employees?</title>
+<link>https://tech.slashdot.org/story/18/03/17/2354255/are-google-and-facebook-surveilling-their-own-employees?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>The Guardian just ran an article titled " 'They'll squash you like a bug': how Silicon Valley keeps a lid on leakers," which begins with the story of an employee confronted by Facebook's secretive "rat-catching" team:
+They had records of a screenshot he'd taken, links he had clicked or hovered over, and they strongly indicated they had accessed chats between him and the journalist, dating back to before he joined the company. "It's horrifying how much they know," he told the Guardian, on the condition of anonymity... "You get on their bad side and all of a sudden you are face to face with Mark Zuckerberg's secret police"... One European Facebook content moderator signed a contract, seen by the Guardian, which granted the company the right to monitor and record his social media activities, including his personal Facebook account, as well as emails, phone calls and internet use. He also agreed to random personal searches of his belongings including bags, briefcases and car while on company premises. Refusal to allow such searches would be treated as gross misconduct... 
+Some employees switch their phones off or hide them out of fear that their location is being tracked. One current Facebook employee who recently spoke to Wired asked the reporter to turn off his phone so the company would have a harder time tracking if it had been near the phones of anyone from Facebook. Two security researchers confirmed that this would be technically simple for Facebook to do if both people had the Facebook app on their phone and location services switched on. Even if location services aren't switched on, Facebook can infer someone's location from wifi access points. 
+
+The article cites a 2012 report that Microsoft read a French blogger's Hotmail account to identify a former employee who had leaked trade secrets. And it also reports that tech companies hire external agencies to surveil their employees. "One such firm, Pinkerton, counts Google and Facebook among its clients." Though Facebook and Google both deny this, "Among other services, Pinkerton offers to send investigators to coffee shops or restaurants near a company's campus to eavesdrop on employees' conversations... 
+Al Gidari, consulting director of privacy at the Stanford Center for Internet and Society, says that these tools "are common, widespread, intrusive and legal."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Are+Google+and+Facebook+Surveilling+Their+Own+Employees%3F%3A+http%3A%2F%2Fbit.ly%2F2tTyNaE"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F18%2F03%2F17%2F2354255%2Fare-google-and-facebook-surveilling-their-own-employees%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://tech.slashdot.org/story/18/03/17/2354255/are-google-and-facebook-surveilling-their-own-employees?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/18/03/17/2354255/are-google-and-facebook-surveilling-their-own-employees?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870271&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-18T10:34:00+00:00</dc:date>
+<dc:subject>facebook</dc:subject>
+<slash:department>non-disclosure-enforcements</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>80</slash:comments>
+<slash:hit_parade>80,75,45,34,10,3,3</slash:hit_parade>
+</item>
+<item rdf:about="https://ask.slashdot.org/story/18/03/18/0046226/ask-slashdot-how-can-i-prove-my-isp-slows-certain-traffic?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Ask Slashdot: How Can I Prove My ISP Slows Certain Traffic?</title>
+<link>https://ask.slashdot.org/story/18/03/18/0046226/ask-slashdot-how-can-i-prove-my-isp-slows-certain-traffic?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Long-time Slashdot reader GerryGilmore is "a basically pretty knowledgeable Linux guy totally comfortable with the command line." But unfortunately, he lives in north Georgia, "where we have a monopoly ISP provider...whose service overall could charitably be described as iffy."
+Sometimes, I have noticed that certain services like Netflix and/or HBONow will be ridiculously slow, but -- when I run an internet speed test from my Linux laptop -- the basic throughput is what it's supposed to be for my DSL service. That is, about 3Mbps due to my distance from the nearest CO. Other basic web browsing seems to be fine... I don't know enough about network tracing to be able to identify where/why such severe slowdowns in certain circumstances are occurring. 
+
+Slashdot reader darkharlequin has also noticed a speed decrease on Comcast "that magickally resolves when I run internet speed tests." But if the original submitter's ultimate goal is delivering evidence to his local legislators so they can pressure on his ISP -- what evidence is there? Leave your best answers in the comments. How can he prove his ISP is slowing certain traffic?&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Ask+Slashdot%3A+How+Can+I+Prove+My+ISP+Slows+Certain+Traffic%3F%3A+http%3A%2F%2Fbit.ly%2F2GCF7pz"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fask.slashdot.org%2Fstory%2F18%2F03%2F18%2F0046226%2Fask-slashdot-how-can-i-prove-my-isp-slows-certain-traffic%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://ask.slashdot.org/story/18/03/18/0046226/ask-slashdot-how-can-i-prove-my-isp-slows-certain-traffic?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://ask.slashdot.org/story/18/03/18/0046226/ask-slashdot-how-can-i-prove-my-isp-slows-certain-traffic?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870299&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-18T07:34:00+00:00</dc:date>
+<dc:subject>networking</dc:subject>
+<slash:department>throttling-throughput</slash:department>
+<slash:section>askslashdot</slash:section>
+<slash:comments>146</slash:comments>
+<slash:hit_parade>146,141,84,74,17,12,7</slash:hit_parade>
+</item>
+<item rdf:about="https://news.slashdot.org/story/18/03/17/0356243/can-problems-from-climate-change-be-addressed-with-science?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Can Problems From Climate Change Be Addressed With Science?</title>
+<link>https://news.slashdot.org/story/18/03/17/0356243/can-problems-from-climate-change-be-addressed-with-science?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Slashdot reader bricko shares an article from Scientific American about two "ecomodernists" who argue that the problems of climate change can be addressed through science and technology.
+In his Breakthrough essay, Steven Pinker spells out a key assumption of ecomodernism. Industrialization "has been good for humanity. It has fed billions, doubled lifespans, slashed extreme poverty, and, by replacing muscle with machinery, made it easier to end slavery, emancipate women, and educate children. It has allowed people to read at night, live where they want, stay warm in winter, see the world, and multiply human contact. Any costs in pollution and habitat loss have to be weighed against these gifts...."
+
+ We can solve problems related to climate change, Pinker argues, "if we sustain the benevolent forces of modernity that have allowed us to solve problems so far, including societal prosperity, wisely regulated markets, international governance, and investments in science and technology... Since 1970, when the Environmental Protection Agency was established, the United States has slashed its emissions of five air pollutants by almost two-thirds. Over the same period, the population grew by more than 40 percent, and those people drove twice as many miles and became two and a half times richer. Energy use has leveled off, and even carbon dioxide emissions have turned a corner." 
+
+The essay also cites ecomodernist Will Boisvert, who believes climate change will be cataclysmic but not apocalyptic, bringing large upheaval but a small impact on human well-being. "Global warming won't wipe us out or even stall our progress, it will just marginally slow ordinary economic development that will still outpace the negative effects of warming and make life steadily better in the future, under every climate scenario.... Our logistic and technical capacities are burgeoning, and they give us ample means of addressing these problems."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Can+Problems+From+Climate+Change+Be+Addressed+With+Science%3F%3A+http%3A%2F%2Fbit.ly%2F2DBxQDj"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F18%2F03%2F17%2F0356243%2Fcan-problems-from-climate-change-be-addressed-with-science%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://news.slashdot.org/story/18/03/17/0356243/can-problems-from-climate-change-be-addressed-with-science?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/18/03/17/0356243/can-problems-from-climate-change-be-addressed-with-science?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11867575&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-18T03:34:00+00:00</dc:date>
+<dc:subject>earth</dc:subject>
+<slash:department>sunny-outlooks</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>177</slash:comments>
+<slash:hit_parade>177,173,108,99,25,16,9</slash:hit_parade>
+</item>
+<item rdf:about="https://science.slashdot.org/story/18/03/17/0311253/google-open-sources-its-exoplanet-hunting-ai?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Google Open Sources Its Exoplanet-Hunting AI</title>
+<link>https://science.slashdot.org/story/18/03/17/0311253/google-open-sources-its-exoplanet-hunting-ai?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>dmoberhaus writes:
+ Last December, NASA announced that two new exoplanets had been hiding in plain sight among data from the Kepler space telescope. These two new planets weren't discovered by a human, however. Instead, an exoplanet hunting neural network -- a type of machine learning algorithm loosely modeled after the human brain -- had discovered the planets by finding subtle patterns in the Kepler data that would've been nearly impossible for a human to see. Last Thursday, Christopher Shallue, the lead Google engineer behind the exoplanet AI, announced in a blog post that the company was making the algorithm open source. In other words, anyone can download the code and help hunt for exoplanets in Kepler data. 
+
+Google's research blog called the December discovery "a successful proof-of-concept for using machine learning to discover exoplanets, and more generally another example of using machine learning to make meaningful gains in a variety of scientific disciplines (e.g. healthcare, quantum chemistry, and fusion research)."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Google+Open+Sources+Its+Exoplanet-Hunting+AI%3A+http%3A%2F%2Fbit.ly%2F2FQ2xGL"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F18%2F03%2F17%2F0311253%2Fgoogle-open-sources-its-exoplanet-hunting-ai%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://science.slashdot.org/story/18/03/17/0311253/google-open-sources-its-exoplanet-hunting-ai?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://science.slashdot.org/story/18/03/17/0311253/google-open-sources-its-exoplanet-hunting-ai?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11867515&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-18T01:34:00+00:00</dc:date>
+<dc:subject>space</dc:subject>
+<slash:department>truth-is-out-there</slash:department>
+<slash:section>science</slash:section>
+<slash:comments>15</slash:comments>
+<slash:hit_parade>15,14,8,8,3,2,1</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/18/03/17/2316200/1-in-3-michigan-workers-tested-opened-a-password-phishing-email?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>1 in 3 Michigan Workers Tested Opened A Password-Phishing Email</title>
+<link>https://tech.slashdot.org/story/18/03/17/2316200/1-in-3-michigan-workers-tested-opened-a-password-phishing-email?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>An anonymous reader quotes the AP:
+Michigan auditors who conducted a fake "phishing" attack on 5,000 randomly selected state employees said Friday that nearly one-third opened the email, a quarter clicked on the link and almost one-fifth entered their user ID and password. The covert operation was done as part of an audit that uncovered weaknesses in the state government's computer network, including that not all workers are required to participate in cybersecurity awareness training... Auditors made 14 findings, including five that are "material" -- the most serious. They range from inadequate management of firewalls to insufficient processes to confirm if only authorized devices are connected to the network. "Unauthorized devices may not meet the state's requirements, increasing the risk of compromise or infection of the network," the audit said.
+&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=1+in+3+Michigan+Workers+Tested+Opened+A+Password-Phishing+Email%3A+http%3A%2F%2Fbit.ly%2F2GBUGh8"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F18%2F03%2F17%2F2316200%2F1-in-3-michigan-workers-tested-opened-a-password-phishing-email%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://tech.slashdot.org/story/18/03/17/2316200/1-in-3-michigan-workers-tested-opened-a-password-phishing-email?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/18/03/17/2316200/1-in-3-michigan-workers-tested-opened-a-password-phishing-email?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870235&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-17T23:34:00+00:00</dc:date>
+<dc:subject>security</dc:subject>
+<slash:department>failing-the-audit</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>105</slash:comments>
+<slash:hit_parade>105,104,67,57,17,11,11</slash:hit_parade>
+</item>
+<item rdf:about="https://tech.slashdot.org/story/18/03/17/2218237/did-cambridge-analytica-harvest-50-million-facebook-profiles?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>Did Cambridge Analytica Harvest 50 Million Facebook Profiles?</title>
+<link>https://tech.slashdot.org/story/18/03/17/2218237/did-cambridge-analytica-harvest-50-million-facebook-profiles?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Slashdot reader umafuckit shared this article from The Guardian:
+The data analytics firm that worked with Donald Trump's election team and the winning Brexit campaign harvested millions of Facebook profiles of U.S. voters, in one of the tech giant's biggest ever data breaches, and used them to build a powerful software program to predict and influence choices at the ballot box... Christopher Wylie, who worked with a Cambridge University academic to obtain the data, told the Observer: "We exploited Facebook to harvest millions of people's profiles. And built models to exploit what we knew about them and target their inner demons. That was the basis the entire company was built on." 
+Documents seen by the Observer, and confirmed by a Facebook statement, show that by late 2015 the company had found out that information had been harvested on an unprecedented scale. However, at the time it failed to alert users and took only limited steps to recover and secure the private information of more than 50 million individuals... On Friday, four days after the Observer sought comment for this story, but more than two years after the data breach was first reported, Facebook announced that it was suspending Cambridge Analytica and Kogan from the platform, pending further information over misuse of data. Separately, Facebook's external lawyers warned the Observer on Friday it was making "false and defamatory" allegations, and reserved Facebook's legal position... 
+The evidence Wylie supplied to U.K. and U.S. authorities includes a letter from Facebook's own lawyers sent to him in August 2016, asking him to destroy any data he held that had been collected by GSR, the company set up by Kogan to harvest the profiles... Facebook did not pursue a response when the letter initially went unanswered for weeks because Wylie was travelling, nor did it follow up with forensic checks on his computers or storage, he said. "That to me was the most astonishing thing. They waited two years and did absolutely nothing to check that the data was deleted. All they asked me to do was tick a box on a form and post it back." 
+
+Wylie worked with Aleksandr Kogan, the creator of the "thisisyourdigitallife" app, "who has previously unreported links to a Russian university and took Russian grants for research," according to the article. Kogan "had a licence from Facebook to collect profile data, but it was for research purposes only. So when he hoovered up information for the commercial venture, he was violating the company's terms...
+ 
+"At the time, more than 50 million profiles represented around a third of active North American Facebook users, and nearly a quarter of potential U.S. voters."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=Did+Cambridge+Analytica+Harvest+50+Million+Facebook+Profiles%3F%3A+http%3A%2F%2Fbit.ly%2F2GBWerz"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F18%2F03%2F17%2F2218237%2Fdid-cambridge-analytica-harvest-50-million-facebook-profiles%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://tech.slashdot.org/story/18/03/17/2218237/did-cambridge-analytica-harvest-50-million-facebook-profiles?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/18/03/17/2218237/did-cambridge-analytica-harvest-50-million-facebook-profiles?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870187&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-17T22:34:00+00:00</dc:date>
+<dc:subject>facebook</dc:subject>
+<slash:department>clicking-like</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>115</slash:comments>
+<slash:hit_parade>115,110,66,54,19,11,10</slash:hit_parade>
+</item>
+<item rdf:about="https://news.slashdot.org/story/18/03/17/2128242/how-an-open-source-plugin-tamed-a-chaotic-comments-section-with-a-simple-quiz?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>How An Open Source Plugin Tamed a Chaotic Comments Section With A Simple Quiz</title>
+<link>https://news.slashdot.org/story/18/03/17/2128242/how-an-open-source-plugin-tamed-a-chaotic-comments-section-with-a-simple-quiz?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Long-time Slashdot reader jebrick quotes an article from Ars Technica about how Norway's government-owned public broadcasting company "employs open source tactics to fight trolling":
+The five-person team behind a simple WordPress plugin, which took three hours to code, never expected to receive worldwide attention as a result. But NRKbeta, the tech-testing group at Norway's largest national media organization, tapped into a meaty vein with the unveiling of last February's Know2Comment, an open source plugin that can attach to any WordPress site's comment section. "It was a basic idea," NRKbeta developer Stale Grut told a South By Southwest crowd on Tuesday. "Readers had to prove they read a story before they were able to comment on it"... He and fellow staffers spent three hours building the plugin, which Grut reminded the crowd is wholly open source... "[W]e realized not every article is in need of this. We are a tech site; we don't have a lot of controversy, so there's not a big need for it. We use it now on stories where we anticipate there'll be uninformed debate to add this speed bump." 
+
+What do you think? And would a quiz-for-commenting-privileges be a good addition to Slashdot?&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=How+An+Open+Source+Plugin+Tamed+a+Chaotic+Comments+Section+With+A+Simple+Quiz%3A+http%3A%2F%2Fbit.ly%2F2GDeQHw"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F18%2F03%2F17%2F2128242%2Fhow-an-open-source-plugin-tamed-a-chaotic-comments-section-with-a-simple-quiz%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://news.slashdot.org/story/18/03/17/2128242/how-an-open-source-plugin-tamed-a-chaotic-comments-section-with-a-simple-quiz?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/18/03/17/2128242/how-an-open-source-plugin-tamed-a-chaotic-comments-section-with-a-simple-quiz?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870149&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-17T21:34:00+00:00</dc:date>
+<dc:subject>opensource</dc:subject>
+<slash:department>very-challenging-response-authentication</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>133</slash:comments>
+<slash:hit_parade>133,126,72,59,18,13,11</slash:hit_parade>
+</item>
+<item rdf:about="https://games.slashdot.org/story/18/03/17/204218/how-hardware-artisans-are-keeping-classic-video-gaming-alive?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>How Hardware Artisans Are Keeping Classic Video Gaming Alive</title>
+<link>https://games.slashdot.org/story/18/03/17/204218/how-hardware-artisans-are-keeping-classic-video-gaming-alive?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Slashdot reader harrymcc writes, "If you want to play classic Nintendo games, you could buy a vintage Super NES. Or you could use an emulator. Or -- if you're really serious -- you could use floating point gate arrays to design a new console that makes them look great on modern TVs." He shares Fast Company's article about "some of the other folks using new hardware to preserve the masterworks of the past."
+
+Analogue created its system with HDTVs in mind, so every game looks as good or maybe even better than I remember from childhood. Playing the same cartridges on my actual Super Nintendo is more like looking through a dirty window... Another company called RetroUSB has also used Field Programmable Gate Arrays to create its own version of the original Nintendo. And if you already own any classic systems like I do, there's a miniature industry of aftermarket hardware that will make those consoles look better on modern televisions. 
+The article also notes "throwback consoles" from AtGames and Hyperkin, as well as the Open Source Scan Converter, "a crude-looking device that converts SCART input to HDMI output with no distinguishable lag from the game controller." Analogue's CEO Christopher Taber "argues that software emulation is inherently less accurate than re-creating systems at the hardware level," and describes Analogue engineer Kevin Horton as "someone who's obscenely talented at what he's doing... He's applying it to making perfect, faithful, aftermarket video game systems to preserve playing these systems in an unadulterated way." 
+
+And in the end the article's author feels that Analogue's Super NT -- a reverse-engineered Super Nintendo -- "just feels more like the real thing. Unlike an emulator, the Super Nt doesn't let you save games from any point or switch to slow motion, and the only modern gameplay concession it offers is the ability to reset the game through a controller shortcut. Switching to a different game still requires you to get off the couch, retrieve another cartridge, and put it into the system, which feels kind of like listening to a vinyl album instead of a Spotify playlist."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=How+Hardware+Artisans+Are+Keeping+Classic+Video+Gaming+Alive%3A+http%3A%2F%2Fbit.ly%2F2DAg8jH"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fgames.slashdot.org%2Fstory%2F18%2F03%2F17%2F204218%2Fhow-hardware-artisans-are-keeping-classic-video-gaming-alive%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://games.slashdot.org/story/18/03/17/204218/how-hardware-artisans-are-keeping-classic-video-gaming-alive?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://games.slashdot.org/story/18/03/17/204218/how-hardware-artisans-are-keeping-classic-video-gaming-alive?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870091&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-17T20:34:00+00:00</dc:date>
+<dc:subject>emulation</dc:subject>
+<slash:department>crafting-consoles</slash:department>
+<slash:section>games</slash:section>
+<slash:comments>65</slash:comments>
+<slash:hit_parade>65,64,29,24,6,2,1</slash:hit_parade>
+</item>
+<item rdf:about="https://news.slashdot.org/story/18/03/17/197215/diy-explosives-experimenter-blows-self-up-contaminates-building?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+<title>DIY Explosives Experimenter Blows Self Up, Contaminates Building</title>
+<link>https://news.slashdot.org/story/18/03/17/197215/diy-explosives-experimenter-blows-self-up-contaminates-building?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed</link>
+<description>Long-time Slashdot reader hey! writes:
+Benjamin D. Morrison of Beaver Dam Wisconsin was killed on March 5 while synthesizing explosives in his apartment... The accident has left the apartment building so contaminated that it will be demolished in a controlled burn, and residents are not being allowed in to retrieve any of their belongings. 
+It was just five years ago that Morrison graduated from Pensacola Christian College in Florida with a degree in pre-pharmacy and minors in chemistry and math. Though a local reverend believes 28-year-old Morrison was "not a bomb maker," USA Today's site FDL Reporter notes that "Officials assume he was making bombs that accidentally exploded and killed him... They have not publicly disclosed what chemicals were in apartment 11 where Morrow lived, only describing them as 'extremely volatile and unstable explosives.'"&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+&lt;a class="slashpop" href="http://twitter.com/home?status=DIY+Explosives+Experimenter+Blows+Self+Up%2C+Contaminates+Building%3A+http%3A%2F%2Fbit.ly%2F2DzkYh5"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+&lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F18%2F03%2F17%2F197215%2Fdiy-explosives-experimenter-blows-self-up-contaminates-building%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+&lt;a class="nobg" href="http://plus.google.com/share?url=https://news.slashdot.org/story/18/03/17/197215/diy-explosives-experimenter-blows-self-up-contaminates-building?utm_source=slashdot&amp;amp;utm_medium=googleplus" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"&gt;&lt;img src="https://www.gstatic.com/images/icons/gplus-16.png" alt="Share on Google+"/&gt;&lt;/a&gt;
+
+
+
+&lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://news.slashdot.org/story/18/03/17/197215/diy-explosives-experimenter-blows-self-up-contaminates-building?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=11870029&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
+<dc:creator>EditorDavid</dc:creator>
+<dc:date>2018-03-17T19:34:00+00:00</dc:date>
+<dc:subject>usa</dc:subject>
+<slash:department>everyones-evicted</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>316</slash:comments>
+<slash:hit_parade>316,307,189,151,42,24,15</slash:hit_parade>
+</item>
+<textinput rdf:about="https://slashdot.org/search.pl">
+<title>Search Slashdot</title>
+<description>Search Slashdot stories</description>
+<name>query</name>
+<link>https://slashdot.org/search.pl</link>
+</textinput>
+</rdf:RDF>

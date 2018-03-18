@@ -92,7 +92,8 @@ class Verification {
   }
 
   public called(count: number): void {
-    assert.equal(this.getInvocations().length, count, `Expected method to be called ${count} times`);
+    const msg = `Expected method to be called ${count} times. Was called ${this.getInvocations().length} times`;
+    assert.equal(this.getInvocations().length, count, msg);
   }
 }
 /**

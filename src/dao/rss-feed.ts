@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from "util";
 import { MySqlClient } from "../clients/mysql-client";
 import { Nullable } from "../models/nullable";
 import { RssFeed, RssFeedBase } from "../models/rss";
@@ -25,22 +26,18 @@ export class RssFeedDao {
     return result.map(this.dbToRssFeed);
   }
 
-  public async save(feed: RssFeedBase): Promise<Nullable<RssFeed>> {
+  public async save(feed: RssFeedBase): Promise<Nullable<number>> {
     const mysql = this.mysqlProvider();
     const sql = "INSERT INTO `feeds` (`title`, `url`, `addedOn`) VALUES(?, ?, ?)";
     const result = await mysql.insertUpdate(sql, [feed.title, feed.url, this.dateTime.dateNoWInSeconds()]);
-    // TODO : error checking
-    return this.getById(result.insertId);
+    return isNullOrUndefined(result.insertId) ? null : result.insertId;
   }
 
-  public async update(feed: RssFeed): Promise<Nullable<RssFeed>> {
+  public async update(feed: RssFeed): Promise<Nullable<number>> {
     const mysql = this.mysqlProvider();
     const sql = "UPDATE `feeds` SET `title`=?, `url`=?, `lastUpdated`=? WHERE `id`=?";
     const result = await mysql.insertUpdate(sql, [feed.title, feed.url, this.dateTime.dateNoWInSeconds(), feed.id]);
-    if (result.affectedRows !== 1) {
-      return null; // TODO : optional
-    }
-    return this.getById(feed.id);
+    return result.affectedRows !== 1 ? null : feed.id;
   }
 
   private dbToRssFeed(result: any): RssFeed {

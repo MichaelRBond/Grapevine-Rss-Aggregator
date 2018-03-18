@@ -25,9 +25,9 @@ const endpointControllers: EndpointController[] = [
 
 // TODO : Refactor
 const rssFetchJob = new CronJob({
-  cronTime: "*/5 * * * * *", // TODO: move into config.
-  onTick: () => {
-    rssModel.fetchFeeds();
+  cronTime: "*/1 * * * * *", // TODO: move into config.
+  onTick: async () => {
+    return await rssModel.fetchFeeds();
   },
   start: false,
 });

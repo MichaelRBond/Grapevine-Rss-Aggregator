@@ -1,10 +1,8 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import * as FP from "feedparser";
 import { isNullOrUndefined } from "util";
 import { RssFeedDao } from "../dao/rss-feed";
 import { RssItemDao } from "../dao/rss-item";
 import { FeedParser } from "../utils/feed-parser";
-import { isBlank } from "../utils/helpers";
 import { AXIOS_STATUS_CODES, Http } from "../utils/http";
 import { getGuid } from "../utils/rss";
 import { Nullable } from "./nullable";
@@ -58,7 +56,7 @@ export interface RssItem extends RssItemBase {
 export class Rss {
 
   constructor(
-    private feedDdao: RssFeedDao,
+    private feedDao: RssFeedDao,
     private itemDao: RssItemDao,
     private feedParser: FeedParser,
     private http: Http,
@@ -74,36 +72,46 @@ export class Rss {
     };
   }
 
-  public async getFeeds(): Promise<RssFeed[]> {
-    return this.feedDdao.getFeeds();
+  public getFeeds(): Promise<RssFeed[]> {
+    return this.feedDao.getFeeds();
   }
 
   public async saveFeed(feed: RssFeedBase): Promise<Nullable<RssFeed>> {
-    return this.feedDdao.save(feed);
+    const feedId = await this.feedDao.save(feed);
+    if (isNullOrUndefined(feedId)) {
+      return null;
+    }
+    return this.feedDao.getById(feedId);
   }
 
   public async updateFeed(feed: RssFeed): Promise<Nullable<RssFeed>> {
-    return this.feedDdao.update(feed);
+    const feedId = await this.feedDao.update(feed);
+    if (isNullOrUndefined(feedId)) {
+      return null;
+    }
+    return this.feedDao.getById(feedId);
   }
 
   public async fetchFeeds(): Promise<void> {
     const feeds = await this.getFeeds();
-    feeds.forEach(async (f) => {
-      const feed = await this.fetchFeed(f);
-      const items = await this.feedParser.parse(feed, f.url);
-      await this.saveItems(feed, items);
+    const fetchPromises = feeds.map(async (feed) => {
+      const rss = await this.fetchRss(feed);
+      const items = await this.feedParser.parse(rss);
+      return this.saveItems(feed, items);
     });
+    await Promise.all(fetchPromises);
     return;
   }
 
   private async saveItems(feed: RssFeed, items: RssItemBase[]): Promise<Array<Nullable<RssItem>>> {
+    // console.log(feed);
     const savePromises = items.map(async (i) => {
-      return this.itemDao.getByGuid(getGuid(i)) ? this.itemDao.update(i) : this.itemDao.save(i, feed);
+      return (await this.itemDao.getByGuid(getGuid(i))) ? this.itemDao.update(i) : this.itemDao.save(i, feed);
     });
-    return Promise.all(savePromises);
+    return await Promise.all(savePromises);
   }
 
-  private async fetchFeed(feed: RssFeed): Promise<any> {
+  private async fetchRss(feed: RssFeed): Promise<any> {
     const requestParams: AxiosRequestConfig = {
       method: "GET",
       url: feed.url,
@@ -120,21 +128,4 @@ export class Rss {
     }
     return feedResponse.data;
   }
-}
-
-export function rssItemBaseFromFeedParser(item: FP.Item): RssItemBase {
-  return {
-    author: item.author,
-    categories: item.categories,
-    comments: item.comments, // a link to the article's comments section
-    description: item.description,
-    enclosures: item.enclosures,
-    guid: getGuid(item),
-    image: item.image,
-    link: isBlank(item.origlink) ? item.link : item.origlink,
-    published: isNullOrUndefined(item.pubdate) ? item.date : item.pubdate, // when originally published
-    summary: item.summary,
-    title: item.title,
-    updated: isNullOrUndefined(item.date) ? item.pubdate : item.date, // most recent update
-  };
 }
