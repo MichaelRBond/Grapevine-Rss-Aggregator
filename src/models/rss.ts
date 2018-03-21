@@ -4,6 +4,7 @@ import { RssFeedDao } from "../dao/rss-feed";
 import { RssItemDao } from "../dao/rss-item";
 import { FeedParser } from "../utils/feed-parser";
 import { AXIOS_STATUS_CODES, Http } from "../utils/http";
+import { logger } from "../utils/logger";
 import { getGuid } from "../utils/rss";
 import { Nullable } from "./nullable";
 
@@ -93,6 +94,7 @@ export class Rss {
   }
 
   public async fetchFeeds(): Promise<void> {
+    logger.info("Fetching RSS Feeds");
     const feeds = await this.getFeeds();
     const fetchPromises = feeds.map(async (feed) => {
       const rss = await this.fetchRss(feed);
