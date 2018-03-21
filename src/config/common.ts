@@ -11,8 +11,9 @@ export interface Config {
     host: string;
     port: number;
   };
-  mysql: ConnectionConfig;
   logger: LoggerConfig;
+  mysql: ConnectionConfig;
+  schedule: string;
 }
 
 export const common: Config = {
@@ -32,4 +33,5 @@ export const common: Config = {
     port: 3306,
     user: "rss",
   },
+  schedule: "*/15 * * * *", // every 15 minutes
 };
