@@ -10,6 +10,7 @@ import { Rss } from "./models/rss";
 import { DateTime } from "./utils/date-time";
 import { FeedParser } from "./utils/feed-parser";
 import { Http } from "./utils/http";
+import { logger } from "./utils/logger";
 
 const feedParser = new FeedParser();
 const http = new Http();
@@ -25,7 +26,7 @@ const endpointControllers: EndpointController[] = [
 
 // TODO : Refactor
 const rssFetchJob = new CronJob({
-  cronTime: "*/1 * * * * *", // TODO: move into config.
+  cronTime: "*/1 * * * *", // TODO: move into config.
   onTick: async () => {
     return await rssModel.fetchFeeds();
   },
@@ -37,7 +38,7 @@ getHapiServer(endpointControllers).then((server) => {
   server.start();
   return server;
 }).then((server) => {
-  console.log(`Hapi Running at: ${server.info.uri}`); // tslint:disable-line
+  logger.info(`Hapi Running at: ${server.info.uri}`);
 }).catch((err) => {
   throw err;
 });

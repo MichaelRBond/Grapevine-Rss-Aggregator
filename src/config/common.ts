@@ -1,17 +1,29 @@
 import {ConnectionConfig} from "mysql";
 
+interface LoggerConfig {
+  colorize: boolean;
+  json: boolean;
+  level: string;
+}
+
 export interface Config {
   hapi: {
     host: string;
     port: number;
   };
   mysql: ConnectionConfig;
+  logger: LoggerConfig;
 }
 
 export const common: Config = {
   hapi: {
     host: "0.0.0.0",
     port: 3000,
+  },
+  logger: {
+    colorize: true,
+    json: false,
+    level: "debug",
   },
   mysql: {
     database: "node_rss_aggregator",
