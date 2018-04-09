@@ -2,10 +2,13 @@ import { CronJob } from "cron";
 import { Server } from "hapi";
 import { mysqlClientProvider } from "./clients/mysql-client";
 import { config } from "./config";
+import { GroupDao } from "./dao/group";
 import { RssFeedDao } from "./dao/rss-feed";
 import { RssItemDao } from "./dao/rss-item";
 import { FeedsController } from "./endpoints/feed-controller";
+import { GroupsController } from "./endpoints/groups-controller";
 import { EndpointController } from "./models/endpoint-controller";
+import { GroupModel } from "./models/group";
 import { Rss } from "./models/rss";
 import { DateTime } from "./utils/date-time";
 import { FeedParser } from "./utils/feed-parser";
@@ -15,13 +18,20 @@ import { logger } from "./utils/logger";
 const feedParser = new FeedParser();
 const http = new Http();
 const datetime = new DateTime();
+
 const rssFeedDao = new RssFeedDao(mysqlClientProvider, datetime);
 const rssItemDao = new RssItemDao(mysqlClientProvider);
+const groupDao = new GroupDao(mysqlClientProvider);
+
 const rssModel = new Rss(rssFeedDao, rssItemDao, feedParser, http);
-const feed: FeedsController = new FeedsController(rssModel);
+const groupModel = new GroupModel(groupDao);
+
+const feedController: FeedsController = new FeedsController(rssModel);
+const groupsController: GroupsController = new GroupsController(groupModel);
 
 const endpointControllers: EndpointController[] = [
-  feed,
+  feedController,
+  groupsController,
 ];
 
 // TODO : Refactor
