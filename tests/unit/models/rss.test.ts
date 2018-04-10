@@ -81,6 +81,32 @@ describe("Unit: RSS Model", () => {
     verify(itemDao.save).called(3);
     verify(itemDao.update).called(3);
   });
+
+  it("Continues parsing feeds if some throw errors", async () => {
+    feedDao.getFeeds = async () => generateNumOfFeeds(3);
+    feedParser.parse = async () => generateNumOfItems(2);
+
+    let httpCount = 0;
+    http.request = async () => {
+      if (httpCount++ % 2 === 0) {
+        throw new Error();
+      }
+      return {} as AxiosPromise;
+    };
+
+    let count = 0;
+    itemDao.getByGuid = async () => {
+      return count++ % 2 === 0 ? null : {} as RssItem;
+    };
+
+    await rss.fetchFeeds();
+    verify(feedDao.getFeeds).calledOnce();
+    verify(http.request).called(3);
+    verify(feedParser.parse).called(1);
+    verify(itemDao.getByGuid).called(2);
+    verify(itemDao.save).called(1);
+    verify(itemDao.update).called(1);
+  })
 });
 
 function generateNumOfFeeds(numOfFeeds: number): RssFeed[] {

@@ -4,6 +4,7 @@ interface LoggerConfig {
   colorize: boolean;
   json: boolean;
   level: string;
+  silent: boolean;
 }
 
 export interface Config {
@@ -25,6 +26,7 @@ export const common: Config = {
     colorize: true,
     json: false,
     level: "debug",
+    silent: false,
   },
   mysql: {
     database: "node_rss_aggregator",

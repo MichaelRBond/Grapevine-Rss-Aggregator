@@ -1,29 +1,43 @@
 import { Request } from "hapi";
 import { FeedsController } from "../../../src/endpoints/feed-controller";
-import {Rss, RssFeed} from "../../../src/models/rss";
+import { Rss, RssFeed } from "../../../src/models/rss";
+import { thrownErrMsg, transformErrors } from "../../../src/utils/errors";
+import { Mock, mock, verify } from "../../utils/mockfill";
 
 describe("Unit: feed-controller", () => {
 
-  let rss: Rss;
+  let rss: Mock<Rss>;
   let api: FeedsController;
 
   let request: Request;
 
   beforeEach(() => {
-    rss = {} as Rss; // TODO: Replace with Mock fill
+    rss = mock<Rss>();
 
     api = new FeedsController(rss);
 
     request = {
       payload: {
+        id: undefined,
         title: "test",
         url: "http://test.com",
       } as any,
     } as Request;
   });
 
-  it("returns an empty array when there are no feeds");
-  it("returns an array of RssFeeds");
+  it("returns an empty array when there are no feeds", async () => {
+    rss.getFeeds = async () => [];
+    const feeds = await api.getFeeds();
+    expect(feeds.length).toEqual(0);
+    verify(rss.getFeeds).calledOnce();
+  });
+
+  it("returns an array of RssFeeds", async () => {
+    rss.getFeeds = async () => [{} as RssFeed, {} as RssFeed];
+    const feeds = await api.getFeeds();
+    expect(feeds.length).toEqual(2);
+    verify(rss.getFeeds).calledOnce();
+  });
 
   it("saves a feed to the database and returns an RssFeed", async () => {
     rss.saveFeed = async () => ({
@@ -51,7 +65,7 @@ describe("Unit: feed-controller", () => {
       await api.saveFeed(request);
       expect(true).toBeFalsy();
     } catch (err) {
-      expect(err.message).toContain("Should be 500"); // FIXME:
+      expect(err.message).toEqual(thrownErrMsg.feedsSaveError);
     }
 
     // verify(rss.save).calledOnce();
@@ -76,12 +90,19 @@ describe("Unit: feed-controller", () => {
   });
 
   it("throws an error when the requested feed cannot be found", async () => {
+    request = {
+      payload: {
+        id: "1",
+        title: "test",
+        url: "http://test.com",
+      } as any,
+    } as Request;
     rss.updateFeed = async () => null;
     try {
       await api.updateFeed(request);
       expect(true).toBeFalsy();
     } catch (err) {
-      expect(err.message).toContain("Should be 404"); // FIXME:
+      expect(err.message).toContain(transformErrors(thrownErrMsg.feedsNotFound, {id: "1"}));
     }
   });
 

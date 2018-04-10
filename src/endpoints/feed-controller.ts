@@ -1,8 +1,10 @@
+import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
 import { isNullOrUndefined } from "util";
 import { EndpointController } from "../models/endpoint-controller";
 import { Rss, RssFeed, RssFeedApiResponse, RssFeedBase } from "../models/rss";
+import { thrownErrMsg, transformErrors } from "../utils/errors";
 
 const joiRssFeedBasePayload = {
   title: Joi.string().required(),
@@ -38,7 +40,7 @@ export class FeedsController extends EndpointController {
     const feedPayload = request.payload as RssFeedBase;
     const feed = await this.rss.saveFeed(feedPayload);
     if (isNullOrUndefined(feed)) {
-      throw new Error("Should be 500");
+      throw Boom.internal(thrownErrMsg.feedsSaveError);
     }
     return Rss.rssFeedToApiResponse(feed);
   }
@@ -47,7 +49,7 @@ export class FeedsController extends EndpointController {
     const feedPayload = request.payload as RssFeed;
     const feed = await this.rss.updateFeed(feedPayload);
     if (isNullOrUndefined(feed)) {
-      throw new Error("Should be 404");
+      throw Boom.notFound(transformErrors(thrownErrMsg.feedsNotFound, {id: feedPayload.id.toString()}));
     }
     return Rss.rssFeedToApiResponse(feed);
   }

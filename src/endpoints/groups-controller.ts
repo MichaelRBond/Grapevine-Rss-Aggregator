@@ -4,7 +4,7 @@ import * as Joi from "joi";
 import { isNullOrUndefined } from "util";
 import { EndpointController } from "../models/endpoint-controller";
 import { GroupApiResponse, GroupBase, GroupModel } from "../models/group";
-import { thrownErrMsg, transformErrors} from "../utils/errors";
+import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { logger } from "../utils/logger";
 
 const joiGroupResponse = {

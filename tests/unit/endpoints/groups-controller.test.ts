@@ -13,6 +13,11 @@ describe("Unit: groups controller", () => {
     endpoint = new GroupsController(groupsModel);
   });
 
+  it("registers routes", () => {
+    const routes = endpoint.registerRoutes();
+    expect(routes.length).toEqual(5);
+  });
+
   it("creates a new group", async () => {
     const request = {
       payload: {

@@ -97,7 +97,13 @@ export class Rss {
     logger.info("Fetching RSS Feeds");
     const feeds = await this.getFeeds();
     const fetchPromises = feeds.map(async (feed) => {
-      const rss = await this.fetchRss(feed);
+      let rss: any; // TODO : type better
+      try {
+        rss = await this.fetchRss(feed);
+      } catch (err) {
+        logger.error(err.message);
+        return;
+      }
       const items = await this.feedParser.parse(rss);
       return this.saveItems(feed, items);
     });
@@ -113,6 +119,7 @@ export class Rss {
     return await Promise.all(savePromises);
   }
 
+  // TODO : type the return better
   private async fetchRss(feed: RssFeed): Promise<any> {
     const requestParams: AxiosRequestConfig = {
       method: "GET",
