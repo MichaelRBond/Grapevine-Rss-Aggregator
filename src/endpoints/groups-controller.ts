@@ -7,7 +7,7 @@ import { GroupApiResponse, GroupBase, GroupModel } from "../models/group";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { logger } from "../utils/logger";
 
-const joiGroupResponse = {
+export const joiGroupResponse = {
   id: Joi.number().integer().min(1).required(),
   name: Joi.string().required(),
 };
