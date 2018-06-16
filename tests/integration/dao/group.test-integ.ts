@@ -99,7 +99,17 @@ describe("Integration: group dao", () => {
       await groupDao.delete(1);
       expect(true).toBeFalsy();
     } catch (err) {
-      expect(err.message).toEqual(transformErrors(thrownErrMsg.dbDelete, {affectedRows: "0"));
+      expect(err.message).toEqual(transformErrors(thrownErrMsg.dbDelete, {affectedRows: "0"}));
     }
+  });
+
+  describe("addFeedToGroup", () => {
+    it.skip("adds a group to a feed", () => {/**/});
+    it.skip("throws an error if insert fails", () => {/**/});
+  });
+
+  describe("getGroupsForFeed", () => {
+    it.skip("returns the expected number of groups", () => {/**/});
+    it.skip("returns an empty array if feed has no groups", () => {/**/});
   });
 });

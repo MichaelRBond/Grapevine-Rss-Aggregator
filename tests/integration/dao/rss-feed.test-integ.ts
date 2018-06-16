@@ -103,4 +103,8 @@ describe("Integration: rss-feed", () => {
     const result = await dao.update(feedUpdate);
     expect(result).toBeNull();
   });
+
+  describe("getFeedsForGroup", () => {
+    it.skip("returns the expected RSS Feeds", () => {/**/});
+  });
 });

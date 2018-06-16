@@ -2,13 +2,10 @@ import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
 import { EndpointController } from "../models/endpoint-controller";
-import { FeedGroupsApiResponse, GroupFeedsApiResponse, FeedGroupAddPayload, FeedGroupModel } from "../models/feed-group";
-import { GroupModel } from "../models/group";
-import { Rss } from "../models/rss";
+import { FeedGroupAddPayload, FeedGroupModel, GroupsApiResponse } from "../models/feed-group";
+import { Group, GroupModel } from "../models/group";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { joiGroupResponse } from "./groups-controller";
-import { RssFeedDao } from "../dao/rss-feed";
-import { isNullOrUndefined, isNull } from "util";
 
 const joiFeedGroupsResponse = {
   feed: {
@@ -25,42 +22,39 @@ const joiAddGroupToFeedPayload = {
 
 export class GroupFeedController extends EndpointController {
   constructor(
-    private groupModel: GroupModel,
-    private feedDao: RssFeedDao,
     private feedGroupModel: FeedGroupModel,
   ) {
     super();
   }
 
-  public async addGroupToFeed(request: Request): Promise<FeedGroupsApiResponse> {
+  public async addGroupToFeed(request: Request): Promise<GroupsApiResponse> {
     const addPayload = request.payload as FeedGroupAddPayload;
     const feedId = addPayload.feedId;
     const groupId = addPayload.groupId;
 
-    const feed = this.feedDao.getById(feedId);
-    if (isNull(feed)) {
-      throw Boom.notFound(transformErrors(thrownErrMsg.feedsNotFound, {id: feedId.toString()}));
+    let groups: Group[];
+    try {
+      groups = await this.feedGroupModel.addFeedToGroup(feedId, groupId);
+    } catch (err) {
+      this.throwMissingError(err.message, feedId, groupId);
     }
 
-    const group = this.groupModel.get(groupId);
-    if (isNull(group)) {
-      throw Boom.notFound(transformErrors(thrownErrMsg.groupNotFound, {id: groupId.toString()}));
-    }
-
-    await this.feedGroupModel
+    return {
+      groups: groups!.map(GroupModel.groupToApiResponse),
+    };
   }
 
-  public async removeGroupFromFeed(): Promise<FeedGroupsApiResponse> {
+  // public async removeGroupFromFeed(): Promise<FeedGroupsApiResponse> {
 
-  }
+  // }
 
-  public async retrieveFeedGroups(): Promise<FeedGroupsApiResponse> {
+  // public async retrieveFeedGroups(): Promise<FeedGroupsApiResponse> {
 
-  }
+  // }
 
-  public async retrieveGroupFeeds(): Promise<GroupFeedsApiResponse> {
+  // public async retrieveGroupFeeds(): Promise<GroupFeedsApiResponse> {
 
-  }
+  // }
 
   public registerRoutes(): ServerRoute[] {
     return [
@@ -81,5 +75,11 @@ export class GroupFeedController extends EndpointController {
         path: "/api/v1/feed-group/add",
       },
     ];
+  }
+
+  private throwMissingError(msg: string, feedId: number, groupId: number): void {
+    const error = msg.indexOf("Feed") !== -1 ? thrownErrMsg.feedsNotFound : thrownErrMsg.groupNotFound;
+    const missingId = msg.indexOf("Feed") !== -1 ? feedId.toString() : groupId.toString();
+    throw Boom.notFound(transformErrors(error, {id: missingId}));
   }
 }

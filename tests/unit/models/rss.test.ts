@@ -24,6 +24,9 @@ describe("Unit: RSS Model", () => {
     rss = new Rss(feedDao, itemDao, feedParser, http);
   });
 
+  it("gets a single feed by id");
+  it("returns null when a single feed cannot be found by id");
+
   it("gets all feeds", async () => {
     feedDao.getFeeds = async () => generateNumOfFeeds(10);
     const result = await rss.getFeeds();
@@ -106,7 +109,7 @@ describe("Unit: RSS Model", () => {
     verify(itemDao.getByGuid).called(2);
     verify(itemDao.save).called(1);
     verify(itemDao.update).called(1);
-  })
+  });
 });
 
 function generateNumOfFeeds(numOfFeeds: number): RssFeed[] {

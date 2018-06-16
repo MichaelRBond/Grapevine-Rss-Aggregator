@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS `feedGroups`(
     groupId INT(11) UNSIGNED NOT NULL,
     feedId INT(11) UNSIGNED NOT NULL,
     PRIMARY KEY(id),
-    CONSTRAINT contacts_unique UNIQUE (last_name, first_name)
+    CONSTRAINT feed_group_unique UNIQUE (groupId, feedId)
 ) engine=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

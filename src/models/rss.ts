@@ -73,6 +73,10 @@ export class Rss {
     };
   }
 
+  public getFeed(id: number): Promise<Nullable<RssFeed>> {
+    return this.feedDao.getById(id);
+  }
+
   public getFeeds(): Promise<RssFeed[]> {
     return this.feedDao.getFeeds();
   }

@@ -57,7 +57,7 @@ export class RssItemDao {
     const mysql = this.mysqlProvider();
     const result = await mysql.query("SELECT * FROM `items` WHERE `id`=?", [id]);
     if (result.length === 0) {
-      return null; // TODO : Optional
+      return null;
     }
     return this.dbToRssItem(result[0]);
   }
@@ -66,7 +66,7 @@ export class RssItemDao {
     const mysql = this.mysqlProvider();
     const result = await mysql.query("SELECT * FROM `items` WHERE `guid`=?", [guid]);
     if (result.length === 0) {
-      return null; // TODO : optional
+      return null;
     }
     return this.dbToRssItem(result[0]);
   }

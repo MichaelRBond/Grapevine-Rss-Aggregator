@@ -15,7 +15,7 @@ export class RssFeedDao {
     const sql = "SELECT * FROM `feeds` WHERE id=?";
     const result = await mysql.query(sql, [id]);
     if (result.length === 0) {
-      return null; // TODO : Optional
+      return null;
     }
     return this.dbToRssFeed(result[0]);
   }
@@ -38,6 +38,14 @@ export class RssFeedDao {
     const sql = "UPDATE `feeds` SET `title`=?, `url`=?, `lastUpdated`=? WHERE `id`=?";
     const result = await mysql.insertUpdate(sql, [feed.title, feed.url, this.dateTime.dateNoWInSeconds(), feed.id]);
     return result.affectedRows !== 1 ? null : feed.id;
+  }
+
+  public async getFeedsForGroup(groupId: number): Promise<RssFeed[]> {
+    const mysql = this.mysqlProvider();
+    const sql = "SELECT `feeds`.* FROM `feedGroups` LEFT JOIN `feeds` ON `feeds`.`id`=`feedGroups`.`feedId` "
+      + "WHERE `feedGroups`.`feedId`=?";
+    const result = await mysql.query(sql, [groupId]);
+    return result.map(this.dbToRssFeed);
   }
 
   private dbToRssFeed(result: any): RssFeed {
