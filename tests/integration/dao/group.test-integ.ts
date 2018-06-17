@@ -123,7 +123,7 @@ describe("Integration: group dao", () => {
       await groupDao.save({name: "test3"});
 
       const mysql = mysqlClientProvider();
-      mysql.query("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3)");
+      await mysql.insertUpdate("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3)");
 
       const result = await groupDao.getGroupsForFeed(1);
       expect(result.length).toEqual(3);
@@ -131,6 +131,21 @@ describe("Integration: group dao", () => {
       result.forEach((g) => {
         expect(g.name).toEqual(`test${++c}`);
       });
+    });
+  });
+
+  describe("removeFeedFromGroup", () => {
+    it("deletes a feed-group relationship", async () => {
+      const mysql = mysqlClientProvider();
+      await mysql.insertUpdate("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3), (2, 1)");
+
+      let relationships = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(relationships.length).toEqual(4);
+
+      groupDao.removeFeedFromGroup(1, 1);
+
+      relationships = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(relationships.length).toEqual(3);
     });
   });
 });

@@ -57,6 +57,41 @@ describe("Unit: group-feed-controller", () => {
     });
   });
 
+  describe("removeGroupFromFeed", () => {
+    it("throws an error if the feed cannot be found", async () => {
+      model.removeFeedFromGroup = async () => { throw new Error("Feed with id=1 not found"); };
+      try {
+        await controller.removeGroupFromFeed(req);
+        expect(true).toEqual(false);
+      } catch (err) {
+        expect(err.message).toContain("Feed with ID 1 not found");
+      }
+    });
+
+    it("throws an error if the group cannot be found", async () => {
+      model.removeFeedFromGroup = async () => { throw new Error("Group with id=1 not found"); };
+      try {
+        await controller.removeGroupFromFeed(req);
+        expect(true).toEqual(false);
+      } catch (err) {
+        expect(err.message).toContain("Group with ID 1 not found");
+      }
+    });
+
+    it("returns an array of groups after removing a feed from a group", async () => {
+      model.removeFeedFromGroup = async () => [
+        { id: 1, name: "group1"},
+        { id: 2, name: "group2"},
+      ];
+      const result = await controller.removeGroupFromFeed(req);
+      let count = 1;
+      result.groups.forEach((g) => {
+        expect(g).toHaveProperty("id", count);
+        expect(g).toHaveProperty("name", `group${count++}`);
+      });
+    });
+  });
+
   describe("getRoutes", () => {
     it("has routes defined", () => {
       const routes = controller.registerRoutes();

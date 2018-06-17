@@ -44,9 +44,22 @@ export class GroupFeedController extends EndpointController {
     };
   }
 
-  // public async removeGroupFromFeed(): Promise<FeedGroupsApiResponse> {
+  public async removeGroupFromFeed(request: Request): Promise<GroupsApiResponse> {
+    const addPayload = request.payload as FeedGroupAddPayload;
+    const feedId = addPayload.feedId;
+    const groupId = addPayload.groupId;
 
-  // }
+    let groups: Group[];
+    try {
+      groups = await this.feedGroupModel.removeFeedFromGroup(feedId, groupId);
+    } catch (err) {
+      this.throwMissingError(err.message, feedId, groupId);
+    }
+
+    return {
+      groups: groups!.map(GroupModel.groupToApiResponse),
+    };
+  }
 
   // public async retrieveFeedGroups(): Promise<FeedGroupsApiResponse> {
 
@@ -65,14 +78,24 @@ export class GroupFeedController extends EndpointController {
             schema: joiFeedGroupsResponse,
           },
           validate: {
-            params: {
-              feedId: Joi.number().min(1),
-            },
             payload: joiAddGroupToFeedPayload,
           },
         },
         method: "POST",
-        path: "/api/v1/feed-group/add",
+        path: "/api/v1/feed-group",
+      },
+      {
+        config: {
+          handler: this.removeGroupFromFeed,
+          response: {
+            schema: joiFeedGroupsResponse,
+          },
+          validate: {
+            payload: joiAddGroupToFeedPayload,
+          },
+        },
+        method: "DELETE",
+        path: "/api/v1/feed-group",
       },
     ];
   }

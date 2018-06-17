@@ -35,4 +35,15 @@ export class FeedGroupModel {
     return await this.groupDao.getGroupsForFeed(feedId);
   }
 
+  public async removeFeedFromGroup(feedId: number, groupId: number): Promise<Group[]> {
+    const feedNullable = await this.feedModel.getFeed(feedId);
+    orElseThrow(feedNullable, new Error(`Feed with id=${feedId} not found`));
+
+    const groupNullable = await this.groupModel.get(groupId);
+    orElseThrow(groupNullable, new Error(`Group with id=${groupId} not found`));
+
+    await this.groupDao.removeFeedFromGroup(feedId, groupId);
+    return await this.groupDao.getGroupsForFeed(feedId);
+  }
+
 }

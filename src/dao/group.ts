@@ -93,6 +93,13 @@ export class GroupDao {
     return result.map(this.dbToGroup);
   }
 
+  public async removeFeedFromGroup(feedId: number, groupId: number): Promise<void> {
+    const mysql = this.mysqlProvider();
+    const sql = "DELETE FROM `feedGroups` WHERE `feedId`=? AND `groupId`=? LIMIT 1";
+    await mysql.query(sql, [feedId, groupId]);
+    return;
+  }
+
   private dbToGroup(result: DbGroup) {
     return {
       id: result.id,

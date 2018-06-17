@@ -21,26 +21,13 @@ describe("Unit: feed-group", () => {
 
   describe("addFeedToGroup", () => {
     it("throws an error when a feed id cannot be found", async () => {
-      rssModel.getFeed = async () => null;
-      try {
-        await model.addFeedToGroup(1, 1);
-        expect(true).toEqual(false);
-      } catch (err) {
-        expect(err.message).toEqual("Feed with id=1 not found");
-      }
+      await expectFeedIdNotFound();
       verify(groupDao.addFeedToGroup).notCalled();
       verify(groupDao.getGroupsForFeed).notCalled();
     });
 
     it("throws an error when a group id cannot be found", async () => {
-      rssModel.getFeed = async () => ({} as RssFeed);
-      groupModel.get = async () => null;
-      try {
-        await model.addFeedToGroup(1, 1);
-        expect(true).toEqual(false);
-      } catch (err) {
-        expect(err.message).toEqual("Group with id=1 not found");
-      }
+      expectGroupIdNotFound();
       verify(groupDao.addFeedToGroup).notCalled();
       verify(groupDao.getGroupsForFeed).notCalled();
     });
@@ -48,7 +35,11 @@ describe("Unit: feed-group", () => {
     it("adds a feed to a group, and returns correctly", async () => {
       rssModel.getFeed = async () => ({} as RssFeed);
       groupModel.get = async () => ({} as Group);
+      groupDao.getGroupsForFeed = async () => [];
+
       const result = await model.addFeedToGroup(1, 2);
+      expect(result.length).toEqual(0);
+
       verify(groupDao.addFeedToGroup).calledWithArgsLike(([feedId, groupId]) => {
         expect(feedId).toEqual(1);
         expect(groupId).toEqual(2);
@@ -60,4 +51,58 @@ describe("Unit: feed-group", () => {
       });
     });
   });
+
+  describe("removeFeedFromGroup", () => {
+    it("throws an error if the feed does not exist", async () => {
+      await expectFeedIdNotFound();
+      verify(groupDao.removeFeedFromGroup).notCalled();
+      verify(groupDao.getGroupsForFeed).notCalled();
+    });
+
+    it("throws an error if the group doesn't exist", async () => {
+      expectGroupIdNotFound();
+      verify(groupDao.removeFeedFromGroup).notCalled();
+      verify(groupDao.getGroupsForFeed).notCalled();
+    });
+
+    it("removes a feed from a group", async () => {
+      rssModel.getFeed = async () => ({} as RssFeed);
+      groupModel.get = async () => ({} as Group);
+      groupDao.getGroupsForFeed = async () => [];
+
+      const result = await model.removeFeedFromGroup(1, 2);
+      expect(result.length).toEqual(0);
+
+      verify(groupDao.removeFeedFromGroup).calledWithArgsLike(([feedId, groupId]) => {
+        expect(feedId).toEqual(1);
+        expect(groupId).toEqual(2);
+        return true;
+      });
+      verify(groupDao.getGroupsForFeed).calledWithArgsLike(([feedId]) => {
+        expect(feedId).toEqual(1);
+        return true;
+      });
+    });
+  });
+
+  async function expectFeedIdNotFound() {
+    rssModel.getFeed = async () => null;
+    try {
+      await model.addFeedToGroup(1, 1);
+      expect(true).toEqual(false);
+    } catch (err) {
+      expect(err.message).toEqual("Feed with id=1 not found");
+    }
+  }
+
+  async function expectGroupIdNotFound() {
+    rssModel.getFeed = async () => ({} as RssFeed);
+    groupModel.get = async () => null;
+    try {
+      await model.addFeedToGroup(1, 1);
+      expect(true).toEqual(false);
+    } catch (err) {
+      expect(err.message).toEqual("Group with id=1 not found");
+    }
+  }
 });
