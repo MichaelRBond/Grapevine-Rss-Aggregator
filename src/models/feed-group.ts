@@ -25,10 +25,10 @@ export class FeedGroupModel {
   ) { /* */ }
 
   public async addFeedToGroup(feedId: number, groupId: number): Promise<Group[]> {
-    const feedNullable = this.feedModel.getFeed(feedId);
+    const feedNullable = await this.feedModel.getFeed(feedId);
     orElseThrow(feedNullable, new Error(`Feed with id=${feedId} not found`));
 
-    const groupNullable = this.groupModel.get(groupId);
+    const groupNullable = await this.groupModel.get(groupId);
     orElseThrow(groupNullable, new Error(`Group with id=${groupId} not found`));
 
     await this.groupDao.addFeedToGroup(feedId, groupId);

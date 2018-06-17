@@ -24,8 +24,8 @@ describe("Unit: RSS Model", () => {
     rss = new Rss(feedDao, itemDao, feedParser, http);
   });
 
-  it("gets a single feed by id");
-  it("returns null when a single feed cannot be found by id");
+  it.skip("gets a single feed by id", () => { /* */ });
+  it.skip("returns null when a single feed cannot be found by id", () => { /* */ });
 
   it("gets all feeds", async () => {
     feedDao.getFeeds = async () => generateNumOfFeeds(10);

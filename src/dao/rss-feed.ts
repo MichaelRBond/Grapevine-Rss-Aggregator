@@ -43,7 +43,7 @@ export class RssFeedDao {
   public async getFeedsForGroup(groupId: number): Promise<RssFeed[]> {
     const mysql = this.mysqlProvider();
     const sql = "SELECT `feeds`.* FROM `feedGroups` LEFT JOIN `feeds` ON `feeds`.`id`=`feedGroups`.`feedId` "
-      + "WHERE `feedGroups`.`feedId`=?";
+      + "WHERE `feedGroups`.`groupId`=?";
     const result = await mysql.query(sql, [groupId]);
     return result.map(this.dbToRssFeed);
   }

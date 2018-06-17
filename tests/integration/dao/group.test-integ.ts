@@ -104,12 +104,33 @@ describe("Integration: group dao", () => {
   });
 
   describe("addFeedToGroup", () => {
-    it.skip("adds a group to a feed", () => {/**/});
+    it("adds a group to a feed", async () => {
+      const mysql = mysqlClientProvider();
+      await groupDao.addFeedToGroup(1, 2);
+      const result = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(result.length).toEqual(1);
+      expect(result[0]).toHaveProperty("feedId", 1);
+      expect(result[0]).toHaveProperty("groupId", 2);
+    });
+
     it.skip("throws an error if insert fails", () => {/**/});
   });
 
   describe("getGroupsForFeed", () => {
-    it.skip("returns the expected number of groups", () => {/**/});
-    it.skip("returns an empty array if feed has no groups", () => {/**/});
+    it("returns the expected number of groups", async () => {
+      await groupDao.save({name: "test1"});
+      await groupDao.save({name: "test2"});
+      await groupDao.save({name: "test3"});
+
+      const mysql = mysqlClientProvider();
+      mysql.query("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3)");
+
+      const result = await groupDao.getGroupsForFeed(1);
+      expect(result.length).toEqual(3);
+      let c = 0;
+      result.forEach((g) => {
+        expect(g.name).toEqual(`test${++c}`);
+      });
+    });
   });
 });

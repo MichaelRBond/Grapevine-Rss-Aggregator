@@ -56,4 +56,11 @@ describe("Unit: group-feed-controller", () => {
       });
     });
   });
+
+  describe("getRoutes", () => {
+    it("has routes defined", () => {
+      const routes = controller.registerRoutes();
+      expect(routes.length).toBeGreaterThan(0);
+    });
+  });
 });

@@ -77,7 +77,7 @@ export class GroupDao {
 
   public async addFeedToGroup(feedId: number, groupId: number): Promise<void> {
     const mysql = this.mysqlProvider();
-    const sql = "INSERT INTO `feedGroups` (`groupId`, `feedId`) VALUES(?, ?)";
+    const sql = "INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(?, ?)";
     const result = await mysql.insertUpdate(sql, [feedId, groupId]);
     if (isNullOrUndefined(result.insertId)) {
       throw new Error(`Error adding feed=${feedId} to group=${groupId}`);
