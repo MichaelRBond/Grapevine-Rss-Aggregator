@@ -92,6 +92,16 @@ describe("Unit: group-feed-controller", () => {
     });
   });
 
+  describe("retrieceFeedGroups", () => {
+    it("throws an error if the feed doesn't exist", async () => {
+      /* */
+    });
+
+    it("returns groups for a feed", async () => {
+      /* */
+    });
+  });
+
   describe("getRoutes", () => {
     it("has routes defined", () => {
       const routes = controller.registerRoutes();

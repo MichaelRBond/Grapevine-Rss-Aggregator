@@ -25,6 +25,9 @@ export class GroupFeedController extends EndpointController {
     private feedGroupModel: FeedGroupModel,
   ) {
     super();
+    this.addGroupToFeed = this.addGroupToFeed.bind(this);
+    this.removeGroupFromFeed = this.removeGroupFromFeed.bind(this);
+    this.retrieveFeedGroups = this.retrieveFeedGroups.bind(this);
   }
 
   public async addGroupToFeed(request: Request): Promise<GroupsApiResponse> {
@@ -61,9 +64,20 @@ export class GroupFeedController extends EndpointController {
     };
   }
 
-  // public async retrieveFeedGroups(): Promise<FeedGroupsApiResponse> {
+  public async retrieveFeedGroups(request: Request): Promise<GroupsApiResponse> {
+    const feedId = parseInt(request.params.id, 10);
 
-  // }
+    let groups: Group[];
+    try {
+      groups = await this.feedGroupModel.getGroupsForFeed(feedId);
+    } catch (err) {
+      this.throwMissingError(err.message, feedId, 0);
+    }
+
+    return {
+      groups: groups!.map(GroupModel.groupToApiResponse),
+    };
+  }
 
   // public async retrieveGroupFeeds(): Promise<GroupFeedsApiResponse> {
 
@@ -96,6 +110,21 @@ export class GroupFeedController extends EndpointController {
         },
         method: "DELETE",
         path: "/api/v1/feed-group",
+      },
+      {
+        config: {
+          handler: this.retrieveFeedGroups,
+          response: {
+            schema: joiFeedGroupsResponse,
+          },
+          validate: {
+            params: {
+              id: Joi.number().min(1),
+            },
+          },
+        },
+        method: "GET",
+        path: "/api/v1/feed/{id}/groups",
       },
     ];
   }

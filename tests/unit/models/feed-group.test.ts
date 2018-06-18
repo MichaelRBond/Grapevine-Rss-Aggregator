@@ -85,6 +85,31 @@ describe("Unit: feed-group", () => {
     });
   });
 
+  describe("getGroupsForFeed", () => {
+    it("throws an error if the feed doesn't exist", async () => {
+      rssModel.getFeed = async () => null;
+      try {
+        await model.getGroupsForFeed(1);
+        expect(true).toEqual(false);
+      } catch (err) {
+        expect(err.message).toEqual(`Feed with id=1 not found`);
+      }
+
+      verify(groupDao.getGroupsForFeed).notCalled();
+    });
+
+    it("retrieves groups that a feed belongs too", async () => {
+      rssModel.getFeed = async () => ({} as RssFeed);
+      groupDao.getGroupsForFeed = async () => [];
+      const result = await model.getGroupsForFeed(1);
+      expect(result.length).toEqual(0);
+      verify(groupDao.getGroupsForFeed).calledWithArgsLike(([feedId]) => {
+        expect(feedId).toEqual(1);
+        return true;
+      });
+    });
+  });
+
   async function expectFeedIdNotFound() {
     rssModel.getFeed = async () => null;
     try {

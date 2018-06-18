@@ -46,4 +46,10 @@ export class FeedGroupModel {
     return await this.groupDao.getGroupsForFeed(feedId);
   }
 
+  public async getGroupsForFeed(feedId: number): Promise<Group[]> {
+    const feedNullable = await this.feedModel.getFeed(feedId);
+    orElseThrow(feedNullable, new Error(`Feed with id=${feedId} not found`));
+    return await this.groupDao.getGroupsForFeed(feedId);
+  }
+
 }
