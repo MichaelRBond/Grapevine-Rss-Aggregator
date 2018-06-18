@@ -90,7 +90,7 @@ describe("Unit: feed-group", () => {
       rssModel.getFeed = async () => null;
       try {
         await model.getGroupsForFeed(1);
-        expect(true).toEqual(false);
+        fail();
       } catch (err) {
         expect(err.message).toEqual(`Feed with id=1 not found`);
       }
@@ -114,7 +114,7 @@ describe("Unit: feed-group", () => {
     rssModel.getFeed = async () => null;
     try {
       await model.addFeedToGroup(1, 1);
-      expect(true).toEqual(false);
+      fail();
     } catch (err) {
       expect(err.message).toEqual("Feed with id=1 not found");
     }
@@ -125,7 +125,7 @@ describe("Unit: feed-group", () => {
     groupModel.get = async () => null;
     try {
       await model.addFeedToGroup(1, 1);
-      expect(true).toEqual(false);
+      fail();
     } catch (err) {
       expect(err.message).toEqual("Group with id=1 not found");
     }

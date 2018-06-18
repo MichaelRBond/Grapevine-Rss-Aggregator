@@ -1,7 +1,7 @@
 import { Request } from "hapi";
 import { GroupFeedController } from "../../../src/endpoints/group-feed-controller";
 import { FeedGroupModel } from "../../../src/models/feed-group";
-import { Mock, mock } from "../../utils/mockfill";
+import { Mock, mock, verify } from "../../utils/mockfill";
 
 describe("Unit: group-feed-controller", () => {
 
@@ -17,7 +17,7 @@ describe("Unit: group-feed-controller", () => {
     req = {
       payload: {
         feedId: 1,
-        groupId: 1,
+        groupId: 2,
       },
     } as Request;
   });
@@ -27,7 +27,7 @@ describe("Unit: group-feed-controller", () => {
       model.addFeedToGroup = async () => { throw new Error("Feed with id=1 not found"); };
       try {
         await controller.addGroupToFeed(req);
-        expect(true).toEqual(false);
+        fail();
       } catch (err) {
         expect(err.message).toContain("Feed with ID 1 not found");
       }
@@ -37,9 +37,9 @@ describe("Unit: group-feed-controller", () => {
       model.addFeedToGroup = async () => { throw new Error("Group with id=1 not found"); };
       try {
         await controller.addGroupToFeed(req);
-        expect(true).toEqual(false);
+        fail();
       } catch (err) {
-        expect(err.message).toContain("Group with ID 1 not found");
+        expect(err.message).toContain("Group with ID 2 not found");
       }
     });
 
@@ -62,7 +62,7 @@ describe("Unit: group-feed-controller", () => {
       model.removeFeedFromGroup = async () => { throw new Error("Feed with id=1 not found"); };
       try {
         await controller.removeGroupFromFeed(req);
-        expect(true).toEqual(false);
+        fail();
       } catch (err) {
         expect(err.message).toContain("Feed with ID 1 not found");
       }
@@ -72,9 +72,9 @@ describe("Unit: group-feed-controller", () => {
       model.removeFeedFromGroup = async () => { throw new Error("Group with id=1 not found"); };
       try {
         await controller.removeGroupFromFeed(req);
-        expect(true).toEqual(false);
+        fail();
       } catch (err) {
-        expect(err.message).toContain("Group with ID 1 not found");
+        expect(err.message).toContain("Group with ID 2 not found");
       }
     });
 
@@ -89,16 +89,53 @@ describe("Unit: group-feed-controller", () => {
         expect(g).toHaveProperty("id", count);
         expect(g).toHaveProperty("name", `group${count++}`);
       });
+
+      verify(model.removeFeedFromGroup).calledWithArgsLike(([feedId, groupId]) => {
+        expect(feedId).toEqual(1);
+        expect(groupId).toEqual(2);
+        return true;
+      });
     });
   });
 
-  describe("retrieceFeedGroups", () => {
+  describe("retrieveFeedGroups", () => {
+
+    beforeEach(() => {
+      req = {
+        params: {
+          id: 1,
+        } as any,
+      } as Request;
+    });
+
     it("throws an error if the feed doesn't exist", async () => {
-      /* */
+      model.getGroupsForFeed = async () => { throw new Error("Feed"); };
+      try {
+        await controller.retrieveFeedGroups(req);
+        fail();
+      } catch (err) {
+        expect(err.message).toEqual("Feed with ID 1 not found");
+      }
     });
 
     it("returns groups for a feed", async () => {
-      /* */
+      model.getGroupsForFeed = async () => [
+        {id: 1, name: "group1"},
+        {id: 2, name: "group2"},
+      ];
+      const result = await controller.retrieveFeedGroups(req);
+      expect(result.groups.length).toEqual(2);
+
+      let count = 1;
+      result.groups.forEach((g) => {
+        expect(g).toHaveProperty("id", count);
+        expect(g).toHaveProperty("name", `group${count++}`);
+      });
+
+      verify(model.getGroupsForFeed).calledWithArgsLike(([id]) => {
+        expect(id).toEqual(1);
+        return true;
+      });
     });
   });
 
