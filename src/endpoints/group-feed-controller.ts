@@ -2,8 +2,9 @@ import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
 import { EndpointController } from "../models/endpoint-controller";
-import { FeedGroupAddPayload, FeedGroupModel, GroupsApiResponse } from "../models/feed-group";
+import { FeedGroupAddPayload, FeedGroupModel, FeedsApiResponse, GroupsApiResponse } from "../models/feed-group";
 import { Group, GroupModel } from "../models/group";
+import { Rss, RssFeed } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { joiGroupResponse } from "./groups-controller";
 
@@ -79,9 +80,20 @@ export class GroupFeedController extends EndpointController {
     };
   }
 
-  // public async retrieveGroupFeeds(): Promise<GroupFeedsApiResponse> {
+  public async retrieveGroupFeeds(request: Request): Promise<FeedsApiResponse> {
+    const groupId = parseInt(request.params.id, 10);
 
-  // }
+    let feeds: RssFeed[];
+    try {
+      feeds = await this.feedGroupModel.getFeedsForGroup(groupId);
+    } catch (err) {
+      this.throwMissingError(err.message, 0, groupId);
+    }
+
+    return {
+      feeds: feeds!.map(Rss.rssFeedToApiResponse),
+    };
+  }
 
   public registerRoutes(): ServerRoute[] {
     return [
@@ -125,6 +137,21 @@ export class GroupFeedController extends EndpointController {
         },
         method: "GET",
         path: "/api/v1/feed/{id}/groups",
+      },
+      {
+        config: {
+          handler: this.retrieveGroupFeeds,
+          response: {
+            schema: joiFeedGroupsResponse,
+          },
+          validate: {
+            params: {
+              id: Joi.number().min(1),
+            },
+          },
+        },
+        method: "GET",
+        path: "/api/v1/group/{id}/feeds",
       },
     ];
   }

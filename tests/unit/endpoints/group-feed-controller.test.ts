@@ -139,6 +139,26 @@ describe("Unit: group-feed-controller", () => {
     });
   });
 
+  describe("retrieveGroupFeeds()", () => {
+    beforeEach(() => {
+      req = {
+        params: {
+          id: 1,
+        } as any,
+      } as Request;
+    });
+
+    it("throws an error if the group doesn't exist", async () => {
+      model.getFeedsForGroup = async () => { throw new Error("Group"); };
+      try {
+        await controller.retrieveGroupFeeds(req);
+        fail();
+      } catch (err) {
+        expect(err.message).toEqual("Group with ID 1 not found");
+      }
+    });
+  });
+
   describe("getRoutes", () => {
     it("has routes defined", () => {
       const routes = controller.registerRoutes();

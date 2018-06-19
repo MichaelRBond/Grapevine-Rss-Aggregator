@@ -1,4 +1,5 @@
 import { GroupDao } from "../../../src/dao/group";
+import { RssFeedDao } from "../../../src/dao/rss-feed";
 import { RssFeed } from "../../../src/model/rss";
 import { FeedGroupModel } from "../../../src/models/feed-group";
 import { Group, GroupModel } from "../../../src/models/group";
@@ -6,17 +7,19 @@ import { Rss } from "../../../src/models/rss";
 import { Mock, mock, verify } from "../../utils/mockfill";
 
 describe("Unit: feed-group", () => {
+  let rssDao: Mock<RssFeedDao>;
   let rssModel: Mock<Rss>;
   let groupModel: Mock<GroupModel>;
   let groupDao: Mock<GroupDao>;
   let model: FeedGroupModel;
 
   beforeEach(() => {
+    rssDao = mock<RssFeedDao>();
     rssModel = mock<Rss>();
     groupModel = mock<GroupModel>();
     groupDao = mock<GroupDao>();
 
-    model = new FeedGroupModel(rssModel, groupModel, groupDao);
+    model = new FeedGroupModel(rssDao, rssModel, groupModel, groupDao);
   });
 
   describe("addFeedToGroup", () => {

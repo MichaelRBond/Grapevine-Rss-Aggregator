@@ -1,11 +1,16 @@
 import { GroupDao } from "../dao/group";
+import { RssFeedDao } from "../dao/rss-feed";
 import { Group, GroupApiResponse, GroupModel } from "./group";
 import { orElseThrow } from "./nullable";
-import { Rss, RssFeedApiResponse } from "./rss";
+import { Rss, RssFeed, RssFeedApiResponse } from "./rss";
 
 export interface FeedGroupAddPayload {
   feedId: number;
   groupId: number;
+}
+
+export interface FeedsApiResponse {
+  feeds: RssFeedApiResponse[];
 }
 
 export interface GroupsApiResponse {
@@ -19,6 +24,7 @@ export interface GroupFeedsApiResponse {
 
 export class FeedGroupModel {
   constructor(
+    private feedDao: RssFeedDao,
     private feedModel: Rss,
     private groupModel: GroupModel,
     private groupDao: GroupDao,
@@ -50,6 +56,12 @@ export class FeedGroupModel {
     const feedNullable = await this.feedModel.getFeed(feedId);
     orElseThrow(feedNullable, new Error(`Feed with id=${feedId} not found`));
     return await this.groupDao.getGroupsForFeed(feedId);
+  }
+
+  public async getFeedsForGroup(groupId: number): Promise<RssFeed[]> {
+    const groupNullable = await this.groupModel.get(groupId);
+    orElseThrow(groupNullable, new Error(`Group with id=${groupId} not found`));
+    return await this.feedDao.getFeedsForGroup(groupId);
   }
 
 }

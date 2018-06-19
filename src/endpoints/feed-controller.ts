@@ -3,6 +3,7 @@ import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
 import { isNullOrUndefined } from "util";
 import { EndpointController } from "../models/endpoint-controller";
+import { orElseThrow } from "../models/nullable";
 import { Rss, RssFeed, RssFeedApiResponse, RssFeedBase } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 
@@ -47,10 +48,10 @@ export class FeedsController extends EndpointController {
 
   public async updateFeed(request: Request): Promise<RssFeedApiResponse> {
     const feedPayload = request.payload as RssFeed;
-    const feed = await this.rss.updateFeed(feedPayload);
-    if (isNullOrUndefined(feed)) {
-      throw Boom.notFound(transformErrors(thrownErrMsg.feedsNotFound, {id: feedPayload.id.toString()}));
-    }
+    const feedNullable = await this.rss.updateFeed(feedPayload);
+    const feed = orElseThrow(feedNullable,
+      Boom.notFound(transformErrors(thrownErrMsg.feedsNotFound, {id: feedPayload.id.toString()})));
+
     return Rss.rssFeedToApiResponse(feed);
   }
 
