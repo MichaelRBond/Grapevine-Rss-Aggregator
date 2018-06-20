@@ -157,6 +157,16 @@ describe("Unit: group-feed-controller", () => {
         expect(err.message).toEqual("Group with ID 1 not found");
       }
     });
+
+    it("returns an array of feeds that belong to a group", async () => {
+      model.getFeedsForGroup = async () => [];
+      const result = await controller.retrieveGroupFeeds(req);
+      expect(result.feeds.length).toEqual(0);
+      verify(model.getFeedsForGroup).calledWithArgsLike(([id]) => {
+        expect(id).toEqual(1);
+        return true;
+      });
+    });
   });
 
   describe("getRoutes", () => {

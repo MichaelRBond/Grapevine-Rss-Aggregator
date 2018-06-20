@@ -112,8 +112,6 @@ describe("Integration: group dao", () => {
       expect(result[0]).toHaveProperty("feedId", 1);
       expect(result[0]).toHaveProperty("groupId", 2);
     });
-
-    it.skip("throws an error if insert fails", () => {/**/});
   });
 
   describe("getGroupsForFeed", () => {

@@ -1,7 +1,6 @@
 import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
-import { isNullOrUndefined } from "util";
 import { EndpointController } from "../models/endpoint-controller";
 import { orElseThrow } from "../models/nullable";
 import { Rss, RssFeed, RssFeedApiResponse, RssFeedBase } from "../models/rss";
@@ -39,10 +38,8 @@ export class FeedsController extends EndpointController {
 
   public async saveFeed(request: Request): Promise<RssFeedApiResponse> {
     const feedPayload = request.payload as RssFeedBase;
-    const feed = await this.rss.saveFeed(feedPayload);
-    if (isNullOrUndefined(feed)) {
-      throw Boom.internal(thrownErrMsg.feedsSaveError);
-    }
+    const feedNullable = await this.rss.saveFeed(feedPayload);
+    const feed = orElseThrow(feedNullable, Boom.internal(thrownErrMsg.feedsSaveError));
     return Rss.rssFeedToApiResponse(feed);
   }
 

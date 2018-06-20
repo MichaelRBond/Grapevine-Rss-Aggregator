@@ -116,7 +116,6 @@ export class Rss {
   }
 
   private async saveItems(feed: RssFeed, items: RssItemBase[]): Promise<Array<Nullable<RssItem>>> {
-    // console.log(feed);
     const savePromises = items.map(async (i) => {
       return (await this.itemDao.getByGuid(getGuid(i))) ? this.itemDao.update(i) : this.itemDao.save(i, feed);
     });
@@ -137,7 +136,7 @@ export class Rss {
       throw new Error(`Error fetching feed: ${feed.title}`);
     }
     if (feedResponse.status !== 200) {
-      return null; // TODO : switch to optional
+      return null;
     }
     return feedResponse.data;
   }

@@ -1,9 +1,9 @@
 import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
-import { isNullOrUndefined } from "util";
 import { EndpointController } from "../models/endpoint-controller";
 import { GroupApiResponse, GroupBase, GroupModel } from "../models/group";
+import { orElseThrow } from "../models/nullable";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { logger } from "../utils/logger";
 
@@ -38,10 +38,9 @@ export class GroupsController extends EndpointController {
     const groupPayload = request.payload as GroupBase;
     const groupId = parseInt(request.params.id, 10);
     logger.info(`Updating group id=${groupId}`, groupPayload);
-    const group = await this.groupModel.update(groupId, groupPayload);
-    if (isNullOrUndefined(group)) {
-      throw Boom.notFound(transformErrors(thrownErrMsg.groupNotFound, {id: groupId.toString()}));
-    }
+    const groupNullable = await this.groupModel.update(groupId, groupPayload);
+    const group = orElseThrow(groupNullable,
+      Boom.notFound(transformErrors(thrownErrMsg.groupNotFound, {id: groupId.toString()})));
     return GroupModel.groupToApiResponse(group);
   }
 
@@ -52,19 +51,17 @@ export class GroupsController extends EndpointController {
 
   public async get(request: Request): Promise<GroupApiResponse> {
     const groupId = parseInt(request.params.id, 10);
-    const group = await this.groupModel.get(groupId);
-    if (isNullOrUndefined(group)) {
-      throw Boom.notFound(transformErrors(thrownErrMsg.groupNotFound, {id: groupId.toString()}));
-    }
+    const groupNullable = await this.groupModel.get(groupId);
+    const group = orElseThrow(groupNullable,
+      Boom.notFound(transformErrors(thrownErrMsg.groupNotFound, {id: groupId.toString()})));
     return GroupModel.groupToApiResponse(group);
   }
 
   public async delete(request: Request): Promise<string> {
     const groupId = parseInt(request.params.id, 10);
-    const group = await this.groupModel.delete(groupId);
-    if (isNullOrUndefined(group)) {
-      throw Boom.notFound(transformErrors(thrownErrMsg.groupNotFound, {id: groupId.toString()}));
-    }
+    const groupNullable = await this.groupModel.delete(groupId);
+    const group = orElseThrow(groupNullable,
+      Boom.notFound(transformErrors(thrownErrMsg.groupNotFound, {id: groupId.toString()})));
     return `Successfully deleted group ${group.name}`;
   }
 

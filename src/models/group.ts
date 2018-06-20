@@ -1,7 +1,7 @@
 import { isNullOrUndefined } from "util";
 import { GroupDao } from "../dao/group";
 import { thrownErrMsg } from "../utils/errors";
-import { Nullable } from "./nullable";
+import { Nullable, orElseThrow } from "./nullable";
 
 export interface GroupApiResponse {
   id: number;
@@ -27,22 +27,16 @@ export class GroupModel {
   }
 
   public async save(groupBase: GroupBase): Promise<Group> {
-    const group = await this.groupDao.save(groupBase);
-    if (isNullOrUndefined(group)) {
-      throw new Error(thrownErrMsg.groupModelAdd);
-    }
-    return group;
+    const groupNullable = await this.groupDao.save(groupBase);
+    return orElseThrow(groupNullable, new Error(thrownErrMsg.groupModelAdd));
   }
 
   public async update(id: number, groupBase: GroupBase): Promise<Nullable<Group>> {
     if (isNullOrUndefined(await this.groupDao.getById(id))) {
       return null;
     }
-    const group = await this.groupDao.update(id, groupBase);
-    if (isNullOrUndefined(group)) {
-      throw new Error(thrownErrMsg.groupModelUpdate);
-    }
-    return group;
+    const groupNullable = await this.groupDao.update(id, groupBase);
+    return orElseThrow(groupNullable, new Error(thrownErrMsg.groupModelUpdate));
   }
 
   public async get(id: number): Promise<Nullable<Group>> {
