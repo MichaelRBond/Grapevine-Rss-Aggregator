@@ -99,7 +99,54 @@ describe("Integration: group dao", () => {
       await groupDao.delete(1);
       expect(true).toBeFalsy();
     } catch (err) {
-      expect(err.message).toEqual(transformErrors(thrownErrMsg.dbDelete, {affectedRows: "0"));
+      expect(err.message).toEqual(transformErrors(thrownErrMsg.dbDelete, {affectedRows: "0"}));
     }
+  });
+
+  describe("addFeedToGroup", () => {
+    it("adds a group to a feed", async () => {
+      const mysql = mysqlClientProvider();
+      await groupDao.addFeedToGroup(1, 2);
+      const result = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(result.length).toEqual(1);
+      expect(result[0]).toHaveProperty("feedId", 1);
+      expect(result[0]).toHaveProperty("groupId", 2);
+    });
+
+    it.skip("throws an error if insert fails", () => {/**/});
+  });
+
+  describe("getGroupsForFeed", () => {
+    it("returns the expected number of groups", async () => {
+      await groupDao.save({name: "test1"});
+      await groupDao.save({name: "test2"});
+      await groupDao.save({name: "test3"});
+
+      const mysql = mysqlClientProvider();
+      await mysql.insertUpdate("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3)");
+
+      const result = await groupDao.getGroupsForFeed(1);
+      expect(result.length).toEqual(3);
+      let c = 0;
+      result.forEach((g) => {
+        expect(g).toHaveProperty("id");
+        expect(g).toHaveProperty("name", `test${++c}`);
+      });
+    });
+  });
+
+  describe("removeFeedFromGroup", () => {
+    it("deletes a feed-group relationship", async () => {
+      const mysql = mysqlClientProvider();
+      await mysql.insertUpdate("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3), (2, 1)");
+
+      let relationships = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(relationships.length).toEqual(4);
+
+      groupDao.removeFeedFromGroup(1, 1);
+
+      relationships = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(relationships.length).toEqual(3);
+    });
   });
 });

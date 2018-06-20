@@ -62,7 +62,7 @@ export class GroupDao {
     const mysql = this.mysqlProvider();
     const sql = "SELECT * FROM `groups`";
     const result = await mysql.query(sql);
-    return result.map((r: DbGroup) => this.dbToGroup(r));
+    return result.map(this.dbToGroup);
   }
 
   public async delete(id: number): Promise<void> {
@@ -72,6 +72,31 @@ export class GroupDao {
     if (result.affectedRows !== 1) {
       throw new Error(transformErrors(thrownErrMsg.dbDelete, {affectedRows: result.affectedRows.toString()}));
     }
+    return;
+  }
+
+  public async addFeedToGroup(feedId: number, groupId: number): Promise<void> {
+    const mysql = this.mysqlProvider();
+    const sql = "INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(?, ?)";
+    const result = await mysql.insertUpdate(sql, [feedId, groupId]);
+    if (isNullOrUndefined(result.insertId)) {
+      throw new Error(`Error adding feed=${feedId} to group=${groupId}`);
+    }
+    return;
+  }
+
+  public async getGroupsForFeed(feedId: number): Promise<Group[]> {
+    const mysql = this.mysqlProvider();
+    const sql = "SELECT `groupId` as `id`, `groups`.`name` FROM `feedGroups` LEFT JOIN `groups` ON `groups`.`id`="
+      + "`feedGroups`.`groupId` WHERE `feedGroups`.`feedId`=?";
+    const result = await mysql.query(sql, [feedId]);
+    return result.map(this.dbToGroup);
+  }
+
+  public async removeFeedFromGroup(feedId: number, groupId: number): Promise<void> {
+    const mysql = this.mysqlProvider();
+    const sql = "DELETE FROM `feedGroups` WHERE `feedId`=? AND `groupId`=? LIMIT 1";
+    await mysql.query(sql, [feedId, groupId]);
     return;
   }
 
