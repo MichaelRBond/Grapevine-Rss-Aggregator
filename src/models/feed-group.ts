@@ -5,8 +5,8 @@ import { orElseThrow } from "./nullable";
 import { Rss, RssFeed, RssFeedApiResponse } from "./rss";
 
 export interface FeedGroupAddPayload {
-  feedId: number;
-  groupId: number;
+  feed_id: number;
+  group_id: number;
 }
 
 export interface FeedsApiResponse {

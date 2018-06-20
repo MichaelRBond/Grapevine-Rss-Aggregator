@@ -6,8 +6,10 @@ import { GroupDao } from "./dao/group";
 import { RssFeedDao } from "./dao/rss-feed";
 import { RssItemDao } from "./dao/rss-item";
 import { FeedsController } from "./endpoints/feed-controller";
+import { GroupFeedController } from "./endpoints/group-feed-controller";
 import { GroupsController } from "./endpoints/groups-controller";
 import { EndpointController } from "./models/endpoint-controller";
+import { FeedGroupModel } from "./models/feed-group";
 import { GroupModel } from "./models/group";
 import { Rss } from "./models/rss";
 import { DateTime } from "./utils/date-time";
@@ -25,12 +27,15 @@ const groupDao = new GroupDao(mysqlClientProvider);
 
 const rssModel = new Rss(rssFeedDao, rssItemDao, feedParser, http);
 const groupModel = new GroupModel(groupDao);
+const feedGroupModel = new FeedGroupModel(rssFeedDao, rssModel, groupModel, groupDao);
 
 const feedController: FeedsController = new FeedsController(rssModel);
+const groupFeedController: GroupFeedController = new GroupFeedController(feedGroupModel);
 const groupsController: GroupsController = new GroupsController(groupModel);
 
 const endpointControllers: EndpointController[] = [
   feedController,
+  groupFeedController,
   groupsController,
 ];
 

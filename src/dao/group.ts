@@ -87,7 +87,7 @@ export class GroupDao {
 
   public async getGroupsForFeed(feedId: number): Promise<Group[]> {
     const mysql = this.mysqlProvider();
-    const sql = "SELECT `groupId`, `groups`.`name` FROM `feedGroups` LEFT JOIN `groups` ON `groups`.`id`="
+    const sql = "SELECT `groupId` as `id`, `groups`.`name` FROM `feedGroups` LEFT JOIN `groups` ON `groups`.`id`="
       + "`feedGroups`.`groupId` WHERE `feedGroups`.`feedId`=?";
     const result = await mysql.query(sql, [feedId]);
     return result.map(this.dbToGroup);

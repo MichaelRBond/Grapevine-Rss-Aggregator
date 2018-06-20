@@ -16,8 +16,8 @@ describe("Unit: group-feed-controller", () => {
 
     req = {
       payload: {
-        feedId: 1,
-        groupId: 2,
+        feed_id: 1,
+        group_id: 2,
       },
     } as Request;
   });

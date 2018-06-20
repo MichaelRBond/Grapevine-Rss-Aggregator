@@ -17,7 +17,7 @@ const joiRssFeedPayload = {
 id: Joi.number().integer().min(1).required(),
 };
 
-const joiRssFeedApiResponse = {
+export const joiRssFeedApiResponse = {
   ...joiRssFeedPayload,
   added_on: Joi.number().required(),
   last_updated: Joi.number().required(),

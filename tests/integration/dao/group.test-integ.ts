@@ -129,7 +129,8 @@ describe("Integration: group dao", () => {
       expect(result.length).toEqual(3);
       let c = 0;
       result.forEach((g) => {
-        expect(g.name).toEqual(`test${++c}`);
+        expect(g).toHaveProperty("id");
+        expect(g).toHaveProperty("name", `test${++c}`);
       });
     });
   });

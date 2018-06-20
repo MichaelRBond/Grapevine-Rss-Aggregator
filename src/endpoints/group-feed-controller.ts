@@ -6,14 +6,15 @@ import { FeedGroupAddPayload, FeedGroupModel, FeedsApiResponse, GroupsApiRespons
 import { Group, GroupModel } from "../models/group";
 import { Rss, RssFeed } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
+import { joiRssFeedApiResponse } from "./feed-controller";
 import { joiGroupResponse } from "./groups-controller";
 
 const joiFeedGroupsResponse = {
-  feed: {
-    id: Joi.number().integer().min(1).required(),
-    title: Joi.string().required(),
-  },
   groups: Joi.array().items(joiGroupResponse),
+};
+
+const joiFeedsResponse = {
+  feeds: Joi.array().items(joiRssFeedApiResponse),
 };
 
 const joiAddGroupToFeedPayload = {
@@ -29,12 +30,13 @@ export class GroupFeedController extends EndpointController {
     this.addGroupToFeed = this.addGroupToFeed.bind(this);
     this.removeGroupFromFeed = this.removeGroupFromFeed.bind(this);
     this.retrieveFeedGroups = this.retrieveFeedGroups.bind(this);
+    this.retrieveGroupFeeds = this.retrieveGroupFeeds.bind(this);
   }
 
   public async addGroupToFeed(request: Request): Promise<GroupsApiResponse> {
     const addPayload = request.payload as FeedGroupAddPayload;
-    const feedId = addPayload.feedId;
-    const groupId = addPayload.groupId;
+    const feedId = addPayload.feed_id;
+    const groupId = addPayload.group_id;
 
     let groups: Group[];
     try {
@@ -50,8 +52,8 @@ export class GroupFeedController extends EndpointController {
 
   public async removeGroupFromFeed(request: Request): Promise<GroupsApiResponse> {
     const addPayload = request.payload as FeedGroupAddPayload;
-    const feedId = addPayload.feedId;
-    const groupId = addPayload.groupId;
+    const feedId = addPayload.feed_id;
+    const groupId = addPayload.group_id;
 
     let groups: Group[];
     try {
@@ -142,7 +144,7 @@ export class GroupFeedController extends EndpointController {
         config: {
           handler: this.retrieveGroupFeeds,
           response: {
-            schema: joiFeedGroupsResponse,
+            schema: joiFeedsResponse,
           },
           validate: {
             params: {
