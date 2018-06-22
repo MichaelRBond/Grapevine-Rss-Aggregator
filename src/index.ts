@@ -12,6 +12,7 @@ import { EndpointController } from "./models/endpoint-controller";
 import { FeedGroupModel } from "./models/feed-group";
 import { GroupModel } from "./models/group";
 import { Rss } from "./models/rss";
+import { validate } from "./utils/authentication";
 import { DateTime } from "./utils/date-time";
 import { FeedParser } from "./utils/feed-parser";
 import { Http } from "./utils/http";
@@ -63,6 +64,11 @@ async function getHapiServer(controllers: EndpointController[]): Promise<Server>
     host: config.hapi.host,
     port: config.hapi.port,
   });
+
+  await server.register(require("hapi-auth-basic"));
+
+  server.auth.strategy("basic", "basic", { validate });
+  server.auth.default("basic");
 
   controllers.forEach((c) => {
     server.route(c.registerRoutes());
