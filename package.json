@@ -4,7 +4,7 @@
   "description": "RSS Aggregator",
   "main": "index.js",
   "author": "Michael Bond <MichaelRBond@users.noreply.github.com>",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "tsc",
     "dbm": "ts-node src/scripts/db-migrate.ts",
