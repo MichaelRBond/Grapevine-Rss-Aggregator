@@ -3,7 +3,6 @@ node_js: lts/carbon
 sudo: required
 services:
   - docker
-  - mysql
 
 env:
   global:
@@ -21,6 +20,7 @@ before_install:
   - sudo rm -f ${DOCKER_COMPOSE_PATH}
   - sudo curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o ${DOCKER_COMPOSE_PATH}
   - sudo chmod +x ${DOCKER_COMPOSE_PATH}
+  - sudo service mysqld stop
   - sudo docker-compose up -d
 
 install:
