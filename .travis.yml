@@ -6,23 +6,23 @@ services:
 
 
 env:
-    global:
-        - DOCKER_VERSION=1.10.1-0~trusty
-        - DOCKER_COMPOSE_VERSION=1.19.0
+  global:
+    - DOCKER_VERSION=18.03.1-ce
+    - DOCKER_COMPOSE_VERSION=1.19.0
 
 before_install:
   # list docker-engine versions
-  - apt-cache madison docker-engine
 
   - sudo apt-get update
 
-  #- sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
 
- # - sudo rm -f /usr/local/bin/docker-compose
-  #- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  #- chmod +x docker-compose
-  #- sudo mv docker-compose /usr/local/bin
+  - sudo rm -f /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 script:
-    - docker version
-    - docker-compose version
+  - apt-cache madison docker-engine
+  - docker version
+  - docker-compose version
