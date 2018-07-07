@@ -34,10 +34,10 @@ describe("Unit: helpers", () => {
     });
   });
 
-  describe("getUnittimeFromDate", () => {
+  describe("getUnixtimeFromDate", () => {
     it("returns the expected unix time", () => {
       const date = new Date(1519087999000);
-      expect(date.toString()).toEqual("Mon Feb 19 2018 19:53:19 GMT-0500 (EST)");
+      expect(date.toUTCString()).toEqual("Tue, 20 Feb 2018 00:53:19 GMT");
       expect(getUnixtimeFromDate(date)).toEqual(1519087999);
     });
   });
