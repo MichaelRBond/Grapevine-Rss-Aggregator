@@ -6,6 +6,7 @@
   "author": "Michael Bond <MichaelRBond@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
+    "add-account": "ts-node src/scripts/account-add.ts",
     "build": "tsc",
     "dbm": "ts-node src/scripts/db-migrate.ts",
     "lint": "tslint -p ./tsconfig.json",
@@ -56,7 +57,7 @@
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/config/*.ts",
-      "!src/scripts/db-migrate.ts",
+      "!src/scripts/*.ts",
       "!src/types/**",
       "!**/node_modules/**",
       "!src/index.ts"

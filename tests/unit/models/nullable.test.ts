@@ -1,4 +1,4 @@
-import { orElseThrow } from "../../../src/models/nullable";
+import { orElse, orElseThrow } from "../../../src/models/nullable";
 
 describe("nullable", () => {
   describe("orElseThrow", () => {
@@ -18,6 +18,16 @@ describe("nullable", () => {
       } catch (err) {
         expect(true).toBeFalsy();
       }
+    });
+  });
+
+  describe("orElse", () => {
+    it("returns the default if value is null", () => {
+      expect(orElse(null, 1)).toEqual(1);
+    });
+
+    it("returns the value if it is not null", () => {
+      expect(orElse("foo", "bar")).toEqual("foo");
     });
   });
 });

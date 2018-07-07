@@ -1,7 +1,12 @@
-import { OptionDefinition } from "command-line-args";
 import commandLineArgs = require("command-line-args");
+import { OptionDefinition } from "command-line-args";
 import { Section } from "command-line-usage";
+import { isNull } from "util";
+import { mysqlClientProvider } from "../clients/mysql-client";
 import { config } from "../config";
+import { AccountDao } from "../dao/accounts";
+import { AccountModel } from "../models/accounts";
+import { genApikey, genHash, genSalt } from "../utils/authentication";
 import { displayCliUsage } from "../utils/cli";
 
 const options: OptionDefinition[] = [
@@ -32,11 +37,34 @@ if (!args.username) {
   process.exit(-1);
 }
 
-// Check to see if the user exists
-// -- if yes, exit
+const accountDao = new AccountDao(mysqlClientProvider);
+const accountModel = new AccountModel(accountDao);
 
-// gen salt
-// gen api key
-// gen hash
-// save account to the database
-// display the api key
+let salt: string;
+let apikey: string;
+accountModel.getByUsername(args.username)
+  .then((account) => {
+    if (!isNull(account)) {
+      console.log("Account already exists"); // tslint:disable-line
+      process.exit(-1);
+    }
+  })
+  .then(() => {
+    salt = genSalt();
+    apikey = genApikey();
+    return genHash(salt, apikey, 10);
+  })
+  .then((hash) => {
+    return accountModel.save({
+      apikeyHash: hash,
+      salt,
+      username: args.username,
+    });
+  })
+  .then(() => {
+    console.log(`API Key: ${apikey}`); // tslint:disable-line
+    process.exit(0);
+  })
+  .catch((err) => {
+    throw err;
+  });

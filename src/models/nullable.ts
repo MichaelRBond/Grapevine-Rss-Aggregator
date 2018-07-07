@@ -8,3 +8,7 @@ export function orElseThrow<T>(value: Nullable<T>, err: Error): T {
   }
   return value;
 }
+
+export function orElse<T>(value: Nullable<T>, defaultVal: T): T {
+  return isNullOrUndefined(value) ? defaultVal : value;
+}

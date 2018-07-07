@@ -1,6 +1,106 @@
-import { genApikey, genHash, genSalt, genSaltedApikey, validateApikey } from "../../../src/utils/authentication";
+import { Request, ResponseToolkit, Server, ServerAuth } from "hapi";
+import { Account, AccountModel } from "../../../src/models/accounts";
+import { Authentication, genApikey, genHash, genSalt, genSaltedApikey,
+  validateApikey } from "../../../src/utils/authentication";
+import { Mock, mock, verify } from "../../utils/mockfill";
 
-describe("Unit: authentication", () => {
+describe("Unit: Authentication class", () => {
+  let accountModel: Mock<AccountModel>;
+  let auth: Authentication;
+
+  let request: Request;
+  let h: ResponseToolkit;
+
+  beforeEach(() => {
+    accountModel = mock<AccountModel>();
+    auth = new Authentication(accountModel);
+
+    request = {} as Request;
+    h = {} as ResponseToolkit;
+  });
+
+  describe("registerAuthStrategies()", () => {
+    it("registers the correct number of authentication strategies and sets a default", () => {
+      const server = mock<Server>();
+      server.auth = mock<ServerAuth>();
+      auth.registerAuthStrategies(server);
+      verify(server.auth.strategy).calledOnce();
+      verify(server.auth.default).calledWithArgsLike(([strategy]) => {
+        expect(strategy).toEqual("basic");
+        return true;
+      });
+    });
+  });
+
+  describe("validate()", () => {
+    it ("returns invalid when there is no username", async () => {
+      const result = await auth.validateBasicAuth(request, undefined, "bar", h);
+      expect(result).toHaveProperty("isValid", false);
+      verify(accountModel.getByUsername).notCalled();
+    });
+
+    it("returns invalid when there is no password", async () => {
+      const result = await auth.validateBasicAuth(request, "foo", undefined, h);
+      expect(result).toHaveProperty("isValid", false);
+      verify(accountModel.getByUsername).notCalled();
+    });
+
+    it("returns invalid when an account cannot be found", async () => {
+      accountModel.getByUsername = async () => null;
+      const result = await auth.validateBasicAuth(request, "buddy-holly", "foo", h);
+      expect(result).toHaveProperty("isValid", false);
+      verify(accountModel.getByUsername).calledWithArgsLike(([username]) => {
+        expect(username).toEqual("buddy-holly");
+        return true;
+      });
+    });
+
+    it("returns invalid when the credentials are incorrect", async () => {
+      const salt = genSalt();
+      const apiKey = genApikey();
+      const hash = await genHash(salt, apiKey, 10);
+      const account = {
+        apikeyHash: hash,
+        id: 2,
+        salt,
+        username: "foo",
+      } as Account;
+      accountModel.getByUsername = async () => account;
+      const result = await auth.validateBasicAuth(request, "foo", "bar", h);
+      expect(result).toHaveProperty("isValid", false);
+      verify(accountModel.getByUsername).calledWithArgsLike(([username]) => {
+        expect(username).toEqual("foo");
+        return true;
+      });
+    });
+
+    it("returns valid when the credentials are correct", async () => {
+      const salt = genSalt();
+      const apiKey = genApikey();
+      const hash = await genHash(salt, apiKey, 10);
+      const account = {
+        apikeyHash: hash,
+        id: 2,
+        salt,
+        username: "foo",
+      } as Account;
+      accountModel.getByUsername = async () => account;
+      const result = await auth.validateBasicAuth(request, "foo", apiKey, h);
+
+      expect(result).toHaveProperty("isValid", true);
+      expect(result).toHaveProperty("credentials");
+      expect(result.credentials).toHaveProperty("id", 2);
+      expect(result.credentials).toHaveProperty("username", "foo");
+
+      verify(accountModel.getByUsername).calledWithArgsLike(([username]) => {
+        expect(username).toEqual("foo");
+        return true;
+      });
+    });
+  });
+});
+
+describe("Unit: authentication functions", () => {
   describe("genSalt", () => {
     it("returns a 16 byte hex", () => {
       const result = genSalt();
