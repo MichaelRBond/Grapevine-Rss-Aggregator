@@ -1,4 +1,5 @@
 export enum thrownErrMsg {
+  accountAdd = "Error adding account with username=:username:",
   dbDelete = "Error deleting group. Affected rows=:affectedRows:",
   feedsNotFound = "Feed with ID :id: not found",
   feedsSaveError = "Error saving feed",

@@ -8,6 +8,7 @@ interface LoggerConfig {
 }
 
 export interface Config {
+  appName: string;
   hapi: {
     host: string;
     port: number;
@@ -18,6 +19,7 @@ export interface Config {
 }
 
 export const common: Config = {
+  appName: "Node RSS Aggregator",
   hapi: {
     host: "0.0.0.0",
     port: 3000,

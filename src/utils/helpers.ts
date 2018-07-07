@@ -12,6 +12,14 @@ export function isBlank(str: string): boolean {
   return isNullOrUndefined(str) || str === "" || /^\s*$/.test(str);
 }
 
+export function getUnixtime(): number {
+  return getUnixtimeFromDate(new Date());
+}
+
 export function getUnixtimeFromDate(date: Date): number {
   return Math.floor(date.getTime() / 1000);
+}
+
+export function sleep(timeInMilliseconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, timeInMilliseconds));
 }
