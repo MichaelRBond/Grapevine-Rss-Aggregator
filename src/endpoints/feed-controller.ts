@@ -3,7 +3,7 @@ import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
 import { EndpointController } from "../models/endpoint-controller";
 import { orElseThrow } from "../models/nullable";
-import { Rss, RssFeed, RssFeedApiResponse, RssFeedBase } from "../models/rss";
+import { RssFeed, RssFeedApiResponse, RssFeedBase, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 
 const joiRssFeedBasePayload = {
@@ -24,7 +24,7 @@ export const joiRssFeedApiResponse = {
 
 export class FeedsController extends EndpointController {
 
-  constructor(private rss: Rss) {
+  constructor(private rss: RssModel) {
     super();
     this.getFeeds = this.getFeeds.bind(this);
     this.saveFeed = this.saveFeed.bind(this);
@@ -33,14 +33,14 @@ export class FeedsController extends EndpointController {
 
   public async getFeeds(): Promise<RssFeedApiResponse[]> {
     const feeds = await this.rss.getFeeds();
-    return feeds.map(Rss.rssFeedToApiResponse);
+    return feeds.map(RssModel.rssFeedToApiResponse);
   }
 
   public async saveFeed(request: Request): Promise<RssFeedApiResponse> {
     const feedPayload = request.payload as RssFeedBase;
     const feedNullable = await this.rss.saveFeed(feedPayload);
     const feed = orElseThrow(feedNullable, Boom.internal(thrownErrMsg.feedsSaveError));
-    return Rss.rssFeedToApiResponse(feed);
+    return RssModel.rssFeedToApiResponse(feed);
   }
 
   public async updateFeed(request: Request): Promise<RssFeedApiResponse> {
@@ -49,7 +49,7 @@ export class FeedsController extends EndpointController {
     const feed = orElseThrow(feedNullable,
       Boom.notFound(transformErrors(thrownErrMsg.feedsNotFound, {id: feedPayload.id.toString()})));
 
-    return Rss.rssFeedToApiResponse(feed);
+    return RssModel.rssFeedToApiResponse(feed);
   }
 
   public registerRoutes(): ServerRoute[] {

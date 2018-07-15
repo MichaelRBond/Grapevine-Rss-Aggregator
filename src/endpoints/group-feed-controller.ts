@@ -4,7 +4,7 @@ import * as Joi from "joi";
 import { EndpointController } from "../models/endpoint-controller";
 import { FeedGroupAddPayload, FeedGroupModel, FeedsApiResponse, GroupsApiResponse } from "../models/feed-group";
 import { Group, GroupModel } from "../models/group";
-import { Rss, RssFeed } from "../models/rss";
+import { RssFeed, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { joiRssFeedApiResponse } from "./feed-controller";
 import { joiGroupResponse } from "./groups-controller";
@@ -93,7 +93,7 @@ export class GroupFeedController extends EndpointController {
     }
 
     return {
-      feeds: feeds!.map(Rss.rssFeedToApiResponse),
+      feeds: feeds!.map(RssModel.rssFeedToApiResponse),
     };
   }
 

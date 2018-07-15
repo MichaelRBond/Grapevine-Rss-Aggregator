@@ -1,21 +1,20 @@
 import { GroupDao } from "../../../src/dao/group";
 import { RssFeedDao } from "../../../src/dao/rss-feed";
-import { RssFeed } from "../../../src/model/rss";
 import { FeedGroupModel } from "../../../src/models/feed-group";
 import { Group, GroupModel } from "../../../src/models/group";
-import { Rss } from "../../../src/models/rss";
+import { RssFeed, RssModel } from "../../../src/models/rss";
 import { Mock, mock, verify } from "../../utils/mockfill";
 
 describe("Unit: feed-group", () => {
   let rssDao: Mock<RssFeedDao>;
-  let rssModel: Mock<Rss>;
+  let rssModel: Mock<RssModel>;
   let groupModel: Mock<GroupModel>;
   let groupDao: Mock<GroupDao>;
   let model: FeedGroupModel;
 
   beforeEach(() => {
     rssDao = mock<RssFeedDao>();
-    rssModel = mock<Rss>();
+    rssModel = mock<RssModel>();
     groupModel = mock<GroupModel>();
     groupDao = mock<GroupDao>();
 
@@ -105,11 +104,29 @@ describe("Unit: feed-group", () => {
       rssModel.getFeed = async () => ({} as RssFeed);
       groupDao.getGroupsForFeed = async () => [];
       const result = await model.getGroupsForFeed(1);
-      expect(result.length).toEqual(0);
-      verify(groupDao.getGroupsForFeed).calledWithArgsLike(([feedId]) => {
-        expect(feedId).toEqual(1);
-        return true;
-      });
+      expect(result).toHaveLength(0);
+      verify(groupDao.getGroupsForFeed).calledWith(1);
+    });
+  });
+
+  describe("getFeedsForGroup()", () => {
+    it("throws an error if agroup does not exist", async () => {
+      groupModel.get = async () => null;
+      try {
+        await model.getFeedsForGroup(1);
+        fail();
+      } catch (err) {
+        expect(err.message).toEqual("Group with id=1 not found");
+      }
+      verify(rssDao.getFeedsForGroup).notCalled();
+    });
+
+    it("retrieves feeds that belong to a group", async () => {
+      groupModel.get = async () => ({} as Group);
+      rssDao.getFeedsForGroup = async () => [];
+      const result = await model.getFeedsForGroup(1);
+      expect(result).toHaveLength(0);
+      verify(rssDao.getFeedsForGroup).calledWith(1);
     });
   });
 

@@ -5,6 +5,9 @@ export async function resetTables(mysqlClientProvider: () => MySqlClient): Promi
   const tables = await mysql.query("SELECT `table_name` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA="
     + "'node_rss_aggregator' AND TABLE_TYPE='BASE TABLE'");
   for (const table of tables) {
+    if (table.table_name === "migrations") {
+      continue;
+    }
     await mysql.query(`TRUNCATE TABLE ${table.table_name}`);
   }
   return;

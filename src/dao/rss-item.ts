@@ -3,7 +3,10 @@ import { MySqlClient } from "../clients/mysql-client";
 import { Nullable } from "../models/nullable";
 import { RssFeed, RssItem, RssItemBase } from "../models/rss";
 import { getUnixtimeFromDate } from "../utils/helpers";
+import { logger } from "../utils/logger";
 import { getGuid } from "../utils/rss";
+
+export type DbStatusFields = "read" | "starred";
 
 export class RssItemDao {
   constructor(
@@ -13,17 +16,19 @@ export class RssItemDao {
   public async save(item: RssItemBase, feed: RssFeed): Promise<Nullable<RssItem>> {
     const mysql = this.mysqlProvider();
     const sql = "INSERT INTO `items` (`feedId`, `title`, `description`, `summary`, `link`, `updated`, `published`, "
-    + "`author`, `guid`, `image`, `categories`, `enclosures`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    + "`author`, `guid`, `image`, `categories`, `enclosures`, `comments`) "
+    + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     const updated = isNullOrUndefined(item.updated) ? null : getUnixtimeFromDate(item.updated);
     const published = isNullOrUndefined(item.published) ? null : getUnixtimeFromDate(item.published);
+    const comments = isNullOrUndefined(item.comments) ? null : item.comments;
     const image = JSON.stringify(item.image);
     const categories = JSON.stringify(item.categories);
     const enclosures = JSON.stringify(item.enclosures);
     const guid = getGuid(item);
 
     const result = await mysql.insertUpdate(sql, [feed.id, item.title, item.description, item.summary, item.link,
-      updated, published, item.author, guid, image, categories, enclosures]);
+      updated, published, item.author, guid, image, categories, enclosures, comments]);
 
     // TODO : check for error in result. Throw new error
 
@@ -34,7 +39,7 @@ export class RssItemDao {
     const guid = getGuid(item);
     const mysql = this.mysqlProvider();
     const sql = "UPDATE `items` SET `title`=?, `description`=?, `summary`=?, `updated`=?, `published`=?, `author`=?, "
-      + "`image`=?, `categories`=?, `enclosures`=? WHERE `guid`=?";
+      + "`image`=?, `categories`=?, `enclosures`=?, `comments`=? WHERE `guid`=?";
 
     // FIXME: Refactor
     const updated = isNullOrUndefined(item.updated) ? null : getUnixtimeFromDate(item.updated);
@@ -42,9 +47,10 @@ export class RssItemDao {
     const image = JSON.stringify(item.image);
     const categories = JSON.stringify(item.categories);
     const enclosures = JSON.stringify(item.enclosures);
+    const comments = isNullOrUndefined(item.comments) ? null : item.comments;
 
     const result = await mysql.insertUpdate(sql, [item.title, item.description, item.summary, updated, published,
-      item.author, image, categories, enclosures, guid]);
+      item.author, image, categories, enclosures, comments, guid]);
 
     if (result.affectedRows !== 1) {
       throw new Error("Error updating Rss Feed item");
@@ -71,6 +77,31 @@ export class RssItemDao {
     return this.dbToRssItem(result[0]);
   }
 
+  public async getByFeed(feedId: number, read?: Nullable<boolean>, starred?: Nullable<boolean>): Promise<RssItem[]> {
+    let readClause = "";
+    let starredClause = "";
+    if (!isNullOrUndefined(read)) {
+      readClause = " AND `read`=" + (read ? "1" : "0");
+    }
+    if (!isNullOrUndefined(starred)) {
+      starredClause = " AND `starred`=" + (starred ? "1" : "0");
+    }
+    const sql = "SELECT * FROM `items` WHERE `feedId`=?" + readClause + starredClause;
+    const result = await this.mysqlProvider().query(sql, [feedId]);
+    return result.map(this.dbToRssItem);
+  }
+
+  public async setItemStatus(id: number, type: DbStatusFields, status: boolean): Promise<void> {
+    const value = status === true ? 1 : 0;
+    const sql = "UPDATE `items` SET `" + type + "`=? WHERE `id`=?";
+    const result = await this.mysqlProvider().insertUpdate(sql, [value, id]);
+    if (result.affectedRows !== 1) {
+      logger.error(`Error updating status type=${type} to ${value}`, result.message);
+      throw new Error("Error updating item status");
+    }
+    return;
+  }
+
   private dbToRssItem(result: any): RssItem {
     return {
       author: result.author,
@@ -84,8 +115,8 @@ export class RssItemDao {
       image: result.image,
       link: result.link,
       published: result.published ? new Date(result.published * 1000) : null,
-      read: result.read,
-      starred: result.read === 1,
+      read: result.read === 1,
+      starred: result.starred === 1,
       summary: result.summary,
       title: result.title,
       updated: result.updated ? new Date(result.updated * 1000) : null,

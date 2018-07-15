@@ -1,3 +1,4 @@
+// tslint:disable:max-classes-per-file
 import * as assert from "assert";
 
 /**
@@ -148,3 +149,5 @@ class CountingProxyHandler<T extends object> implements ProxyHandler<T> {
     return proxy;
   }
 }
+
+// tslist:enable

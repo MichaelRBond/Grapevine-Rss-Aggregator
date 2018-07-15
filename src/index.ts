@@ -9,11 +9,12 @@ import { RssItemDao } from "./dao/rss-item";
 import { FeedsController } from "./endpoints/feed-controller";
 import { GroupFeedController } from "./endpoints/group-feed-controller";
 import { GroupsController } from "./endpoints/groups-controller";
+import { ItemController } from "./endpoints/item-controller";
 import { AccountModel } from "./models/accounts";
 import { EndpointController } from "./models/endpoint-controller";
 import { FeedGroupModel } from "./models/feed-group";
 import { GroupModel } from "./models/group";
-import { Rss } from "./models/rss";
+import { RssModel } from "./models/rss";
 import { Authentication } from "./utils/authentication";
 import { DateTime } from "./utils/date-time";
 import { FeedParser } from "./utils/feed-parser";
@@ -30,7 +31,7 @@ const rssItemDao = new RssItemDao(mysqlClientProvider);
 const groupDao = new GroupDao(mysqlClientProvider);
 
 const accountModel = new AccountModel(accountDao);
-const rssModel = new Rss(rssFeedDao, rssItemDao, feedParser, http);
+const rssModel = new RssModel(rssFeedDao, rssItemDao, feedParser, http);
 const groupModel = new GroupModel(groupDao);
 const feedGroupModel = new FeedGroupModel(rssFeedDao, rssModel, groupModel, groupDao);
 
@@ -39,11 +40,13 @@ const authentication = new Authentication(accountModel);
 const feedController: FeedsController = new FeedsController(rssModel);
 const groupFeedController: GroupFeedController = new GroupFeedController(feedGroupModel);
 const groupsController: GroupsController = new GroupsController(groupModel);
+const itemController: ItemController = new ItemController(rssModel);
 
 const endpointControllers: EndpointController[] = [
   feedController,
   groupFeedController,
   groupsController,
+  itemController,
 ];
 
 // TODO : Refactor

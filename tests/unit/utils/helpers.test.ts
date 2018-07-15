@@ -3,6 +3,7 @@ import {
   getUnixtime,
   getUnixtimeFromDate,
   isBlank,
+  isNotBlank,
 } from "../../../src/utils/helpers";
 
 describe("Unit: helpers", () => {
@@ -31,6 +32,26 @@ describe("Unit: helpers", () => {
 
     it("returns false when given a non-empty string", () => {
       expect(isBlank("test")).toEqual(false);
+    });
+  });
+
+  describe("isNotBlank()", () => {
+    it("returns false when given a null or undefined value", () => {
+      expect(isNotBlank(null)).toEqual(false);
+      expect(isNotBlank(undefined)).toEqual(false);
+    });
+
+    it("returns false when given a zero length string", () => {
+      expect(isNotBlank("")).toEqual(false);
+    });
+
+    it("returns false when given a string with only spaces", () => {
+      expect(isNotBlank("                    ")).toEqual(false);
+      expect(isNotBlank("  ")).toEqual(false); // Tab
+    });
+
+    it("returns true when given a non-empty string", () => {
+      expect(isNotBlank("test")).toEqual(true);
     });
   });
 

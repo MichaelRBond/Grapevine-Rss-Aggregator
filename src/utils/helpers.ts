@@ -12,6 +12,10 @@ export function isBlank(str: string): boolean {
   return isNullOrUndefined(str) || str === "" || /^\s*$/.test(str);
 }
 
+export function isNotBlank(str: string): boolean {
+  return !isBlank(str);
+}
+
 export function getUnixtime(): number {
   return getUnixtimeFromDate(new Date());
 }
