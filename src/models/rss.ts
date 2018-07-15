@@ -1,12 +1,19 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { isNullOrUndefined } from "util";
 import { RssFeedDao } from "../dao/rss-feed";
-import { RssItemDao } from "../dao/rss-item";
+import { DbStatusFields, RssItemDao } from "../dao/rss-item";
 import { FeedParser } from "../utils/feed-parser";
 import { AXIOS_STATUS_CODES, Http } from "../utils/http";
 import { logger } from "../utils/logger";
 import { getGuid } from "../utils/rss";
 import { Nullable } from "./nullable";
+
+export enum ItemFlags {
+  read = "read",
+  starred = "starred",
+  unread = "unread",
+  unstarred = "unstarred",
+}
 
 export interface RssFeedBase {
   title: string;
@@ -28,23 +35,23 @@ export interface RssFeedApiResponse {
 }
 
 interface RssItemImage {
-  url?: string;
   title?: string;
+  url?: string;
 }
 
 export interface RssItemBase {
-  title: string;
-  description: string;
-  summary: string;
-  link: string;
-  updated: Nullable<Date>; // most recent update
-  published: Nullable<Date>; // when originally published
   author: string;
-  guid: string;
-  comments: string; // a link to the article's comments section
-  image: RssItemImage;
   categories: string[];
+  comments: string; // a link to the article's comments section
+  description: string;
   enclosures: string[];
+  guid: string;
+  image: RssItemImage;
+  link: string;
+  published: Nullable<Date>;
+  summary: string;
+  title: string;
+  updated: Nullable<Date>;
 }
 
 export interface RssItem extends RssItemBase {
@@ -54,7 +61,26 @@ export interface RssItem extends RssItemBase {
   starred: boolean;
 }
 
-export class Rss {
+export interface RssItemApiResponse {
+  id: number;
+  feed_id: number;
+  read: boolean;
+  starred: boolean;
+  title: string;
+  description: string;
+  summary: string;
+  link: string;
+  updated: Nullable<Date>;
+  published: Nullable<Date>;
+  author: string;
+  guid: string;
+  comments: string; // a link to the article's comments section
+  image: RssItemImage;
+  categories: string[];
+  enclosures: string[];
+}
+
+export class RssModel {
 
   constructor(
     private feedDao: RssFeedDao,
@@ -113,6 +139,63 @@ export class Rss {
     });
     await Promise.all(fetchPromises);
     return;
+  }
+
+  public async getFeedItems(feedId: number, read?: Nullable<boolean>, starred?: Nullable<boolean>): Promise<RssItem[]> {
+    return this.itemDao.getByFeed(feedId, read, starred);
+  }
+
+  public rssItemToApiResponse(rssItem: RssItem): RssItemApiResponse {
+    return {
+      author: rssItem.author,
+      categories: rssItem.categories,
+      comments: rssItem.comments,
+      description: rssItem.description,
+      enclosures: rssItem.enclosures,
+      feed_id: rssItem.feedId,
+      guid: rssItem.guid,
+      id: rssItem.id,
+      image: rssItem.image,
+      link: rssItem.link,
+      published: rssItem.published,
+      read: rssItem.read,
+      starred: rssItem.starred,
+      summary: rssItem.summary,
+      title: rssItem.title,
+      updated: rssItem.updated,
+    };
+  }
+
+  public async getItemById(id: number): Promise<Nullable<RssItem>> {
+    return this.itemDao.getById(id);
+  }
+
+  public async setItemStatus(id: number, flag: ItemFlags): Promise<void> {
+    let value: boolean;
+    let statusType: DbStatusFields;
+
+    switch (flag) {
+      case ItemFlags.read:
+        statusType = "read";
+        value = true;
+        break;
+      case ItemFlags.unread:
+        statusType = "read";
+        value = false;
+        break;
+      case ItemFlags.starred:
+        statusType = "starred";
+        value = true;
+        break;
+      case ItemFlags.unstarred:
+        statusType = "starred";
+        value = false;
+        break;
+      default:
+        throw new Error("Invalid status flag provided");
+    }
+
+    return this.itemDao.setItemStatus(id, statusType, value);
   }
 
   private async saveItems(feed: RssFeed, items: RssItemBase[]): Promise<Array<Nullable<RssItem>>> {

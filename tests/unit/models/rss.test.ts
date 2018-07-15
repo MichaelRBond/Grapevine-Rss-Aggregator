@@ -1,7 +1,7 @@
 import { AxiosPromise } from "axios";
 import { RssFeedDao } from "../../../src/dao/rss-feed";
 import { RssItemDao } from "../../../src/dao/rss-item";
-import { Rss, RssFeed, RssFeedBase, RssItem, RssItemBase } from "../../../src/models/rss";
+import { ItemFlags, RssFeed, RssFeedBase, RssItem, RssItemBase, RssModel } from "../../../src/models/rss";
 import { FeedParser } from "../../../src/utils/feed-parser";
 import { Http } from "../../../src/utils/http";
 import { getGuid } from "../../../src/utils/rss";
@@ -13,7 +13,7 @@ describe("Unit: RSS Model", () => {
   let itemDao: Mock<RssItemDao>;
   let feedParser: Mock<FeedParser>;
   let http: Mock<Http>;
-  let rss: Rss;
+  let rss: RssModel;
 
   beforeEach(() => {
     feedDao = mock<RssFeedDao>();
@@ -21,7 +21,7 @@ describe("Unit: RSS Model", () => {
     feedParser = mock<FeedParser>();
     http = mock<Http>();
 
-    rss = new Rss(feedDao, itemDao, feedParser, http);
+    rss = new RssModel(feedDao, itemDao, feedParser, http);
   });
 
   describe("getFeed()", () => {
@@ -139,6 +139,106 @@ describe("Unit: RSS Model", () => {
       verify(itemDao.getByGuid).called(2);
       verify(itemDao.save).called(1);
       verify(itemDao.update).called(1);
+    });
+  });
+
+  describe("getFeedItems()", () => {
+    it("returns feed items", async () => {
+      itemDao.getByFeed = async () => [];
+      const result = await rss.getFeedItems(1, false, true);
+      expect(result).toHaveLength(0);
+      verify(itemDao.getByFeed).calledWith(1, false, true);
+    });
+  });
+
+  describe("rssItemToApiResponse()", () => {
+
+    let rssItem: RssItem;
+
+    beforeEach(() => {
+      rssItem = {
+        author: "John Denver",
+        categories: [],
+        comments: "http://test.com/comments",
+        description: "I've packed my bags",
+        enclosures: [],
+        feedId: 2,
+        guid: "1a",
+        id: 1,
+        image: {
+          title: "some image",
+          url: "http://image.com",
+        },
+        link: "http://test.com",
+        published: new Date(),
+        read: false,
+        starred: false,
+        summary: "I'm ready to go",
+        title: "Leaving on a Jet Plane",
+        updated: new Date(),
+      };
+    });
+
+    it("converts a RssItem to a RssItemApiResponse", () => {
+      const result = rss.rssItemToApiResponse(rssItem);
+      expect(result).toEqual({
+        author: rssItem.author,
+        categories: rssItem.categories,
+        comments: rssItem.comments,
+        description: rssItem.description,
+        enclosures: rssItem.enclosures,
+        feed_id: rssItem.feedId,
+        guid: rssItem.guid,
+        id: rssItem.id,
+        image: rssItem.image,
+        link: rssItem.link,
+        published: rssItem.published,
+        read: rssItem.read,
+        starred: rssItem.starred,
+        summary: rssItem.summary,
+        title: rssItem.title,
+        updated: rssItem.updated,
+      });
+    });
+  });
+
+  describe("getItemById()", () => {
+    it("returns a RssItem", async () => {
+      itemDao.getById = async () => ({} as RssItem);
+      await rss.getItemById(1);
+      verify(itemDao.getById).calledWith(1);
+    });
+  });
+
+  describe("setItemStatus()", () => {
+    it("handles the case of read", async () => {
+      await rss.setItemStatus(1, ItemFlags.read);
+      verify(itemDao.setItemStatus).calledWith(1, "read", true);
+    });
+
+    it("handles the case of unread", async () => {
+      await rss.setItemStatus(1, ItemFlags.unread);
+      verify(itemDao.setItemStatus).calledWith(1, "read", false);
+    });
+
+    it("handles the case of starred", async () => {
+      await rss.setItemStatus(1, ItemFlags.starred);
+      verify(itemDao.setItemStatus).calledWith(1, "starred", true);
+    });
+
+    it("handles the case of unstarred", async () => {
+      await rss.setItemStatus(1, ItemFlags.unstarred);
+      verify(itemDao.setItemStatus).calledWith(1, "starred", false);
+    });
+
+    it("throws an error when an invalid flag is provided", async () => {
+      try {
+        await rss.setItemStatus(1, "foo" as ItemFlags);
+        fail();
+      } catch (err) {
+        expect(err.message).toEqual("Invalid status flag provided");
+      }
+      verify(itemDao.setItemStatus).notCalled();
     });
   });
 });

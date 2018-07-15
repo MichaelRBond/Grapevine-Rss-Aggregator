@@ -7,6 +7,9 @@ export enum thrownErrMsg {
   groupModelAdd = "Unable to save group",
   groupModelUpdate = "Unable to update group",
   groupNotFound = "Group with ID :id: not found",
+  itemNotFound = "Item with ID :id: not found",
+  itemsInvalidFlag = "Invalid flag(s): :flag:",
+  itemStatusUpdateError = "Error updating status=:flag: on id=:id:",
   testing = "This is a :adjective: :noun:. It is for testing :adjective: tests",
 }
 

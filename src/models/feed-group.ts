@@ -2,7 +2,7 @@ import { GroupDao } from "../dao/group";
 import { RssFeedDao } from "../dao/rss-feed";
 import { Group, GroupApiResponse, GroupModel } from "./group";
 import { orElseThrow } from "./nullable";
-import { Rss, RssFeed, RssFeedApiResponse } from "./rss";
+import { RssFeed, RssFeedApiResponse, RssModel } from "./rss";
 
 export interface FeedGroupAddPayload {
   feed_id: number;
@@ -25,7 +25,7 @@ export interface GroupFeedsApiResponse {
 export class FeedGroupModel {
   constructor(
     private feedDao: RssFeedDao,
-    private feedModel: Rss,
+    private feedModel: RssModel,
     private groupModel: GroupModel,
     private groupDao: GroupDao,
   ) { /* */ }
