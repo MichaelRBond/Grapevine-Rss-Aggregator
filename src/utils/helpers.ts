@@ -1,5 +1,4 @@
 import { Readable, Stream } from "stream";
-import { isNullOrUndefined } from "util";
 
 export function convertStringToStream(str: string): Stream {
   const stream = new Readable();
@@ -26,4 +25,8 @@ export function getUnixtimeFromDate(date: Date): number {
 
 export function sleep(timeInMilliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, timeInMilliseconds));
+}
+
+export function isNullOrUndefined(x: any): boolean {
+  return x === null || x === undefined;
 }

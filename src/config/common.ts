@@ -19,7 +19,7 @@ export interface Config {
 }
 
 export const common: Config = {
-  appName: "Node RSS Aggregator",
+  appName: "Grapevine RSS Aggregator",
   hapi: {
     host: "0.0.0.0",
     port: 3000,
@@ -31,11 +31,10 @@ export const common: Config = {
     silent: false,
   },
   mysql: {
-    database: "node_rss_aggregator",
+    database: "grapevine_rss",
     host: "127.0.0.1",
-    password: process.env.MYSQL_PASSWORD,
     port: 3306,
-    user: "rss",
+    user: "grapevine",
   },
   schedule: "*/15 * * * *", // every 15 minutes
 };

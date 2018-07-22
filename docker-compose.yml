@@ -4,8 +4,8 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-      MYSQL_DATABASE: node_rss_aggregator
-      MYSQL_USER: rss
+      MYSQL_DATABASE: grapevine_rss
+      MYSQL_USER: grapevine
       MYSQL_PASSWORD: rss
     ports:
       - 3306:3306
@@ -15,8 +15,8 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-      MYSQL_DATABASE: node_rss_aggregator
-      MYSQL_USER: rss
+      MYSQL_DATABASE: grapevine_rss
+      MYSQL_USER: grapevine
       MYSQL_PASSWORD: test
     ports:
       - 3307:3306

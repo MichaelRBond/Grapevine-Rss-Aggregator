@@ -1,4 +1,4 @@
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { generate } from "generate-password";
 import { Request, ResponseToolkit, Server } from "hapi";
