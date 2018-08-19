@@ -1,9 +1,8 @@
 import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
 import { EndpointController } from "../models/endpoint-controller";
-import { Nullable, orElseThrow } from "../models/nullable";
 import { ItemFlags, RssItemApiResponse, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { isNotBlank } from "../utils/helpers";
@@ -80,7 +79,7 @@ export class ItemController extends EndpointController {
     if (isNullOrUndefined(flagsParmas)) {
       return [];
     }
-    const flags = flagsParmas.split("/");
+    const flags = flagsParmas!.split("/");
     const filteredFlags = flags.filter(isNotBlank);
     const invalidFlags = filteredFlags.filter(this.isInvalidFlag);
     if (invalidFlags.length) {

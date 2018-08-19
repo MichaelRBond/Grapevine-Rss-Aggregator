@@ -4,7 +4,6 @@ import {
   getUnixtimeFromDate,
   isBlank,
   isNotBlank,
-  isNullOrUndefined,
 } from "../../../src/utils/helpers";
 
 describe("Unit: helpers", () => {
@@ -73,20 +72,6 @@ describe("Unit: helpers", () => {
 
   describe("sleep", () => {
     it.skip("sleeps the appropriate length of time", () => { /* */ });
-  });
-
-  describe("isNullOrUndefined", () => {
-    it("returns true for null", () => {
-      expect(isNullOrUndefined(null)).toEqual(true);
-    });
-
-    it("returns true for undefined", () => {
-      expect(isNullOrUndefined(undefined)).toEqual(true);
-    });
-
-    it("returns false for a defined value", () => {
-      expect(isNullOrUndefined("foo")).toEqual(false);
-    });
   });
 
 });

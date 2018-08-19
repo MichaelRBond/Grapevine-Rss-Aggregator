@@ -1,7 +1,6 @@
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, Nullable } from "nullable-ts";
 import { MySqlClient } from "../clients/mysql-client";
 import { Account, AccountBase } from "../models/accounts";
-import { Nullable } from "../models/nullable";
 import { getUnixtime } from "../utils/helpers";
 
 export class AccountDao {

@@ -1,7 +1,7 @@
 
 import * as crypto from "crypto";
 import * as FP from "feedparser";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined } from "nullable-ts";
 import { RssItemBase } from "../models/rss";
 
 export function getGuid(item: FP.Item | RssItemBase): string {

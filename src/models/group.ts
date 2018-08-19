@@ -1,7 +1,6 @@
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
 import { GroupDao } from "../dao/group";
 import { thrownErrMsg } from "../utils/errors";
-import { Nullable, orElseThrow } from "./nullable";
 
 export interface GroupApiResponse {
   id: number;

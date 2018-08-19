@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from "nullable-ts";
 import { Readable, Stream } from "stream";
 
 export function convertStringToStream(str: string): Stream {
@@ -25,8 +26,4 @@ export function getUnixtimeFromDate(date: Date): number {
 
 export function sleep(timeInMilliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, timeInMilliseconds));
-}
-
-export function isNullOrUndefined(x: any): boolean {
-  return x === null || x === undefined;
 }

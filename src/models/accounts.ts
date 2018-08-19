@@ -1,5 +1,5 @@
+import { Nullable } from "nullable-ts";
 import { AccountDao } from "../dao/accounts";
-import { Nullable } from "./nullable";
 
 export interface AccountBase {
   username: string;

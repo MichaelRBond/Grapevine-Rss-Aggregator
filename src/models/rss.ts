@@ -1,12 +1,11 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
 import { RssFeedDao } from "../dao/rss-feed";
 import { DbStatusFields, RssItemDao } from "../dao/rss-item";
 import { FeedParser } from "../utils/feed-parser";
 import { AXIOS_STATUS_CODES, Http } from "../utils/http";
 import { logger } from "../utils/logger";
 import { getGuid } from "../utils/rss";
-import { Nullable } from "./nullable";
 
 export enum ItemFlags {
   read = "read",
@@ -108,18 +107,20 @@ export class RssModel {
   }
 
   public async saveFeed(feed: RssFeedBase): Promise<Nullable<RssFeed>> {
-    const feedId = await this.feedDao.save(feed);
-    if (isNullOrUndefined(feedId)) {
+    const feedIdNullable = await this.feedDao.save(feed);
+    if (isNullOrUndefined(feedIdNullable)) {
       return null;
     }
+    const feedId = orElseThrow(feedIdNullable, new Error("Error saving seed"));
     return this.feedDao.getById(feedId);
   }
 
   public async updateFeed(feed: RssFeed): Promise<Nullable<RssFeed>> {
-    const feedId = await this.feedDao.update(feed);
-    if (isNullOrUndefined(feedId)) {
+    const feedIdNullable = await this.feedDao.update(feed);
+    if (isNullOrUndefined(feedIdNullable)) {
       return null;
     }
+    const feedId = orElseThrow(feedIdNullable, new Error("Error saving seed"));
     return this.feedDao.getById(feedId);
   }
 

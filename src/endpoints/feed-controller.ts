@@ -1,8 +1,8 @@
 import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
+import { orElseThrow } from "nullable-ts";
 import { EndpointController } from "../models/endpoint-controller";
-import { orElseThrow } from "../models/nullable";
 import { RssFeed, RssFeedApiResponse, RssFeedBase, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 

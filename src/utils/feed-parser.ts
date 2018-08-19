@@ -1,5 +1,5 @@
 import * as FP from "feedparser";
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined } from "nullable-ts";
 import { RssItemBase } from "../models/rss";
 import { convertStringToStream, isBlank } from "./helpers";
 import { getGuid } from "./rss";

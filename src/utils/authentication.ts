@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 import { generate } from "generate-password";
 import { Request, ResponseToolkit, Server } from "hapi";
 import { ValidateResponse } from "hapi-auth-basic";
-import { isNull } from "util";
+import { isNull } from "nullable-ts";
 import { AccountModel } from "../models/accounts";
 
 export class Authentication {
@@ -39,14 +39,14 @@ export class Authentication {
       return this.invalid;
     }
 
-    const saltedApikey = genSaltedApikey(account.salt, password);
-    if (!(await validateApikey(saltedApikey, account.apikeyHash))) {
+    const saltedApikey = genSaltedApikey(account!.salt, password);
+    if (!(await validateApikey(saltedApikey, account!.apikeyHash))) {
       return this.invalid;
     }
 
     return {
       credentials: {
-        id: account.id,
+        id: account!.id,
         username,
       },
       isValid: true,

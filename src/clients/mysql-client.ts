@@ -1,6 +1,6 @@
 import { createPool, MysqlError, Pool} from "mysql";
+import { Nullable } from "nullable-ts";
 import { config } from "../config/index";
-import { Nullable } from "../models/nullable";
 
 export interface OkPacket {
   fieldCount: number;
