@@ -1,7 +1,7 @@
+import { orElseThrow } from "nullable-ts";
 import { GroupDao } from "../dao/group";
 import { RssFeedDao } from "../dao/rss-feed";
 import { Group, GroupApiResponse, GroupModel } from "./group";
-import { orElseThrow } from "./nullable";
 import { RssFeed, RssFeedApiResponse, RssModel } from "./rss";
 
 export interface FeedGroupAddPayload {

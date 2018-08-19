@@ -1,6 +1,5 @@
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, Nullable } from "nullable-ts";
 import { MySqlClient } from "../clients/mysql-client";
-import { Nullable } from "../models/nullable";
 import { RssFeed, RssItem, RssItemBase } from "../models/rss";
 import { getUnixtimeFromDate } from "../utils/helpers";
 import { logger } from "../utils/logger";
@@ -19,8 +18,8 @@ export class RssItemDao {
     + "`author`, `guid`, `image`, `categories`, `enclosures`, `comments`) "
     + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    const updated = isNullOrUndefined(item.updated) ? null : getUnixtimeFromDate(item.updated);
-    const published = isNullOrUndefined(item.published) ? null : getUnixtimeFromDate(item.published);
+    const updated = isNullOrUndefined(item.updated) ? null : getUnixtimeFromDate(item.updated as Date);
+    const published = isNullOrUndefined(item.published) ? null : getUnixtimeFromDate(item.published as Date);
     const comments = isNullOrUndefined(item.comments) ? null : item.comments;
     const image = JSON.stringify(item.image);
     const categories = JSON.stringify(item.categories);
@@ -42,8 +41,8 @@ export class RssItemDao {
       + "`image`=?, `categories`=?, `enclosures`=?, `comments`=? WHERE `guid`=?";
 
     // FIXME: Refactor
-    const updated = isNullOrUndefined(item.updated) ? null : getUnixtimeFromDate(item.updated);
-    const published = isNullOrUndefined(item.published) ? null : getUnixtimeFromDate(item.published);
+    const updated = isNullOrUndefined(item.updated) ? null : getUnixtimeFromDate(item.updated as Date);
+    const published = isNullOrUndefined(item.published) ? null : getUnixtimeFromDate(item.published as Date);
     const image = JSON.stringify(item.image);
     const categories = JSON.stringify(item.categories);
     const enclosures = JSON.stringify(item.enclosures);

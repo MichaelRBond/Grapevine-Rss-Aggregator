@@ -1,6 +1,5 @@
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, Nullable } from "nullable-ts";
 import { MySqlClient } from "../clients/mysql-client";
-import { Nullable } from "../models/nullable";
 import { RssFeed, RssFeedBase } from "../models/rss";
 import { DateTime } from "../utils/date-time";
 

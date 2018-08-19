@@ -1,7 +1,6 @@
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined, Nullable } from "nullable-ts";
 import { MySqlClient } from "../clients/mysql-client";
 import { Group, GroupBase } from "../models/group";
-import { Nullable } from "../models/nullable";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { logger } from "../utils/logger";
 

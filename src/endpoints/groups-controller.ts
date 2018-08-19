@@ -1,9 +1,9 @@
 import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
+import { orElseThrow } from "nullable-ts";
 import { EndpointController } from "../models/endpoint-controller";
 import { GroupApiResponse, GroupBase, GroupModel } from "../models/group";
-import { orElseThrow } from "../models/nullable";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { logger } from "../utils/logger";
 

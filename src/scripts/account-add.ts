@@ -1,7 +1,7 @@
 import commandLineArgs = require("command-line-args");
 import { OptionDefinition } from "command-line-args";
 import { Section } from "command-line-usage";
-import { isNull } from "util";
+import { isNull } from "nullable-ts";
 import { mysqlClientProvider } from "../clients/mysql-client";
 import { config } from "../config";
 import { AccountDao } from "../dao/accounts";
