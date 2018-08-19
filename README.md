@@ -1,6 +1,6 @@
 # Grapevine RSS Aggregator
 
-[![Build Status](https://travis-ci.com/MichaelRBond/node-rss-aggregator.svg?branch=master)](https://travis-ci.com/MichaelRBond/node-rss-aggregator)
+[![Build Status](https://travis-ci.org/MichaelRBond/Grapevine-Rss-Aggregator.svg?branch=master)](https://travis-ci.org/MichaelRBond/Grapevine-Rss-Aggregator)
 
 RSS Aggregator written in Typescript
 
