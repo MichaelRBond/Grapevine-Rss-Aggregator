@@ -49,7 +49,7 @@
     "hapi-auth-basic": "^5.0.0",
     "joi": "^13.1.2",
     "mysql": "^2.15.0",
-    "nullable-ts": "^1.0.0",
+    "nullable-ts": "^1.1.0",
     "winston": "^2.4.1"
   },
   "jest": {
