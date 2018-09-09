@@ -2988,7 +2988,7 @@ npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-nullable-ts@^1.0.0:
+nullable-ts@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/nullable-ts/-/nullable-ts-1.1.0.tgz#44f6d33a5d7f68de242151917948f2d4e1cefe72"
 

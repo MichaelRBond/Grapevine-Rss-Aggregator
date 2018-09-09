@@ -38,7 +38,7 @@ export class GroupFeedController extends EndpointController {
     const feedId = addPayload.feed_id;
     const groupId = addPayload.group_id;
 
-    let groups: Group[];
+    let groups: Group[] = [];
     try {
       groups = await this.feedGroupModel.addFeedToGroup(feedId, groupId);
     } catch (err) {
@@ -46,7 +46,7 @@ export class GroupFeedController extends EndpointController {
     }
 
     return {
-      groups: groups!.map(GroupModel.groupToApiResponse),
+      groups: groups.map(GroupModel.groupToApiResponse),
     };
   }
 
@@ -55,7 +55,7 @@ export class GroupFeedController extends EndpointController {
     const feedId = addPayload.feed_id;
     const groupId = addPayload.group_id;
 
-    let groups: Group[];
+    let groups: Group[] = [];
     try {
       groups = await this.feedGroupModel.removeFeedFromGroup(feedId, groupId);
     } catch (err) {
@@ -63,14 +63,14 @@ export class GroupFeedController extends EndpointController {
     }
 
     return {
-      groups: groups!.map(GroupModel.groupToApiResponse),
+      groups: groups.map(GroupModel.groupToApiResponse),
     };
   }
 
   public async retrieveFeedGroups(request: Request): Promise<GroupsApiResponse> {
     const feedId = parseInt(request.params.id, 10);
 
-    let groups: Group[];
+    let groups: Group[] = [];
     try {
       groups = await this.feedGroupModel.getGroupsForFeed(feedId);
     } catch (err) {
@@ -78,14 +78,14 @@ export class GroupFeedController extends EndpointController {
     }
 
     return {
-      groups: groups!.map(GroupModel.groupToApiResponse),
+      groups: groups.map(GroupModel.groupToApiResponse),
     };
   }
 
   public async retrieveGroupFeeds(request: Request): Promise<FeedsApiResponse> {
     const groupId = parseInt(request.params.id, 10);
 
-    let feeds: RssFeed[];
+    let feeds: RssFeed[] = [];
     try {
       feeds = await this.feedGroupModel.getFeedsForGroup(groupId);
     } catch (err) {
@@ -93,7 +93,7 @@ export class GroupFeedController extends EndpointController {
     }
 
     return {
-      feeds: feeds!.map(RssModel.rssFeedToApiResponse),
+      feeds: feeds.map(RssModel.rssFeedToApiResponse),
     };
   }
 
