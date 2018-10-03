@@ -55,17 +55,18 @@ export class FeedsController extends EndpointController {
   public registerRoutes(): ServerRoute[] {
     return [
       {
-        config: {
+        method: "GET",
+        options: {
           handler: this.getFeeds,
           response: {
             schema: Joi.array().items(joiRssFeedApiResponse),
           },
         },
-        method: "GET",
         path: "/api/v1/feed",
       },
       {
-        config: {
+        method: "POST",
+        options: {
           handler: this.saveFeed,
           response: {
             schema: joiRssFeedApiResponse,
@@ -74,11 +75,11 @@ export class FeedsController extends EndpointController {
             payload: joiRssFeedBasePayload,
           },
         },
-        method: "POST",
         path: "/api/v1/feed",
       },
       {
-        config: {
+        method: "PUT",
+        options: {
           handler: this.updateFeed,
           response: {
             schema: joiRssFeedApiResponse,
@@ -87,7 +88,6 @@ export class FeedsController extends EndpointController {
             payload: joiRssFeedPayload,
           },
         },
-        method: "PUT",
         path: "/api/v1/feed",
       },
     ];

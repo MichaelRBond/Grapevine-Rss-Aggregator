@@ -92,7 +92,8 @@ export class ItemController extends EndpointController {
   public registerRoutes(): ServerRoute[] {
     return [
       {
-        config: {
+        method: "GET",
+        options: {
           handler: this.getFeedItems,
           response: {
             schema: Joi.array().items(joiRssItemApiResponse),
@@ -104,11 +105,11 @@ export class ItemController extends EndpointController {
             },
           },
         },
-        method: "GET",
         path: "/api/v1/items/feed/{id}/{flags*}",
       },
       {
-        config: {
+        method: "POST",
+        options: {
           handler: this.setStatusOfItem,
           response: {
             schema: {message: Joi.string()},
@@ -127,7 +128,6 @@ export class ItemController extends EndpointController {
             },
           },
         },
-        method: "POST",
         path: "/api/v1/item/{id}/status",
       },
     ];

@@ -100,7 +100,8 @@ export class GroupFeedController extends EndpointController {
   public registerRoutes(): ServerRoute[] {
     return [
       {
-        config: {
+        method: "POST",
+        options: {
           handler: this.addGroupToFeed,
           response: {
             schema: joiFeedGroupsResponse,
@@ -109,11 +110,11 @@ export class GroupFeedController extends EndpointController {
             payload: joiAddGroupToFeedPayload,
           },
         },
-        method: "POST",
         path: "/api/v1/feed-group",
       },
       {
-        config: {
+        method: "DELETE",
+        options: {
           handler: this.removeGroupFromFeed,
           response: {
             schema: joiFeedGroupsResponse,
@@ -122,11 +123,11 @@ export class GroupFeedController extends EndpointController {
             payload: joiAddGroupToFeedPayload,
           },
         },
-        method: "DELETE",
         path: "/api/v1/feed-group",
       },
       {
-        config: {
+        method: "GET",
+        options: {
           handler: this.retrieveFeedGroups,
           response: {
             schema: joiFeedGroupsResponse,
@@ -137,11 +138,11 @@ export class GroupFeedController extends EndpointController {
             },
           },
         },
-        method: "GET",
         path: "/api/v1/feed/{id}/groups",
       },
       {
-        config: {
+        method: "GET",
+        options: {
           handler: this.retrieveGroupFeeds,
           response: {
             schema: joiFeedsResponse,
@@ -152,7 +153,6 @@ export class GroupFeedController extends EndpointController {
             },
           },
         },
-        method: "GET",
         path: "/api/v1/group/{id}/feeds",
       },
     ];

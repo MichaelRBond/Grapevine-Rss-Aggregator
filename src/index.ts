@@ -10,6 +10,7 @@ import { FeedsController } from "./endpoints/feed-controller";
 import { GroupFeedController } from "./endpoints/group-feed-controller";
 import { GroupsController } from "./endpoints/groups-controller";
 import { ItemController } from "./endpoints/item-controller";
+import { VerifyAuthController } from "./endpoints/verify-auth";
 import { AccountModel } from "./models/accounts";
 import { EndpointController } from "./models/endpoint-controller";
 import { FeedGroupModel } from "./models/feed-group";
@@ -41,12 +42,14 @@ const feedController: FeedsController = new FeedsController(rssModel);
 const groupFeedController: GroupFeedController = new GroupFeedController(feedGroupModel);
 const groupsController: GroupsController = new GroupsController(groupModel);
 const itemController: ItemController = new ItemController(rssModel);
+const verifyAuthController: VerifyAuthController = new VerifyAuthController();
 
 const endpointControllers: EndpointController[] = [
   feedController,
   groupFeedController,
   groupsController,
   itemController,
+  verifyAuthController,
 ];
 
 // TODO : Refactor

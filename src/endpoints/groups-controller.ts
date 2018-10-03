@@ -68,7 +68,8 @@ export class GroupsController extends EndpointController {
   public registerRoutes(): ServerRoute[] {
     return [
       {
-        config: {
+        method: "POST",
+        options: {
           handler: this.create,
           response: {
             schema: joiGroupResponse,
@@ -77,11 +78,11 @@ export class GroupsController extends EndpointController {
             payload: joiGroupCreatePayload,
           },
         },
-        method: "POST",
         path: "/api/v1/group",
       },
       {
-        config: {
+        method: "PUT",
+        options: {
           handler: this.update,
           response: {
             schema: joiGroupResponse,
@@ -93,21 +94,21 @@ export class GroupsController extends EndpointController {
             payload: joiGroupCreatePayload,
           },
         },
-        method: "PUT",
         path: "/api/v1/group/{id}",
       },
       {
-        config: {
+        method: "GET",
+        options: {
           handler: this.list,
           response: {
             schema: Joi.array().items(joiGroupResponse),
           },
         },
-        method: "GET",
         path: "/api/v1/group",
       },
       {
-        config: {
+        method: "GET",
+        options: {
           handler: this.get,
           response: {
             schema: joiGroupResponse,
@@ -118,24 +119,23 @@ export class GroupsController extends EndpointController {
             },
           },
         },
-        method: "GET",
         path: "/api/v1/group/{id}",
       },
       {
-        config: {
-        handler: this.delete,
-        response: {
-          schema: Joi.string(),
-        },
-        validate: {
-          params: {
-            id: Joi.number().min(1),
+        method: "DELETE",
+        options: {
+          handler: this.delete,
+          response: {
+            schema: Joi.string(),
+          },
+          validate: {
+            params: {
+              id: Joi.number().min(1),
+            },
           },
         },
+        path: "/api/v1/group/{id}",
       },
-      method: "DELETE",
-      path: "/api/v1/group/{id}",
-    },
-   ];
+    ];
   }
 }
