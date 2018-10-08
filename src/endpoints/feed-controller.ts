@@ -57,6 +57,7 @@ export class FeedsController extends EndpointController {
       {
         method: "GET",
         options: {
+          cors: true,
           handler: this.getFeeds,
           response: {
             schema: Joi.array().items(joiRssFeedApiResponse),
@@ -67,6 +68,7 @@ export class FeedsController extends EndpointController {
       {
         method: "POST",
         options: {
+          cors: true,
           handler: this.saveFeed,
           response: {
             schema: joiRssFeedApiResponse,
@@ -80,6 +82,7 @@ export class FeedsController extends EndpointController {
       {
         method: "PUT",
         options: {
+          cors: true,
           handler: this.updateFeed,
           response: {
             schema: joiRssFeedApiResponse,

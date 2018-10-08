@@ -102,6 +102,7 @@ export class GroupFeedController extends EndpointController {
       {
         method: "POST",
         options: {
+          cors: true,
           handler: this.addGroupToFeed,
           response: {
             schema: joiFeedGroupsResponse,
@@ -115,6 +116,7 @@ export class GroupFeedController extends EndpointController {
       {
         method: "DELETE",
         options: {
+          cors: true,
           handler: this.removeGroupFromFeed,
           response: {
             schema: joiFeedGroupsResponse,
@@ -128,6 +130,7 @@ export class GroupFeedController extends EndpointController {
       {
         method: "GET",
         options: {
+          cors: true,
           handler: this.retrieveFeedGroups,
           response: {
             schema: joiFeedGroupsResponse,
@@ -143,6 +146,7 @@ export class GroupFeedController extends EndpointController {
       {
         method: "GET",
         options: {
+          cors: true,
           handler: this.retrieveGroupFeeds,
           response: {
             schema: joiFeedsResponse,

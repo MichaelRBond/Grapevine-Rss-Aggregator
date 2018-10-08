@@ -70,6 +70,7 @@ export class GroupsController extends EndpointController {
       {
         method: "POST",
         options: {
+          cors: true,
           handler: this.create,
           response: {
             schema: joiGroupResponse,
@@ -83,6 +84,7 @@ export class GroupsController extends EndpointController {
       {
         method: "PUT",
         options: {
+          cors: true,
           handler: this.update,
           response: {
             schema: joiGroupResponse,
@@ -99,6 +101,7 @@ export class GroupsController extends EndpointController {
       {
         method: "GET",
         options: {
+          cors: true,
           handler: this.list,
           response: {
             schema: Joi.array().items(joiGroupResponse),
@@ -109,6 +112,7 @@ export class GroupsController extends EndpointController {
       {
         method: "GET",
         options: {
+          cors: true,
           handler: this.get,
           response: {
             schema: joiGroupResponse,
@@ -124,6 +128,7 @@ export class GroupsController extends EndpointController {
       {
         method: "DELETE",
         options: {
+          cors: true,
           handler: this.delete,
           response: {
             schema: Joi.string(),

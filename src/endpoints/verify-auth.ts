@@ -21,6 +21,7 @@ export class VerifyAuthController extends EndpointController {
       {
         method: "GET",
         options: {
+          cors: true,
           handler: this.verify,
           response: {
             schema: joiReponse,
