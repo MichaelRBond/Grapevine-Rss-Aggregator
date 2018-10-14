@@ -94,7 +94,6 @@ export class ItemController extends EndpointController {
       {
         method: "GET",
         options: {
-          cors: true,
           handler: this.getFeedItems,
           response: {
             schema: Joi.array().items(joiRssItemApiResponse),
@@ -111,7 +110,6 @@ export class ItemController extends EndpointController {
       {
         method: "POST",
         options: {
-          cors: true,
           handler: this.setStatusOfItem,
           response: {
             schema: {message: Joi.string()},

@@ -78,6 +78,9 @@ async function getHapiServer(
   const server = new Server({
     host: config.hapi.host,
     port: config.hapi.port,
+    routes: {
+      cors: true,
+    },
   });
 
   await server.register(require("hapi-auth-basic"));
