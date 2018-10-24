@@ -7,11 +7,11 @@ RSS Aggregator written in Typescript
 
 ## Motivation
 
-Being an avid user of RSS since the late 1990s, I have become tired of the RSS software I use disappearing when the software authors lose interest (I'm looking at you Google, Fever, etc ...). So, since RSS is daily use for me, I decided to write my own solution.
+Being an avid user of RSS since the late 1990s, I have become tired of the RSS software I use disappearing when the software authors lose interest (I'm looking at you Google, Fever, etc ...). Since RSS is s daily use for me, I decided to write my own solution.
 
-Grapevine RSS Aggregator is the backend service.
+Grapevine RSS Aggregator is the backend service. This is the "sync" engine. Run and maintain your own aggregator with an API and connect to it with a client.
 
-Grapevine RSS Reader is the initial frontend service.
+Grapevine RSS Reader is the initial frontend service. This is the client, or user interface.
 
 My hope is that other RSS readers will integrate the API
 
@@ -35,6 +35,12 @@ If you are using docker compose, you can skip to step #2 and just run `yarn dbm 
 
     ```bash
     yarn dbm up
+    ```
+
+1. Run datbase migration in docker. Replace `src_grapevine-aggregator_1` with the container id
+
+    ```bash
+    docker exec -it src_grapevine-aggregator_1 yarn dbm up
     ```
 
 ## Creating a user
