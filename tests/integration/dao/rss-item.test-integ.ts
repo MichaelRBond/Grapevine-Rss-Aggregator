@@ -295,6 +295,48 @@ describe("Integration: feed-item", () => {
     });
   });
 
+  describe("getItems()", () => {
+
+    beforeEach(async () => {
+      await populateItems();
+    });
+
+    it("returns all items", async () => {
+      const items = await dao.getItems();
+      expect(items).toHaveLength(16);
+    });
+
+    it("returns all starred items", async () => {
+      const items = await dao.getItems(null, true);
+      expect(items).toHaveLength(8);
+    });
+
+    it("returns all unread items", async () => {
+      const items = await dao.getItems(true);
+      expect(items).toHaveLength(8);
+    });
+
+    it("returns all starred items that are unread", async () => {
+      const items = await dao.getItems(false, true);
+      expect(items).toHaveLength(4);
+    });
+
+    it("returns all starred items that are read", async () => {
+      const items = await dao.getItems(true, true);
+      expect(items).toHaveLength(4);
+    });
+
+    it("returns all unstarred items that are read", async () => {
+      const items = await dao.getItems(true, false);
+      expect(items).toHaveLength(4);
+    });
+
+    it("returns all unstarred items that are unread", async () => {
+      const items = await dao.getItems(true, false);
+      expect(items).toHaveLength(4);
+    });
+  });
+
   describe("setItemStatus()", () => {
 
     const mysql = mysqlClientProvider();

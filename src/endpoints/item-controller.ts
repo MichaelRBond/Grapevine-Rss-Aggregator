@@ -1,7 +1,7 @@
 import * as Boom from "boom";
 import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
-import { get, isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
+import { get, isDefined, isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
 import { EndpointController } from "../models/endpoint-controller";
 import { ItemFlags, RssItemApiResponse, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
@@ -32,6 +32,7 @@ export class ItemController extends EndpointController {
   ) {
     super();
     this.getFeedItems = this.getFeedItems.bind(this);
+    this.getItems = this.getItems.bind(this);
     this.setStatusOfItem = this.setStatusOfItem.bind(this);
   }
 
@@ -45,6 +46,14 @@ export class ItemController extends EndpointController {
     const starred = this.determineStarredFlag(flags);
 
     const items = await this.rssModel.getFeedItems(feedId, read, starred);
+    return items.map(this.rssModel.rssItemToApiResponse);
+  }
+
+  public async getItems(request: Request): Promise<RssItemApiResponse[]> {
+    const flags = isDefined(request.params) ? this.parseFlags(request.params.flags) : [];
+    const read = this.determineReadFlag(flags);
+    const starred = this.determineStarredFlag(flags);
+    const items = await this.rssModel.getItems(read, starred);
     return items.map(this.rssModel.rssItemToApiResponse);
   }
 
@@ -106,6 +115,21 @@ export class ItemController extends EndpointController {
           },
         },
         path: "/api/v1/items/feed/{id}/{flags*}",
+      },
+      {
+        method: "GET",
+        options: {
+          handler: this.getItems,
+          response: {
+            schema: Joi.array().items(joiRssItemApiResponse),
+          },
+          validate: {
+            params: {
+              flags: Joi.string().optional(),
+            },
+          },
+        },
+        path: "/api/v1/items/{flags*}",
       },
       {
         method: "POST",

@@ -151,6 +151,15 @@ describe("Unit: RSS Model", () => {
     });
   });
 
+  describe("getItems()", () => {
+    it("returns items", async () => {
+      itemDao.getItems = async () => [];
+      const result = await rss.getItems(false, true);
+      expect(result).toHaveLength(0);
+      verify(itemDao.getItems).calledWith(false, true);
+    });
+  });
+
   describe("rssItemToApiResponse()", () => {
 
     let rssItem: RssItem;

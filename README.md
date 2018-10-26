@@ -339,6 +339,39 @@ Response:
 ]
 ```
 
+#### Get items
+
+URL: `/api/v1/items/{flags*}`
+
+*flags*: optional. `/` delimited list of `read`, `starred`, `unread`, `unstarred`
+
+Method: `GET`
+
+Response:
+
+```javascript
+[
+  {
+    author: Joi.string().optional().allow(null, ""),
+    categories: Joi.array().items(Joi.string().allow(null, "")).optional(),
+    comments: Joi.string().optional().allow(null, ""),
+    description: Joi.string().optional().allow(null, ""),
+    enclosures: Joi.array().items(Joi.string().allow(null, "")).optional(),
+    feed_id: Joi.number().min(1).required(),
+    guid: Joi.string().required(),
+    id: Joi.number().min(1).required(),
+    image: Joi.object().optional(),
+    link: Joi.string().optional().allow(null, ""),
+    published: Joi.date(),
+    read: Joi.boolean().required(),
+    starred: Joi.boolean().required(),
+    summary: Joi.string().optional().allow(null, ""),
+    title: Joi.string().optional().allow(null, ""),
+    updated: Joi.date(),
+  }
+]
+```
+
 #### Update item status
 
 URL: `/api/v1/item/{id}/status`
@@ -360,7 +393,7 @@ Payload:
 
 ## TODO
 
-- [ ] Option to run a cleanup process to remove read, unstarred, items after they are X days old. 
+- [ ] Option to run a cleanup process to remove read, unstarred, items after they are X days old.
 - [ ] Delete a feed
 - [ ] Parse title from feed when adding a new feed, if none is provided
 - [ ] Download and store favicon
@@ -369,5 +402,3 @@ Payload:
 - [ ] Support for Password protected RSS feeds
 - [ ] Tagging support
 - [ ] Multiple Users
-
-

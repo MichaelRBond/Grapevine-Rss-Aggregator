@@ -1,7 +1,7 @@
-import { isNullOrUndefined, Nullable } from "nullable-ts";
+import { isNotNullorUnDefined, isNullOrUndefined, Nullable } from "nullable-ts";
 import { MySqlClient } from "../clients/mysql-client";
 import { RssFeed, RssItem, RssItemBase } from "../models/rss";
-import { getUnixtimeFromDate } from "../utils/helpers";
+import { getUnixtimeFromDate, isBlank } from "../utils/helpers";
 import { logger } from "../utils/logger";
 import { getGuid } from "../utils/rss";
 
@@ -77,16 +77,16 @@ export class RssItemDao {
   }
 
   public async getByFeed(feedId: number, read?: Nullable<boolean>, starred?: Nullable<boolean>): Promise<RssItem[]> {
-    let readClause = "";
-    let starredClause = "";
-    if (!isNullOrUndefined(read)) {
-      readClause = " AND `read`=" + (read ? "1" : "0");
-    }
-    if (!isNullOrUndefined(starred)) {
-      starredClause = " AND `starred`=" + (starred ? "1" : "0");
-    }
-    const sql = "SELECT * FROM `items` WHERE `feedId`=?" + readClause + starredClause;
+    const where = this.buildWhereClause(feedId, read, starred);
+    const sql = "SELECT * FROM `items` " + where;
     const result = await this.mysqlProvider().query(sql, [feedId]);
+    return result.map(this.dbToRssItem);
+  }
+
+  public async getItems(read?: Nullable<boolean>, starred?: Nullable<boolean>): Promise<RssItem[]> {
+    const where = this.buildWhereClause(null, read, starred);
+    const sql = "SELECT * FROM `items` " + where;
+    const result = await this.mysqlProvider().query(sql);
     return result.map(this.dbToRssItem);
   }
 
@@ -99,6 +99,24 @@ export class RssItemDao {
       throw new Error("Error updating item status");
     }
     return;
+  }
+
+  // visible for testing
+  public buildWhereClause(feedId?: Nullable<number>, read?: Nullable<boolean>, starred?: Nullable<boolean>): string {
+    const clauses: string[] = [];
+
+    if (isNotNullorUnDefined(feedId)) {
+      clauses.push("`feedId`=?");
+    }
+    if (isNotNullorUnDefined(read)) {
+      clauses.push("`read`=" + (read ? "1" : "0"));
+    }
+    if (isNotNullorUnDefined(starred)) {
+      clauses.push("`starred`=" + (starred ? "1" : "0"));
+    }
+
+    const joined = clauses.join(" AND ");
+    return isBlank(joined) ? "" : `WHERE ${joined}`;
   }
 
   private dbToRssItem(result: any): RssItem {

@@ -44,6 +44,21 @@ describe("Unit: item-controller", () => {
     });
   });
 
+  describe("getItems()", () => {
+
+    beforeEach(() => {
+      request = {
+      } as Request;
+    });
+
+    it("returns an array on success", async () => {
+      rssModel.getItems = async () => [{} as RssItem];
+      const result = await controller.getItems(request);
+      verify(rssModel.getItems).calledWith(null, null);
+      verify(rssModel.rssItemToApiResponse).calledOnce();
+    });
+  });
+
   describe("setStatusOfItem()", () => {
 
     beforeEach(() => {
@@ -162,7 +177,7 @@ describe("Unit: item-controller", () => {
   describe("registerRoutes()", () => {
     it("returns an array of routes", () => {
       const routes = controller.registerRoutes();
-      expect(routes).toHaveLength(2);
+      expect(routes).toHaveLength(3);
     });
   });
 });

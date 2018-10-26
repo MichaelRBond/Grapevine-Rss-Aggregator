@@ -146,6 +146,10 @@ export class RssModel {
     return this.itemDao.getByFeed(feedId, read, starred);
   }
 
+  public async getItems(read?: Nullable<boolean>, starred?: Nullable<boolean>): Promise<RssItem[]> {
+    return this.itemDao.getItems(read, starred);
+  }
+
   public rssItemToApiResponse(rssItem: RssItem): RssItemApiResponse {
     return {
       author: rssItem.author,
