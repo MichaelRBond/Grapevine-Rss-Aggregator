@@ -76,7 +76,7 @@ export interface RssItemApiResponse {
   comments: string; // a link to the article's comments section
   image: RssItemImage;
   categories: string[];
-  enclosures: string[];
+  enclosures: any[];
 }
 
 export class RssModel {

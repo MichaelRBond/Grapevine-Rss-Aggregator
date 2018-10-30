@@ -12,7 +12,7 @@ const joiRssItemApiResponse = {
   categories: Joi.array().items(Joi.string().allow(null, "")).optional(),
   comments: Joi.string().optional().allow(null, ""),
   description: Joi.string().optional().allow(null, ""),
-  enclosures: Joi.array().items(Joi.string().allow(null, "")).optional(),
+  enclosures: Joi.array().items(Joi.any()).optional(),
   feed_id: Joi.number().min(1).required(),
   guid: Joi.string().required(),
   id: Joi.number().min(1).required(),
