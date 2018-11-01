@@ -1,18 +1,18 @@
 import { Request } from "hapi";
-import { FeedsController } from "../../../src/endpoints/feed-controller";
-import { Rss, RssFeed } from "../../../src/models/rss";
+import { FeedsController } from "../../../src/api/feed-controller";
+import { RssFeed, RssModel } from "../../../src/models/rss";
 import { thrownErrMsg, transformErrors } from "../../../src/utils/errors";
 import { Mock, mock, verify } from "../../utils/mockfill";
 
 describe("Unit: feed-controller", () => {
 
-  let rss: Mock<Rss>;
+  let rss: Mock<RssModel>;
   let api: FeedsController;
 
   let request: Request;
 
   beforeEach(() => {
-    rss = mock<Rss>();
+    rss = mock<RssModel>();
 
     api = new FeedsController(rss);
 

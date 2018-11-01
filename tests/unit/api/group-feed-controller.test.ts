@@ -1,5 +1,5 @@
 import { Request } from "hapi";
-import { GroupFeedController } from "../../../src/endpoints/group-feed-controller";
+import { GroupFeedController } from "../../../src/api/group-feed-controller";
 import { FeedGroupModel } from "../../../src/models/feed-group";
 import { Mock, mock, verify } from "../../utils/mockfill";
 

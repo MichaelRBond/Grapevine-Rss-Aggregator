@@ -1,5 +1,5 @@
 import { Request } from "hapi";
-import { ItemController } from "../../../src/endpoints/item-controller";
+import { ItemController } from "../../../src/api/item-controller";
 import { ItemFlags, RssFeed, RssItem, RssModel } from "../../../src/models/rss";
 import { Mock, mock, verify } from "../../utils/mockfill";
 

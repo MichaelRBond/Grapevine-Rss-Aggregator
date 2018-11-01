@@ -1,4 +1,4 @@
-import { VerifyAuthController } from "../../../src/endpoints/verify-auth";
+import { VerifyAuthController } from "../../../src/api/verify-auth";
 
 describe("Unit: verify-auth controller", () => {
   let controller: VerifyAuthController;

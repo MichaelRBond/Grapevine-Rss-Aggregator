@@ -1,5 +1,5 @@
 import { Request } from "hapi";
-import { GroupsController } from "../../../src/endpoints/groups-controller";
+import { GroupsController } from "../../../src/api/groups-controller";
 import { GroupModel } from "../../../src/models/group";
 import { thrownErrMsg } from "../../../src/utils/errors";
 import { Mock, mock, verify } from "../../utils/mockfill";
