@@ -13,7 +13,10 @@ const joiRssItemApiResponse = {
   comments: Joi.string().optional().allow(null, ""),
   description: Joi.string().optional().allow(null, ""),
   enclosures: Joi.array().items(Joi.any()).optional(),
-  feed_id: Joi.number().min(1).required(),
+  feed: Joi.object().keys({
+    id: Joi.number().min(1).required(),
+    title: Joi.string().required(),
+  }).required(),
   guid: Joi.string().required(),
   id: Joi.number().min(1).required(),
   image: Joi.object().optional(),
@@ -88,8 +91,8 @@ export class ItemController extends EndpointController {
     if (isNullOrUndefined(flagsParmasOptional)) {
       return [];
     }
-    const flagsParmas = get(flagsParmasOptional as string);
-    const flags = flagsParmas.split("/");
+    const flagsParams = get(flagsParmasOptional as string);
+    const flags = flagsParams.split("/");
     const filteredFlags = flags.filter(isNotBlank);
     const invalidFlags = filteredFlags.filter(this.isInvalidFlag);
     if (invalidFlags.length) {

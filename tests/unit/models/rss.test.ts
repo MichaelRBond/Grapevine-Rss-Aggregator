@@ -172,6 +172,7 @@ describe("Unit: RSS Model", () => {
         description: "I've packed my bags",
         enclosures: [],
         feedId: 2,
+        feedTitle: "John Denver Sings",
         guid: "1a",
         id: 1,
         image: {
@@ -196,7 +197,10 @@ describe("Unit: RSS Model", () => {
         comments: rssItem.comments,
         description: rssItem.description,
         enclosures: rssItem.enclosures,
-        feed_id: rssItem.feedId,
+        feed: {
+          id: rssItem.feedId,
+          title: rssItem.feedTitle,
+        },
         guid: rssItem.guid,
         id: rssItem.id,
         image: rssItem.image,

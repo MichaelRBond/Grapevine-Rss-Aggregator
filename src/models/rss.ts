@@ -56,13 +56,17 @@ export interface RssItemBase {
 export interface RssItem extends RssItemBase {
   id: number;
   feedId: number;
+  feedTitle: string;
   read: boolean;
   starred: boolean;
 }
 
 export interface RssItemApiResponse {
   id: number;
-  feed_id: number;
+  feed: {
+    id: number;
+    title: string;
+  };
   read: boolean;
   starred: boolean;
   title: string;
@@ -157,7 +161,10 @@ export class RssModel {
       comments: rssItem.comments,
       description: rssItem.description,
       enclosures: rssItem.enclosures,
-      feed_id: rssItem.feedId,
+      feed: {
+        id: rssItem.feedId,
+        title: rssItem.feedTitle,
+      },
       guid: rssItem.guid,
       id: rssItem.id,
       image: rssItem.image,

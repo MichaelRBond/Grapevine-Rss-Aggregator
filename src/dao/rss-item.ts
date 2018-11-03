@@ -59,8 +59,9 @@ export class RssItemDao {
   }
 
   public async getById(id: number): Promise<Nullable<RssItem>> {
+    const sql = this.getSql("WHERE `items`.`id`=?");
     const mysql = this.mysqlProvider();
-    const result = await mysql.query("SELECT * FROM `items` WHERE `id`=?", [id]);
+    const result = await mysql.query(sql, [id]);
     if (result.length === 0) {
       return null;
     }
@@ -68,8 +69,9 @@ export class RssItemDao {
   }
 
   public async getByGuid(guid: string): Promise<Nullable<RssItem>> {
+    const sql = this.getSql("WHERE `items`.`guid`=?");
     const mysql = this.mysqlProvider();
-    const result = await mysql.query("SELECT * FROM `items` WHERE `guid`=?", [guid]);
+    const result = await mysql.query(sql, [guid]);
     if (result.length === 0) {
       return null;
     }
@@ -78,14 +80,14 @@ export class RssItemDao {
 
   public async getByFeed(feedId: number, read?: Nullable<boolean>, starred?: Nullable<boolean>): Promise<RssItem[]> {
     const where = this.buildWhereClause(feedId, read, starred);
-    const sql = "SELECT * FROM `items` " + where;
+    const sql = this.getSql(where);
     const result = await this.mysqlProvider().query(sql, [feedId]);
     return result.map(this.dbToRssItem);
   }
 
   public async getItems(read?: Nullable<boolean>, starred?: Nullable<boolean>): Promise<RssItem[]> {
     const where = this.buildWhereClause(null, read, starred);
-    const sql = "SELECT * FROM `items` " + where;
+    const sql = this.getSql(where);
     const result = await this.mysqlProvider().query(sql);
     return result.map(this.dbToRssItem);
   }
@@ -99,6 +101,13 @@ export class RssItemDao {
       throw new Error("Error updating item status");
     }
     return;
+  }
+
+  // visible for testing
+  public getSql(where: string): string {
+    return "SELECT `items`.*, `feeds`.`title` as `feedTitle` FROM `items`"
+      + " LEFT JOIN `feeds` ON `feeds`.`id`=`items`.`feedId`"
+      + where;
   }
 
   // visible for testing
@@ -127,6 +136,7 @@ export class RssItemDao {
       description: result.description,
       enclosures: JSON.parse(result.enclosures),
       feedId: result.feedId,
+      feedTitle: result.feedTitle,
       guid: result.guid,
       id: result.id,
       image: result.image,

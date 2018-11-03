@@ -49,12 +49,25 @@ describe("Unit: item-controller", () => {
     beforeEach(() => {
       request = {
       } as Request;
+
+      rssModel.getItems = async () => [{} as RssItem];
     });
 
     it("returns an array on success", async () => {
       rssModel.getItems = async () => [{} as RssItem];
       const result = await controller.getItems(request);
       verify(rssModel.getItems).calledWith(null, null);
+      verify(rssModel.rssItemToApiResponse).calledOnce();
+    });
+
+    it("returns an array when flags are provided", async () => {
+      request = {
+        params: {
+          flags: "starred/read",
+        } as any,
+      } as Request;
+      const result = await controller.getItems(request);
+      verify(rssModel.getItems).calledWith(true, true);
       verify(rssModel.rssItemToApiResponse).calledOnce();
     });
   });
