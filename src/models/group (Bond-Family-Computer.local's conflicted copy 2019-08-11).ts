@@ -31,7 +31,9 @@ export class GroupModel {
   }
 
   public async update(id: number, groupBase: GroupBase): Promise<Nullable<Group>> {
-    if (isNullOrUndefined(await this.groupDao.getById(id))) { return null; }
+    if (isNullOrUndefined(await this.groupDao.getById(id))) {
+      return null;
+    }
     const groupNullable = await this.groupDao.update(id, groupBase);
     return orElseThrow(groupNullable, new Error(thrownErrMsg.groupModelUpdate));
   }
@@ -46,7 +48,9 @@ export class GroupModel {
 
   public async delete(id: number): Promise<Nullable<Group>> {
     const group = await this.groupDao.getById(id);
-    if (isNullOrUndefined(group)) { return null; }
+    if (isNullOrUndefined(group)) {
+      return null;
+    }
     await this.groupDao.delete(id);
     // TODO : Remove feed associations
     return group;

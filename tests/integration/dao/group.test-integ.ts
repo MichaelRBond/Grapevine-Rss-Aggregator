@@ -147,4 +147,19 @@ describe("Integration: group dao", () => {
       expect(relationships.length).toEqual(3);
     });
   });
+
+  describe("removeFeedFromGroups", () => {
+    it("removes a feed from all groups", async () => {
+      const mysql = mysqlClientProvider();
+      await mysql.insertUpdate("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3), (2, 1)");
+
+      let relationships = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(relationships.length).toEqual(4);
+
+      groupDao.removeFeedFromGroups(1);
+
+      relationships = await mysql.query("SELECT * FROM `feedGroups`");
+      expect(relationships.length).toEqual(1);
+    });
+  });
 });

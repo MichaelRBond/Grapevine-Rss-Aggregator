@@ -39,6 +39,13 @@ export class RssFeedDao {
     return result.affectedRows !== 1 ? null : feed.id;
   }
 
+  public async delete(id: number): Promise<void> {
+    const mysql = this.mysqlProvider();
+    const sql = "DELETE FROM `feeds` WHERE `id`=? LIMIT 1";
+    await mysql.query(sql, [id]);
+    return;
+  }
+
   public async getFeedsForGroup(groupId: number): Promise<RssFeed[]> {
     const mysql = this.mysqlProvider();
     const sql = "SELECT `feeds`.* FROM `feedGroups` LEFT JOIN `feeds` ON `feeds`.`id`=`feedGroups`.`feedId` "

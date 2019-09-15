@@ -103,6 +103,13 @@ export class RssItemDao {
     return;
   }
 
+  public async deleteItemsFromFeed(feedId: number): Promise<void> {
+    const mysql = this.mysqlProvider();
+    const sql = "DELETE FROM `items` WHERE `feedId`=?";
+    await mysql.query(sql, [feedId]);
+    return;
+  }
+
   // visible for testing
   public getSql(where: string): string {
     return "SELECT `items`.*, `feeds`.`title` as `feedTitle` FROM `items`"

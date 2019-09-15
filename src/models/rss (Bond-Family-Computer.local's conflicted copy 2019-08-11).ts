@@ -138,8 +138,8 @@ export class RssModel {
       return;
     }
     await this.itemDao.deleteItemsFromFeed(feedId);
-    await this.groupDao.removeFeedFromGroups(feedId);
     await this.feedDao.delete(feedId);
+    await this.groupDao.removeFeedFromGroups(feedId);
     return;
   }
 

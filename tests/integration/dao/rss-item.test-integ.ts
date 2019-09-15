@@ -205,14 +205,18 @@ describe("Integration: feed-item", () => {
     });
   });
 
-  it("returns null when no id can be found", async () => {
-    const result = await dao.getById(1000);
-    expect(result).toBeNull();
+  describe("getById", () => {
+    it("returns null when no id can be found", async () => {
+      const result = await dao.getById(1000);
+      expect(result).toBeNull();
+    });
   });
 
-  it("returns null when no guid can be found", async () => {
-    const result = await dao.getByGuid("abcd");
-    expect(result).toBeNull();
+  describe("getByGuid", () => {
+      it("returns null when no guid can be found", async () => {
+      const result = await dao.getByGuid("abcd");
+      expect(result).toBeNull();
+    });
   });
 
   describe("getByFeed()", () => {
@@ -395,6 +399,10 @@ describe("Integration: feed-item", () => {
         expect(err.message).toEqual("Error updating item status");
       }
     });
+  });
+
+  describe("deleteItemsFromFeed", () => {
+
   });
 
 });

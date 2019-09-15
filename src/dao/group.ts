@@ -99,6 +99,13 @@ export class GroupDao {
     return;
   }
 
+  public async removeFeedFromGroups(feedId: number): Promise<void> {
+    const mysql = this.mysqlProvider();
+    const sql = "DELETE FROM `feedGroups` WHERE `feedId`=?";
+    await mysql.query(sql, [feedId]);
+    return;
+  }
+
   private dbToGroup(result: DbGroup) {
     return {
       id: result.id,
