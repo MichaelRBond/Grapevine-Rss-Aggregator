@@ -37,7 +37,7 @@ describe("Unit: item-controller", () => {
     it("returns an array on success", async () => {
       rssModel.getFeed = async () => ({} as RssFeed);
       rssModel.getFeedItems = async () => [{} as RssItem];
-      const result = await controller.getFeedItems(request);
+      await controller.getFeedItems(request);
       verify(rssModel.getFeed).calledWith(1);
       verify(rssModel.getFeedItems).calledWith(1, null, null);
       verify(rssModel.rssItemToApiResponse).calledOnce();
@@ -55,7 +55,7 @@ describe("Unit: item-controller", () => {
 
     it("returns an array on success", async () => {
       rssModel.getItems = async () => [{} as RssItem];
-      const result = await controller.getItems(request);
+      await controller.getItems(request);
       verify(rssModel.getItems).calledWith(null, null);
       verify(rssModel.rssItemToApiResponse).calledOnce();
     });
@@ -66,7 +66,7 @@ describe("Unit: item-controller", () => {
           flags: "starred/read",
         } as any,
       } as Request;
-      const result = await controller.getItems(request);
+      await controller.getItems(request);
       verify(rssModel.getItems).calledWith(true, true);
       verify(rssModel.rssItemToApiResponse).calledOnce();
     });

@@ -14,7 +14,7 @@ export function mock<T>(instance: any = {}, options: MockOptions = defaultOption
   const handler = new CountingProxyHandler(options);
   const proxy = new Proxy(instance, handler);
   proxy.captures = (property: string): any[][] => {
-    return !handler.captures.has(property) ? [] : handler.captures.get(property);
+    return !handler.captures.has(property) ? [] : handler.captures.get(property) || [];
   };
   return proxy;
 }
@@ -109,7 +109,7 @@ export interface MockOptions {
 }
 
 const defaultOptions = {
-  defaultValue: (): number => void 0,
+  defaultValue: (): number | undefined => void 0,
 };
 
 interface ProxyMethod {
@@ -142,10 +142,13 @@ class CountingProxyHandler<T extends object> implements ProxyHandler<T> {
 
     const captures = this.captures;
     const proxy = function(...args: any[]) { // tslint:disable-line only-arrow-functions
-      captures.get(property).push(args);
+      const capturedProp = captures.get(property);
+      if (capturedProp !== null && capturedProp !== undefined) {
+       capturedProp.push(args);
+      }
       return propValue(...args);
     } as ProxyMethod;
-    proxy.getInvocations = () => captures.get(property);
+    proxy.getInvocations = () => captures.get(property) || [];
     return proxy;
   }
 }

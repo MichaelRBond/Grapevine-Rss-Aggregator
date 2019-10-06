@@ -46,7 +46,7 @@ export interface RssItemBase {
   description: string;
   enclosures: string[];
   guid: string;
-  image: RssItemImage;
+  image: Nullable<RssItemImage>;
   link: string;
   published: Nullable<Date>;
   summary: string;
@@ -79,7 +79,7 @@ export interface RssItemApiResponse {
   author: string;
   guid: string;
   comments: string; // a link to the article's comments section
-  image: RssItemImage;
+  image: Nullable<RssItemImage>;
   categories: string[];
   enclosures: any[];
 }

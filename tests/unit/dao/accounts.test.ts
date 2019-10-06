@@ -1,6 +1,6 @@
 import { MySqlClient, OkPacket } from "../../../src/clients/mysql-client";
 import { AccountDao } from "../../../src/dao/accounts";
-import { AccountBase } from "../../../src/models/accounts";
+import { Account, AccountBase } from "../../../src/models/accounts";
 import { Mock, mock, verify } from "../../utils/mockfill";
 
 describe("Unit: account dao", () => {
@@ -30,7 +30,7 @@ describe("Unit: account dao", () => {
     it("throws an error when there are more than 1 accounts found", async () => {
       mysql.query = async () => [{} as Account, {} as Account];
       try {
-        const result = await dao.getById(1);
+        await dao.getById(1);
         fail();
       } catch (err) {
         expect(err.message).toEqual("Invalid number of accounts returned");
@@ -42,7 +42,7 @@ describe("Unit: account dao", () => {
     it("throws an error when there are more than 1 accounts found", async () => {
       mysql.query = async () => [{} as Account, {} as Account];
       try {
-        const result = await dao.getByUsername("foo");
+        await dao.getByUsername("foo");
         fail();
       } catch (err) {
         expect(err.message).toEqual("Invalid number of accounts returned");
