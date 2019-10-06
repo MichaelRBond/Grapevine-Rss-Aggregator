@@ -66,7 +66,7 @@ describe("Unit: RSS Model", () => {
     it("saves a feed", async () => {
       feedDao.save = async () => 1;
       feedDao.getById = async () => generateNumOfFeeds(1)[0];
-      const feed = await rss.saveFeed({} as RssFeedBase);
+      await rss.saveFeed({} as RssFeedBase);
       verify(feedDao.save).calledOnce();
       verify(feedDao.getById).calledOnce();
     });
@@ -84,7 +84,7 @@ describe("Unit: RSS Model", () => {
     it("updates a feed", async () => {
       feedDao.update = async () => 1;
       feedDao.getById = async () => generateNumOfFeeds(1)[0];
-      const feed = await rss.updateFeed({} as RssFeed);
+      await rss.updateFeed({} as RssFeed);
       verify(feedDao.update).calledOnce();
       verify(feedDao.getById).calledOnce();
     });
@@ -286,7 +286,7 @@ function generateNumOfFeeds(numOfFeeds: number): RssFeed[] {
     const feed: RssFeed = {
       addedOn: i,
       id: i,
-      lastUpdated: null,
+      lastUpdated: 1234,
       title: `Title ${i}`,
       url: `http://testing-${i}.com`,
     };
