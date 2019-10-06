@@ -141,7 +141,7 @@ describe("Integration: group dao", () => {
       let relationships = await mysql.query("SELECT * FROM `feedGroups`");
       expect(relationships.length).toEqual(4);
 
-      groupDao.removeFeedFromGroup(1, 1);
+      await groupDao.removeFeedFromGroup(1, 1);
 
       relationships = await mysql.query("SELECT * FROM `feedGroups`");
       expect(relationships.length).toEqual(3);
@@ -154,12 +154,12 @@ describe("Integration: group dao", () => {
       await mysql.insertUpdate("INSERT INTO `feedGroups` (`feedId`, `groupId`) VALUES(1, 1), (1, 2), (1, 3), (2, 1)");
 
       let relationships = await mysql.query("SELECT * FROM `feedGroups`");
-      expect(relationships.length).toEqual(4);
+      expect(relationships).toHaveLength(4);
 
-      groupDao.removeFeedFromGroups(1);
+      await groupDao.removeFeedFromGroups(1);
 
       relationships = await mysql.query("SELECT * FROM `feedGroups`");
-      expect(relationships.length).toEqual(1);
+      expect(relationships).toHaveLength(1);
     });
   });
 });

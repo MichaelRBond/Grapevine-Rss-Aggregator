@@ -1586,9 +1586,10 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-generate-password@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/generate-password/-/generate-password-1.4.0.tgz#a3f865c666f629c4f2852093466d83e7a0f16ee2"
+generate-password@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/generate-password/-/generate-password-1.4.2.tgz#77f344ec525f3bfdc1e50899c09e3c46ddb95dfd"
+  integrity sha512-UYEOMRcnpC/228qfCQNSebq8jmIonoPYPILsZl2NmH16Vm53yPvgo/KK3BYeCA3JmhSA/a/HqHzaY0v5dRbyoQ==
 
 get-caller-file@^2.0.1:
   version "2.0.5"
