@@ -32,7 +32,7 @@ const rssItemDao = new RssItemDao(mysqlClientProvider);
 const groupDao = new GroupDao(mysqlClientProvider);
 
 const accountModel = new AccountModel(accountDao);
-const rssModel = new RssModel(rssFeedDao, rssItemDao, feedParser, http);
+const rssModel = new RssModel(rssFeedDao, rssItemDao, groupDao, feedParser, http);
 const groupModel = new GroupModel(groupDao);
 const feedGroupModel = new FeedGroupModel(rssFeedDao, rssModel, groupModel, groupDao);
 
