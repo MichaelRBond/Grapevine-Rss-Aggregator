@@ -142,6 +142,20 @@ Response:
 }
 ```
 
+#### Delete
+
+URL: `/api/v1/feed/{id}`
+
+Method: `DELETE`
+
+Response:
+
+```json
+{
+  "message": "successfully deleted feed"
+}
+```
+
 ### Groups
 
 #### Add Group
@@ -394,7 +408,7 @@ Payload:
 ## TODO
 
 - [ ] Option to run a cleanup process to remove read, unstarred, items after they are X days old.
-- [ ] Delete a feed
+- [X] Delete a feed
 - [ ] Parse title from feed when adding a new feed, if none is provided
 - [ ] Download and store favicon
 - [ ] Swagger Docs
