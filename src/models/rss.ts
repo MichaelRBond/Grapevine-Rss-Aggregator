@@ -1,5 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
+import { GroupDao } from "../dao/group";
 import { RssFeedDao } from "../dao/rss-feed";
 import { DbStatusFields, RssItemDao } from "../dao/rss-item";
 import { FeedParser } from "../utils/feed-parser";
@@ -88,6 +89,7 @@ export class RssModel {
   constructor(
     private feedDao: RssFeedDao,
     private itemDao: RssItemDao,
+    private groupDao: GroupDao,
     private feedParser: FeedParser,
     private http: Http,
   ) { /* */ }
@@ -126,6 +128,19 @@ export class RssModel {
     }
     const feedId = orElseThrow(feedIdNullable, new Error("Error saving seed"));
     return this.feedDao.getById(feedId);
+  }
+
+  public async deleteFeed(feedId: number): Promise<void> {
+    logger.info(`Deleting feed with id=${feedId}`);
+    const feedIdNullable = await this.feedDao.getById(feedId);
+    if (isNullOrUndefined(feedIdNullable)) {
+      logger.error(`Attempted to delete feed id=${feedId}, which does not exist`);
+      return;
+    }
+    await this.itemDao.deleteItemsFromFeed(feedId);
+    await this.groupDao.removeFeedFromGroups(feedId);
+    await this.feedDao.delete(feedId);
+    return;
   }
 
   public async fetchFeeds(): Promise<void> {

@@ -143,8 +143,44 @@ describe("Unit: feed-controller", () => {
 
   });
 
+  describe("deleteFeed", () => {
+
+    beforeEach(() => {
+      request = {
+        params: {
+          id: 1,
+        },
+      } as unknown as Request;
+    });
+
+    it("throws an error if the feed cannot be found", async () => {
+      rss.getFeed = async () => null;
+      try {
+        await api.deleteFeed(request);
+        expect(true).toBeFalsy();
+      } catch (err) {
+        expect(err.message).toContain(transformErrors(thrownErrMsg.feedsNotFound, {id: "1"}));
+      }
+
+      verify(rss.getFeed).calledOnce();
+      verify(rss.deleteFeed).notCalled();
+    });
+
+    it("deletes a feed and returns", async () => {
+      rss.getFeed = async () => ({} as RssFeed);
+      const result = await api.deleteFeed(request);
+      expect(result).toHaveProperty("message", "successfully deleted feed");
+
+      verify(rss.getFeed).calledOnce();
+      verify(rss.deleteFeed).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual(1);
+        return true;
+      });
+    });
+  });
+
   it("returns an array of routes", () => {
     const routes = api.registerRoutes();
-    expect(routes.length).toEqual(3);
+    expect(routes.length).toBeGreaterThan(0);
   });
 });

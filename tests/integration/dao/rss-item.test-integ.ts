@@ -205,14 +205,18 @@ describe("Integration: feed-item", () => {
     });
   });
 
-  it("returns null when no id can be found", async () => {
-    const result = await dao.getById(1000);
-    expect(result).toBeNull();
+  describe("getById", () => {
+    it("returns null when no id can be found", async () => {
+      const result = await dao.getById(1000);
+      expect(result).toBeNull();
+    });
   });
 
-  it("returns null when no guid can be found", async () => {
-    const result = await dao.getByGuid("abcd");
-    expect(result).toBeNull();
+  describe("getByGuid", () => {
+      it("returns null when no guid can be found", async () => {
+      const result = await dao.getByGuid("abcd");
+      expect(result).toBeNull();
+    });
   });
 
   describe("getByFeed()", () => {
@@ -393,6 +397,26 @@ describe("Integration: feed-item", () => {
         fail();
       } catch (err) {
         expect(err.message).toEqual("Error updating item status");
+      }
+    });
+  });
+
+  describe("deleteItemsFromFeed", () => {
+    const mysql = mysqlClientProvider();
+
+    beforeEach(async () => {
+      await populateItems();
+    });
+
+    it("deletes all of the rss items from the items table for a given feed", async () => {
+      const verifyCheck = await mysql.query("SELECT * FROM `items`");
+      expect(verifyCheck).toHaveLength(16);
+      await dao.deleteItemsFromFeed(1);
+
+      const check = await mysql.query("SELECT * FROM `items`");
+      expect(check).toHaveLength(8);
+      for (const item of check) {
+        expect(item.feedId).not.toEqual(1);
       }
     });
   });

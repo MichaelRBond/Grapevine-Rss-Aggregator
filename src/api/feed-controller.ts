@@ -29,6 +29,7 @@ export class FeedsController extends EndpointController {
     this.getFeeds = this.getFeeds.bind(this);
     this.saveFeed = this.saveFeed.bind(this);
     this.updateFeed = this.updateFeed.bind(this);
+    this.deleteFeed = this.deleteFeed.bind(this);
   }
 
   public async getFeeds(): Promise<RssFeedApiResponse[]> {
@@ -50,6 +51,14 @@ export class FeedsController extends EndpointController {
       Boom.notFound(transformErrors(thrownErrMsg.feedsNotFound, {id: feedPayload.id.toString()})));
 
     return RssModel.rssFeedToApiResponse(feed);
+  }
+
+  public async deleteFeed(request: Request): Promise<{message: string}> {
+    const feedId = parseInt(request.params.id, 10);
+    const feedNullable = await this.rss.getFeed(feedId);
+    orElseThrow(feedNullable, Boom.notFound(transformErrors(thrownErrMsg.feedsNotFound, {id: feedId.toString()})));
+    await this.rss.deleteFeed(feedId);
+    return {message: "successfully deleted feed"};
   }
 
   public registerRoutes(): ServerRoute[] {
@@ -89,6 +98,21 @@ export class FeedsController extends EndpointController {
           },
         },
         path: "/api/v1/feed",
+      },
+      {
+        method: "DELETE",
+        options: {
+          handler: this.deleteFeed,
+          response: {
+            schema: {message: Joi.string()},
+          },
+          validate: {
+            params: {
+              id: Joi.number().min(1).required(),
+            },
+          },
+        },
+        path: "/api/v1/feed/{id}",
       },
     ];
   }

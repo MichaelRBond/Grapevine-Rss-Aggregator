@@ -2988,9 +2988,10 @@ npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-nullable-ts@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/nullable-ts/-/nullable-ts-1.1.0.tgz#44f6d33a5d7f68de242151917948f2d4e1cefe72"
+nullable-ts@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/nullable-ts/-/nullable-ts-1.3.0.tgz#109e8dabcca0fad8c1aaabc0d63ff46562cebc2f"
+  integrity sha512-VP0ucbgpUckxXG5sOpw5gPhiA4b7+S7X9Tku5txV4JtkxD400jnP8jZmu4reexC8PyAshYKulAGVRiBdtIXqrA==
 
 number-is-nan@^1.0.0:
   version "1.0.1"

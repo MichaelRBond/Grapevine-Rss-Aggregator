@@ -140,4 +140,34 @@ describe("Integration: rss-feed", () => {
       expect(results.length).toEqual(3);
     });
   });
+
+  describe("delete", () => {
+    it("deletes an rss feed as expected", async () => {
+      const idToDelete = await dao.save(feed);
+
+      feed = {
+        title: "test2",
+        url: "http://test2.com",
+      };
+      await dao.save(feed);
+
+      feed = {
+        title: "test3",
+        url: "http://test3.com",
+      };
+      await dao.save(feed);
+
+      const mysql = mysqlClientProvider();
+      let sqlCheck = await mysql.query("SELECT * FROM `feeds`");
+      expect(sqlCheck).toHaveLength(3);
+
+      await dao.delete(idToDelete);
+      sqlCheck = await mysql.query("SELECT * FROM `feeds`");
+      expect(sqlCheck).toHaveLength(2);
+
+      for (const checkFeed of sqlCheck) {
+        expect(checkFeed.id).not.toEqual(idToDelete);
+      }
+    });
+  });
 });
