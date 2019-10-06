@@ -158,11 +158,11 @@ describe("Integration: rss-feed", () => {
       await dao.save(feed);
 
       const mysql = mysqlClientProvider();
-      let sqlCheck = await mysql.query("SELECT * FROM `feed`");
+      let sqlCheck = await mysql.query("SELECT * FROM `feeds`");
       expect(sqlCheck).toHaveLength(3);
 
       await dao.delete(idToDelete);
-      sqlCheck = await mysql.query("SELECT * FROM `feed`");
+      sqlCheck = await mysql.query("SELECT * FROM `feeds`");
       expect(sqlCheck).toHaveLength(2);
 
       for (const checkFeed of sqlCheck) {

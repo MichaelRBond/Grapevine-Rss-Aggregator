@@ -402,7 +402,23 @@ describe("Integration: feed-item", () => {
   });
 
   describe("deleteItemsFromFeed", () => {
+    const mysql = mysqlClientProvider();
 
+    beforeEach(async () => {
+      await populateItems();
+    });
+
+    it("deletes all of the rss items from the items table for a given feed", async () => {
+      const verifyCheck = await mysql.query("SELECT * FROM `items`");
+      expect(verifyCheck).toHaveLength(16);
+      await dao.deleteItemsFromFeed(1);
+
+      const check = await mysql.query("SELECT * FROM `items`");
+      expect(check).toHaveLength(8);
+      for (const item of check) {
+        expect(item.feedId).not.toEqual(1);
+      }
+    });
   });
 
 });

@@ -1,4 +1,5 @@
 import { AxiosPromise } from "axios";
+import { GroupDao } from "../../../src/dao/group";
 import { RssFeedDao } from "../../../src/dao/rss-feed";
 import { RssItemDao } from "../../../src/dao/rss-item";
 import { ItemFlags, RssFeed, RssFeedBase, RssItem, RssItemBase, RssModel } from "../../../src/models/rss";
@@ -11,6 +12,7 @@ describe("Unit: RSS Model", () => {
 
   let feedDao: Mock<RssFeedDao>;
   let itemDao: Mock<RssItemDao>;
+  let groupDao: Mock<GroupDao>;
   let feedParser: Mock<FeedParser>;
   let http: Mock<Http>;
   let rss: RssModel;
@@ -18,10 +20,11 @@ describe("Unit: RSS Model", () => {
   beforeEach(() => {
     feedDao = mock<RssFeedDao>();
     itemDao = mock<RssItemDao>();
+    groupDao = mock<GroupDao>();
     feedParser = mock<FeedParser>();
     http = mock<Http>();
 
-    rss = new RssModel(feedDao, itemDao, feedParser, http);
+    rss = new RssModel(feedDao, itemDao, groupDao, feedParser, http);
   });
 
   describe("getFeed()", () => {
@@ -252,6 +255,27 @@ describe("Unit: RSS Model", () => {
         expect(err.message).toEqual("Invalid status flag provided");
       }
       verify(itemDao.setItemStatus).notCalled();
+    });
+  });
+
+  describe("deleteFeed", () => {
+    it("returns no-op if the feed cannot be retrieved", async () => {
+      feedDao.getById = async () => null;
+      await rss.deleteFeed(1);
+      verify(itemDao.deleteItemsFromFeed).notCalled();
+      verify(groupDao.removeFeedFromGroups).notCalled();
+      verify(feedDao.delete).notCalled();
+    });
+
+    it("deletes a feed", async () => {
+      feedDao.getById = async () => ({} as RssFeed);
+      await rss.deleteFeed(1);
+      verify(itemDao.deleteItemsFromFeed).calledOnce();
+      verify(itemDao.deleteItemsFromFeed).calledWith(1);
+      verify(groupDao.removeFeedFromGroups).calledOnce();
+      verify(groupDao.removeFeedFromGroups).calledWith(1);
+      verify(feedDao.delete).calledOnce();
+      verify(feedDao.delete).calledWith(1);
     });
   });
 });
