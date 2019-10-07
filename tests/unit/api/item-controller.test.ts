@@ -115,6 +115,27 @@ describe("Unit: item-controller", () => {
     });
   });
 
+  describe("setStatusOfItems", () => {
+    it("updates the status of items and returns successful and error ids", async () => {
+      request = {
+        payload: {
+          flag: "unread",
+          ids: ["1", "2", "3", "4"],
+        },
+      } as Request;
+
+      rssModel.setItemStatus = async (id) => {
+        if (id % 2 === 0) {
+          throw new Error("Bad!");
+        }
+      };
+
+      const result = await controller.setStatusOfItems(request);
+      expect(result).toHaveProperty("errorIds", [2, 4]);
+      expect(result).toHaveProperty("successIds", [1, 3]);
+    });
+  });
+
   describe("determineReadFlag()", () => {
     it("returns true if read flag is passed in", () => {
       const result = controller.determineReadFlag([ItemFlags.starred, ItemFlags.read]);
@@ -190,7 +211,7 @@ describe("Unit: item-controller", () => {
   describe("registerRoutes()", () => {
     it("returns an array of routes", () => {
       const routes = controller.registerRoutes();
-      expect(routes).toHaveLength(3);
+      expect(routes).toHaveLength(4);
     });
   });
 });

@@ -84,6 +84,11 @@ export interface RssItemApiResponse {
   enclosures: any[];
 }
 
+export interface RssItemsPatchResponse {
+  errorIds: number[];
+  successIds: number[];
+}
+
 export class RssModel {
 
   constructor(

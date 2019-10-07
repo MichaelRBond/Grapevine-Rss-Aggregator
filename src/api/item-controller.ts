@@ -3,9 +3,10 @@ import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
 import { get, isDefined, isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
 import { EndpointController } from "../models/endpoint-controller";
-import { ItemFlags, RssItemApiResponse, RssModel } from "../models/rss";
+import { ItemFlags, RssItemApiResponse, RssItemsPatchResponse, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { isNotBlank } from "../utils/helpers";
+import { logger } from "../utils/logger";
 
 const joiRssItemApiResponse = {
   author: Joi.string().optional().allow(null, ""),
@@ -29,6 +30,11 @@ const joiRssItemApiResponse = {
   updated: Joi.date(),
 };
 
+const joiRssItemStatusUpdateResponse = {
+  errorIds: Joi.array().items(Joi.number()),
+  successIds: Joi.array().items(Joi.number()),
+};
+
 export class ItemController extends EndpointController {
   constructor(
     private rssModel: RssModel,
@@ -37,6 +43,7 @@ export class ItemController extends EndpointController {
     this.getFeedItems = this.getFeedItems.bind(this);
     this.getItems = this.getItems.bind(this);
     this.setStatusOfItem = this.setStatusOfItem.bind(this);
+    this.setStatusOfItems = this.setStatusOfItems.bind(this);
   }
 
   public async getFeedItems(request: Request): Promise<RssItemApiResponse[]> {
@@ -74,6 +81,26 @@ export class ItemController extends EndpointController {
     }
 
     return {message: `Successfully updated id=${itemId} with status=${payload.flag}`};
+  }
+
+  public async setStatusOfItems(request: Request): Promise<RssItemsPatchResponse> {
+    const payload = request.payload as {flag: ItemFlags, ids: string[]};
+    const errorIds: number[] = [];
+    const updatePromises = payload.ids.map((idAsString) => {
+      const id = parseInt(idAsString, 10);
+      return this.rssModel.setItemStatus(id, payload.flag).catch((err) => {
+        logger.error(`Error setting status of id=${id}`, err);
+        errorIds.push(id);
+      });
+    });
+    await Promise.all(updatePromises);
+    const successIds = payload.ids
+      .map((idAsString) => parseInt(idAsString, 10))
+      .filter((id) => !errorIds.includes(id));
+    return {
+      errorIds,
+      successIds,
+    };
   }
 
   // visible for testing
@@ -156,6 +183,27 @@ export class ItemController extends EndpointController {
           },
         },
         path: "/api/v1/item/{id}/status",
+      },
+      {
+        method: "PATCH",
+        options: {
+          handler: this.setStatusOfItems,
+          response: {
+            schema: joiRssItemStatusUpdateResponse,
+          },
+          validate: {
+            payload: {
+              flag: Joi.string().only(
+                ItemFlags.read,
+                ItemFlags.unread,
+                ItemFlags.starred,
+                ItemFlags.unstarred,
+              ),
+              ids: Joi.array().items(Joi.number().min(1)).required(),
+            },
+          },
+        },
+        path: "/api/v1/items/status",
       },
     ];
   }
