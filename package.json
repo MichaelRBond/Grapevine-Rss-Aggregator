@@ -1,6 +1,6 @@
 {
   "name": "grapevine-rss-aggregator",
-  "version": "0.1",
+  "version": "0.2",
   "description": "RSS Aggregator",
   "main": "index.js",
   "author": "Michael Bond <MichaelRBond@users.noreply.github.com>",
