@@ -353,18 +353,18 @@ describe("Integration: feed-item", () => {
       const check = await mysql.query("select * from items where id=1");
       expect(check[0].read).toEqual(0);
 
-      await dao.setItemStatus(1, "read", true);
+      await dao.setItemStatus([1], "read", true);
 
       const verify = await mysql.query("select * from items where id=1");
       expect(verify[0].read).toEqual(1);
     });
 
     it("updates the read status of the item with false", async () => {
-      await dao.setItemStatus(1, "read", true);
+      await dao.setItemStatus([1], "read", true);
       const check = await mysql.query("select * from items where id=1");
       expect(check[0].read).toEqual(1);
 
-      await dao.setItemStatus(1, "read", false);
+      await dao.setItemStatus([1], "read", false);
 
       const verify = await mysql.query("select * from items where id=1");
       expect(verify[0].read).toEqual(0);
@@ -374,29 +374,43 @@ describe("Integration: feed-item", () => {
       const check = await mysql.query("select * from items where id=1");
       expect(check[0].starred).toEqual(0);
 
-      await dao.setItemStatus(1, "starred", true);
+      await dao.setItemStatus([1], "starred", true);
 
       const verify = await mysql.query("select * from items where id=1");
       expect(verify[0].starred).toEqual(1);
     });
 
     it("updates the starred status of the item with false", async () => {
-      await dao.setItemStatus(1, "starred", true);
+      await dao.setItemStatus([1], "starred", true);
       const check = await mysql.query("select * from items where id=1");
       expect(check[0].starred).toEqual(1);
 
-      await dao.setItemStatus(1, "starred", false);
+      await dao.setItemStatus([1], "starred", false);
 
       const verify = await mysql.query("select * from items where id=1");
       expect(verify[0].starred).toEqual(0);
     });
 
+    it("updates multiple items", async () => {
+      await dao.setItemStatus([1, 2], "starred", true);
+
+      const check = await mysql.query("select * from items where id in (1, 2)");
+      expect(check[0].starred).toEqual(1);
+      expect(check[1].starred).toEqual(1);
+
+      await dao.setItemStatus([1, 2], "starred", false);
+
+      const verify = await mysql.query("select * from items where id in (1, 2)");
+      expect(verify[0].starred).toEqual(0);
+      expect(verify[1].starred).toEqual(0);
+    });
+
     it("throws an error there is an erro updating the record", async () => {
       try {
-        await dao.setItemStatus(42, "read", true);
+        await dao.setItemStatus([42], "read", true);
         fail();
       } catch (err) {
-        expect(err.message).toEqual("Error updating item status");
+        expect(err.message).toEqual("Error updating item status. Updated 0 of 1");
       }
     });
   });

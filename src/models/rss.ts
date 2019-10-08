@@ -84,11 +84,6 @@ export interface RssItemApiResponse {
   enclosures: any[];
 }
 
-export interface RssItemsPatchResponse {
-  errorIds: number[];
-  successIds: number[];
-}
-
 export class RssModel {
 
   constructor(
@@ -202,7 +197,7 @@ export class RssModel {
     return this.itemDao.getById(id);
   }
 
-  public async setItemStatus(id: number, flag: ItemFlags): Promise<void> {
+  public async setItemStatus(id: number[], flag: ItemFlags): Promise<void> {
     let value: boolean;
     let statusType: DbStatusFields;
 

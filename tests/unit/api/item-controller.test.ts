@@ -105,7 +105,12 @@ describe("Unit: item-controller", () => {
       } catch (err) {
         expect(err.message).toEqual("Error updating status=unread on id=1");
       }
-      verify(rssModel.setItemStatus).calledWith(1, "unread");
+      verify(rssModel.setItemStatus).calledOnce();
+      verify(rssModel.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("unread");
+        return true;
+      });
     });
 
     it("returns correctly if the status could be updated", async () => {
@@ -116,7 +121,7 @@ describe("Unit: item-controller", () => {
   });
 
   describe("setStatusOfItems", () => {
-    it("updates the status of items and returns successful and error ids", async () => {
+    it("updates the status of items and returns successful", async () => {
       request = {
         payload: {
           flag: "unread",
@@ -124,15 +129,45 @@ describe("Unit: item-controller", () => {
         },
       } as Request;
 
-      rssModel.setItemStatus = async (id) => {
-        if (id % 2 === 0) {
-          throw new Error("Bad!");
-        }
-      };
+      rssModel.setItemStatus = async () => void 0;
 
-      const result = await controller.setStatusOfItems(request);
-      expect(result).toHaveProperty("errorIds", [2, 4]);
-      expect(result).toHaveProperty("successIds", [1, 3]);
+      try {
+        await controller.setStatusOfItems(request);
+      } catch (err) {
+        fail();
+      }
+
+      verify(rssModel.setItemStatus).calledOnce();
+      verify(rssModel.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1, 2, 3, 4]);
+        expect(args[1]).toEqual("unread");
+        return true;
+      });
+    });
+
+    it("throws an error", async () => {
+      request = {
+        payload: {
+          flag: "unread",
+          ids: ["1", "2", "3", "4"],
+        },
+      } as Request;
+
+      rssModel.setItemStatus = async () => { throw new Error("Bad!"); };
+
+      try {
+        await controller.setStatusOfItems(request);
+        fail();
+      } catch (err) {
+        expect(err.message).toEqual(`Error updating status=unread on ids=1,2,3,4`);
+      }
+
+      verify(rssModel.setItemStatus).calledOnce();
+      verify(rssModel.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1, 2, 3, 4]);
+        expect(args[1]).toEqual("unread");
+        return true;
+      });
     });
   });
 

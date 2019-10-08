@@ -3,7 +3,7 @@ import { Request, ServerRoute } from "hapi";
 import * as Joi from "joi";
 import { get, isDefined, isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
 import { EndpointController } from "../models/endpoint-controller";
-import { ItemFlags, RssItemApiResponse, RssItemsPatchResponse, RssModel } from "../models/rss";
+import { ItemFlags, RssItemApiResponse, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { isNotBlank } from "../utils/helpers";
 import { logger } from "../utils/logger";
@@ -28,11 +28,6 @@ const joiRssItemApiResponse = {
   summary: Joi.string().optional().allow(null, ""),
   title: Joi.string().optional().allow(null, ""),
   updated: Joi.date(),
-};
-
-const joiRssItemStatusUpdateResponse = {
-  errorIds: Joi.array().items(Joi.number()),
-  successIds: Joi.array().items(Joi.number()),
 };
 
 export class ItemController extends EndpointController {
@@ -74,7 +69,7 @@ export class ItemController extends EndpointController {
 
     const payload = request.payload as {flag: ItemFlags};
     try {
-      await this.rssModel.setItemStatus(itemId, payload.flag);
+      await this.rssModel.setItemStatus([itemId], payload.flag);
     } catch (err) {
       throw Boom.internal(transformErrors(thrownErrMsg.itemStatusUpdateError,
         {id: itemId.toString(), flag: payload.flag}));
@@ -83,24 +78,17 @@ export class ItemController extends EndpointController {
     return {message: `Successfully updated id=${itemId} with status=${payload.flag}`};
   }
 
-  public async setStatusOfItems(request: Request): Promise<RssItemsPatchResponse> {
+  public async setStatusOfItems(request: Request): Promise<{message: string}> {
     const payload = request.payload as {flag: ItemFlags, ids: string[]};
-    const errorIds: number[] = [];
-    const updatePromises = payload.ids.map((idAsString) => {
-      const id = parseInt(idAsString, 10);
-      return this.rssModel.setItemStatus(id, payload.flag).catch((err) => {
-        logger.error(`Error setting status of id=${id}`, err);
-        errorIds.push(id);
-      });
-    });
-    await Promise.all(updatePromises);
-    const successIds = payload.ids
-      .map((idAsString) => parseInt(idAsString, 10))
-      .filter((id) => !errorIds.includes(id));
-    return {
-      errorIds,
-      successIds,
-    };
+    const itemIds = payload.ids.map((id) => parseInt(id, 10));
+    try {
+      await this.rssModel.setItemStatus(itemIds, payload.flag);
+    } catch (err) {
+      logger.error(`Error setting items statuses`, err);
+      throw Boom.internal(transformErrors(thrownErrMsg.itemsStatusesUpdateError,
+        {ids: itemIds.toString(), flag: payload.flag}));
+    }
+    return {message: `Successfully updated ${itemIds.length} items with status ${payload.flag}`};
   }
 
   // visible for testing
@@ -189,7 +177,7 @@ export class ItemController extends EndpointController {
         options: {
           handler: this.setStatusOfItems,
           response: {
-            schema: joiRssItemStatusUpdateResponse,
+            schema: {message: Joi.string()},
           },
           validate: {
             payload: {
