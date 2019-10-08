@@ -10,6 +10,7 @@ export enum thrownErrMsg {
   itemNotFound = "Item with ID :id: not found",
   itemsInvalidFlag = "Invalid flag(s): :flag:",
   itemStatusUpdateError = "Error updating status=:flag: on id=:id:",
+  itemsStatusesUpdateError = "Error updating status=:flag: on ids=:ids:",
   testing = "This is a :adjective: :noun:. It is for testing :adjective: tests",
 }
 
