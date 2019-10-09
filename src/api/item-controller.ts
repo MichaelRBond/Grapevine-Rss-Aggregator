@@ -6,6 +6,7 @@ import { EndpointController } from "../models/endpoint-controller";
 import { ItemFlags, RssItemApiResponse, RssModel } from "../models/rss";
 import { thrownErrMsg, transformErrors } from "../utils/errors";
 import { isNotBlank } from "../utils/helpers";
+import { logger } from "../utils/logger";
 
 const joiRssItemApiResponse = {
   author: Joi.string().optional().allow(null, ""),
@@ -37,6 +38,7 @@ export class ItemController extends EndpointController {
     this.getFeedItems = this.getFeedItems.bind(this);
     this.getItems = this.getItems.bind(this);
     this.setStatusOfItem = this.setStatusOfItem.bind(this);
+    this.setStatusOfItems = this.setStatusOfItems.bind(this);
   }
 
   public async getFeedItems(request: Request): Promise<RssItemApiResponse[]> {
@@ -67,13 +69,26 @@ export class ItemController extends EndpointController {
 
     const payload = request.payload as {flag: ItemFlags};
     try {
-      await this.rssModel.setItemStatus(itemId, payload.flag);
+      await this.rssModel.setItemStatus([itemId], payload.flag);
     } catch (err) {
       throw Boom.internal(transformErrors(thrownErrMsg.itemStatusUpdateError,
         {id: itemId.toString(), flag: payload.flag}));
     }
 
     return {message: `Successfully updated id=${itemId} with status=${payload.flag}`};
+  }
+
+  public async setStatusOfItems(request: Request): Promise<{message: string}> {
+    const payload = request.payload as {flag: ItemFlags, ids: string[]};
+    const itemIds = payload.ids.map((id) => parseInt(id, 10));
+    try {
+      await this.rssModel.setItemStatus(itemIds, payload.flag);
+    } catch (err) {
+      logger.error(`Error setting items statuses`, err);
+      throw Boom.internal(transformErrors(thrownErrMsg.itemsStatusesUpdateError,
+        {ids: itemIds.toString(), flag: payload.flag}));
+    }
+    return {message: `Successfully updated ${itemIds.length} items with status ${payload.flag}`};
   }
 
   // visible for testing
@@ -156,6 +171,27 @@ export class ItemController extends EndpointController {
           },
         },
         path: "/api/v1/item/{id}/status",
+      },
+      {
+        method: "PATCH",
+        options: {
+          handler: this.setStatusOfItems,
+          response: {
+            schema: {message: Joi.string()},
+          },
+          validate: {
+            payload: {
+              flag: Joi.string().only(
+                ItemFlags.read,
+                ItemFlags.unread,
+                ItemFlags.starred,
+                ItemFlags.unstarred,
+              ),
+              ids: Joi.array().items(Joi.number().min(1)).required(),
+            },
+          },
+        },
+        path: "/api/v1/items/status",
       },
     ];
   }

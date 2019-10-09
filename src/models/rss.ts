@@ -197,7 +197,7 @@ export class RssModel {
     return this.itemDao.getById(id);
   }
 
-  public async setItemStatus(id: number, flag: ItemFlags): Promise<void> {
+  public async setItemStatus(id: number[], flag: ItemFlags): Promise<void> {
     let value: boolean;
     let statusType: DbStatusFields;
 

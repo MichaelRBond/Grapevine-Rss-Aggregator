@@ -92,13 +92,13 @@ export class RssItemDao {
     return result.map(this.dbToRssItem);
   }
 
-  public async setItemStatus(id: number, type: DbStatusFields, status: boolean): Promise<void> {
+  public async setItemStatus(ids: number[], type: DbStatusFields, status: boolean): Promise<void> {
     const value = status === true ? 1 : 0;
-    const sql = "UPDATE `items` SET `" + type + "`=? WHERE `id`=?";
-    const result = await this.mysqlProvider().insertUpdate(sql, [value, id]);
-    if (result.affectedRows !== 1) {
+    const sql = "UPDATE `items` SET `" + type + "`=? WHERE `id` in (?)";
+    const result = await this.mysqlProvider().insertUpdate(sql, [value, ids]);
+    if (result.affectedRows !== ids.length) {
       logger.error(`Error updating status type=${type} to ${value}`, result.message);
-      throw new Error("Error updating item status");
+      throw new Error(`Error updating item status. Updated ${result.affectedRows} of ${ids.length}`);
     }
     return;
   }

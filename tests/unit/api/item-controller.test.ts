@@ -105,13 +105,69 @@ describe("Unit: item-controller", () => {
       } catch (err) {
         expect(err.message).toEqual("Error updating status=unread on id=1");
       }
-      verify(rssModel.setItemStatus).calledWith(1, "unread");
+      verify(rssModel.setItemStatus).calledOnce();
+      verify(rssModel.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("unread");
+        return true;
+      });
     });
 
     it("returns correctly if the status could be updated", async () => {
       rssModel.getItemById = async () => ({} as RssItem);
       const result = await controller.setStatusOfItem(request);
       expect(result.message).toEqual("Successfully updated id=1 with status=unread");
+    });
+  });
+
+  describe("setStatusOfItems", () => {
+    it("updates the status of items and returns successful", async () => {
+      request = {
+        payload: {
+          flag: "unread",
+          ids: ["1", "2", "3", "4"],
+        },
+      } as Request;
+
+      rssModel.setItemStatus = async () => void 0;
+
+      try {
+        await controller.setStatusOfItems(request);
+      } catch (err) {
+        fail();
+      }
+
+      verify(rssModel.setItemStatus).calledOnce();
+      verify(rssModel.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1, 2, 3, 4]);
+        expect(args[1]).toEqual("unread");
+        return true;
+      });
+    });
+
+    it("throws an error", async () => {
+      request = {
+        payload: {
+          flag: "unread",
+          ids: ["1", "2", "3", "4"],
+        },
+      } as Request;
+
+      rssModel.setItemStatus = async () => { throw new Error("Bad!"); };
+
+      try {
+        await controller.setStatusOfItems(request);
+        fail();
+      } catch (err) {
+        expect(err.message).toEqual(`Error updating status=unread on ids=1,2,3,4`);
+      }
+
+      verify(rssModel.setItemStatus).calledOnce();
+      verify(rssModel.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1, 2, 3, 4]);
+        expect(args[1]).toEqual("unread");
+        return true;
+      });
     });
   });
 
@@ -190,7 +246,7 @@ describe("Unit: item-controller", () => {
   describe("registerRoutes()", () => {
     it("returns an array of routes", () => {
       const routes = controller.registerRoutes();
-      expect(routes).toHaveLength(3);
+      expect(routes).toHaveLength(4);
     });
   });
 });
