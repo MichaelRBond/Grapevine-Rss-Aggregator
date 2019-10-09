@@ -4,20 +4,21 @@
 
 RSS Aggregator written in Typescript
 
-
 ## Motivation
 
-Being an avid user of RSS since the late 1990s, I have become tired of the RSS software I use disappearing when the software authors lose interest (I'm looking at you Google, Fever, etc ...). Since RSS is s daily use for me, I decided to write my own solution.
+Being an avid user of RSS since the late 1990s, I have become tired of the RSS software I use disappearing when the software authors lose interest (I'm looking at you Google, Fever, etc ...). Since RSS is s daily use for me, I decided to write, and maintain, my own solution.
 
 Grapevine RSS Aggregator is the backend service. This is the "sync" engine. Run and maintain your own aggregator with an API and connect to it with a client.
 
-Grapevine RSS Reader is the initial frontend service. This is the client, or user interface.
+[Grapevine RSS Reader](https://github.com/MichaelRBond/Grapevine-Rss-Reader) is the initial frontend service. This is the client, or user interface.
 
-My hope is that other RSS readers will integrate the API
+My hope is that other RSS readers will integrate with the Grapevine API.
 
 ### Setup
 
-Container: https://hub.docker.com/r/mrbond/grapevine-rss-aggregator/
+Container: [https://hub.docker.com/r/mrbond/grapevine-rss-aggregator/](https://hub.docker.com/r/mrbond/grapevine-rss-aggregator/)
+
+Web Front End: [Grapevine RSS Reader](https://github.com/MichaelRBond/Grapevine-Rss-Reader)
 
 ## Database
 
@@ -88,8 +89,6 @@ datbase information can be passed into the application via ENV variables.
 ```
 
 ## API
-
-Why a new API? Given that Fever's API is available in some existing RSS Reading software, I considered using it as Grapevine's API. However, given some of the features i'm intereted in adding in the future, I would have had to extend it. In the end, I think it will be much cleaner to build a new API.
 
 ### Feeds
 
@@ -405,10 +404,29 @@ Payload:
 }
 ```
 
+#### Update multiple items statuses
+
+URL: `/api/v1/items/status`
+
+Method: `PATCH`
+
+Payload:
+
+```javascript
+{
+  flag: Joi.string().only(
+    ItemFlags.read,
+    ItemFlags.unread,
+    ItemFlags.starred,
+    ItemFlags.unstarred,
+  ),
+  ids: Joi.array().items(Joi.number()),
+}
+```
+
 ## TODO
 
 - [ ] Option to run a cleanup process to remove read, unstarred, items after they are X days old.
-- [X] Delete a feed
 - [ ] Parse title from feed when adding a new feed, if none is provided
 - [ ] Download and store favicon
 - [ ] Swagger Docs
