@@ -3,6 +3,7 @@ import { GroupDao } from "../../../src/dao/group";
 import { RssFeedDao } from "../../../src/dao/rss-feed";
 import { RssItemDao } from "../../../src/dao/rss-item";
 import { ItemFlags, RssFeed, RssFeedBase, RssItem, RssItemBase, RssModel } from "../../../src/models/rss";
+import { DateTime } from "../../../src/utils/date-time";
 import { FeedParser } from "../../../src/utils/feed-parser";
 import { Http } from "../../../src/utils/http";
 import { getGuid } from "../../../src/utils/rss";
@@ -15,6 +16,7 @@ describe("Unit: RSS Model", () => {
   let groupDao: Mock<GroupDao>;
   let feedParser: Mock<FeedParser>;
   let http: Mock<Http>;
+  let dateTime: Mock<DateTime>;
   let rss: RssModel;
 
   beforeEach(() => {
@@ -23,8 +25,9 @@ describe("Unit: RSS Model", () => {
     groupDao = mock<GroupDao>();
     feedParser = mock<FeedParser>();
     http = mock<Http>();
+    dateTime = mock<DateTime>();
 
-    rss = new RssModel(feedDao, itemDao, groupDao, feedParser, http);
+    rss = new RssModel(feedDao, itemDao, groupDao, feedParser, http, dateTime);
   });
 
   describe("getFeed()", () => {
@@ -228,28 +231,48 @@ describe("Unit: RSS Model", () => {
 
   describe("setItemStatus()", () => {
     it("handles the case of read", async () => {
-      await rss.setItemStatus(1, ItemFlags.read);
-      verify(itemDao.setItemStatus).calledWith(1, "read", true);
+      await rss.setItemStatus([1], ItemFlags.read);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("read");
+        expect(args[2]).toEqual(true);
+        return true;
+      });
     });
 
     it("handles the case of unread", async () => {
-      await rss.setItemStatus(1, ItemFlags.unread);
-      verify(itemDao.setItemStatus).calledWith(1, "read", false);
+      await rss.setItemStatus([1], ItemFlags.unread);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("read");
+        expect(args[2]).toEqual(false);
+        return true;
+      });
     });
 
     it("handles the case of starred", async () => {
-      await rss.setItemStatus(1, ItemFlags.starred);
-      verify(itemDao.setItemStatus).calledWith(1, "starred", true);
+      await rss.setItemStatus([1], ItemFlags.starred);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("starred");
+        expect(args[2]).toEqual(true);
+        return true;
+      });
     });
 
     it("handles the case of unstarred", async () => {
-      await rss.setItemStatus(1, ItemFlags.unstarred);
-      verify(itemDao.setItemStatus).calledWith(1, "starred", false);
+      await rss.setItemStatus([1], ItemFlags.unstarred);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("starred");
+        expect(args[2]).toEqual(false);
+        return true;
+      });
     });
 
     it("throws an error when an invalid flag is provided", async () => {
       try {
-        await rss.setItemStatus(1, "foo" as ItemFlags);
+        await rss.setItemStatus([1], "foo" as ItemFlags);
         fail();
       } catch (err) {
         expect(err.message).toEqual("Invalid status flag provided");
@@ -276,6 +299,16 @@ describe("Unit: RSS Model", () => {
       verify(groupDao.removeFeedFromGroups).calledWith(1);
       verify(feedDao.delete).calledOnce();
       verify(feedDao.delete).calledWith(1);
+    });
+  });
+
+  describe("deleteExpiredItems", async () => {
+    it("correctly calls itemDao", async () => {
+      itemDao.deleteExpiredItems = async () => 8;
+      dateTime.dateNoWInSeconds = () => 400;
+      await rss.deleteExpiredItems(100);
+      verify(itemDao.deleteExpiredItems).calledOnce();
+      verify(itemDao.deleteExpiredItems).calledWith(300);
     });
   });
 });

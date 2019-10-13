@@ -110,6 +110,13 @@ export class RssItemDao {
     return;
   }
 
+  public async deleteExpiredItems(expirationDate: number): Promise<number> {
+    const mysql = this.mysqlProvider();
+    const sql = "DELETE FROM `items` WHERE `published`<=? AND `starred`=0";
+    const result = await mysql.delete(sql, [expirationDate]);
+    return result.affectedRows;
+  }
+
   // visible for testing
   public getSql(where: string): string {
     return "SELECT `items`.*, `feeds`.`title` as `feedTitle` FROM `items`"

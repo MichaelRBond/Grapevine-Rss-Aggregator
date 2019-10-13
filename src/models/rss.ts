@@ -3,6 +3,7 @@ import { isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
 import { GroupDao } from "../dao/group";
 import { RssFeedDao } from "../dao/rss-feed";
 import { DbStatusFields, RssItemDao } from "../dao/rss-item";
+import { DateTime } from "../utils/date-time";
 import { FeedParser } from "../utils/feed-parser";
 import { AXIOS_STATUS_CODES, Http } from "../utils/http";
 import { logger } from "../utils/logger";
@@ -92,6 +93,7 @@ export class RssModel {
     private groupDao: GroupDao,
     private feedParser: FeedParser,
     private http: Http,
+    private dateTime: DateTime,
   ) { /* */ }
 
   public static rssFeedToApiResponse(feed: RssFeed): RssFeedApiResponse {
@@ -223,6 +225,13 @@ export class RssModel {
     }
 
     return this.itemDao.setItemStatus(id, statusType, value);
+  }
+
+  public async deleteExpiredItems(expirationAgeInSeconds: number): Promise<void> {
+    const expirationDate = this.dateTime.dateNoWInSeconds() - expirationAgeInSeconds;
+    const numItemsDeleted = await this.itemDao.deleteExpiredItems(expirationDate);
+    logger.info(`Deleted ${numItemsDeleted} expired RSS Items`);
+    return;
   }
 
   private async saveItems(feed: RssFeed, items: RssItemBase[]): Promise<Array<Nullable<RssItem>>> {

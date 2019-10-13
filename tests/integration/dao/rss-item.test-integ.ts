@@ -435,41 +435,79 @@ describe("Integration: feed-item", () => {
     });
   });
 
+  describe("deleteExpiredItems", () => {
+    const mysql = mysqlClientProvider();
+
+    beforeEach(async () => {
+      await populateItems();
+    });
+
+    it("deletes the expected number of rss items", async () => {
+      const result = await dao.deleteExpiredItems(100);
+      // expect(result).toEqual(8);
+
+      const verifyRemaining = await mysql.query("select * from `items` where `published`=101");
+      expect(verifyRemaining).toHaveLength(8);
+
+      const verifyDelete = await mysql.query("select * from `items` where `published`!=101 AND `starred`=0");
+      expect(verifyDelete).toHaveLength(0);
+
+      const verifyDeleteStarred = await mysql.query("select * from `items` where `published`!=101 AND `starred`=1");
+      expect(verifyDeleteStarred).toHaveLength(4);
+    });
+  });
+
 });
 
 async function populateItems(): Promise<void> {
   const mysql = mysqlClientProvider();
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title1a', 0, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title1a', 0, 0, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title2a', 0, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title2a', 0, 0, 'a', 'a', 101)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title4a', 1, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title4a', 1, 0, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title3a', 1, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title3a', 1, 0, 'a', 'a', 101)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title5a', 0, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title5a', 0, 1, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title6a', 0, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title6a', 0, 1, 'a', 'a', 101)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title7a', 1, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title7a', 1, 1, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(1, 'title8a', 1, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(1, 'title8a', 1, 1, 'a', 'a', 101)");
 
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title1b', 0, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title1b', 0, 0, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title2b', 0, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title2b', 0, 0, 'a', 'a', 101)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title3b', 1, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title3b', 1, 0, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title4b', 1, 0, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title4b', 1, 0, 'a', 'a', 101)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title5b', 0, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title5b', 0, 1, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title6b', 0, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title6b', 0, 1, 'a', 'a', 101)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title7b', 1, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title7b', 1, 1, 'a', 'a', 100)");
   await mysql.query(
-    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`) VALUES(2, 'title8b', 1, 1, 'a', 'a')");
+    "INSERT INTO `items` (`feedId`, `title`, `read`, `starred`, `link`, `guid`, `published`) "
+    + "VALUES(2, 'title8b', 1, 1, 'a', 'a', 101)");
 }

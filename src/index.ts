@@ -32,7 +32,7 @@ const rssItemDao = new RssItemDao(mysqlClientProvider);
 const groupDao = new GroupDao(mysqlClientProvider);
 
 const accountModel = new AccountModel(accountDao);
-const rssModel = new RssModel(rssFeedDao, rssItemDao, groupDao, feedParser, http);
+const rssModel = new RssModel(rssFeedDao, rssItemDao, groupDao, feedParser, http, datetime);
 const groupModel = new GroupModel(groupDao);
 const feedGroupModel = new FeedGroupModel(rssFeedDao, rssModel, groupModel, groupDao);
 
@@ -54,13 +54,22 @@ const endpointControllers: EndpointController[] = [
 
 // TODO : Refactor
 const rssFetchJob = new CronJob({
-  cronTime: config.schedule,
+  cronTime: config.schedules.rssFetch,
   onTick: async () => {
     return await rssModel.fetchFeeds();
   },
   start: false,
 });
 rssFetchJob.start();
+
+const deleteExpiredItemsJob = new CronJob({
+  cronTime: config.schedules.deleteExpiredItems,
+  onTick: async () => {
+    return await rssModel.deleteExpiredItems(config.expireItemsInSeconds);
+  },
+  start: false,
+});
+deleteExpiredItemsJob.start();
 
 getHapiServer(authentication, endpointControllers).then((server) => {
   server.start();
