@@ -1,9 +1,12 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { isNullOrUndefined, Nullable, orElseThrow } from "nullable-ts";
+import { config } from "../config";
 import { GroupDao } from "../dao/group";
 import { RssFeedDao } from "../dao/rss-feed";
 import { DbStatusFields, RssItemDao } from "../dao/rss-item";
+import { DateTime } from "../utils/date-time";
 import { FeedParser } from "../utils/feed-parser";
+import { getUnixtimeFromDate } from "../utils/helpers";
 import { AXIOS_STATUS_CODES, Http } from "../utils/http";
 import { logger } from "../utils/logger";
 import { getGuid } from "../utils/rss";
@@ -92,6 +95,8 @@ export class RssModel {
     private groupDao: GroupDao,
     private feedParser: FeedParser,
     private http: Http,
+    private dateTime: DateTime,
+    private expirationAgeInSeconds: number = config.expireItemsInSeconds,
   ) { /* */ }
 
   public static rssFeedToApiResponse(feed: RssFeed): RssFeedApiResponse {
@@ -225,9 +230,19 @@ export class RssModel {
     return this.itemDao.setItemStatus(id, statusType, value);
   }
 
+  public async deleteExpiredItems(): Promise<void> {
+    const expirationDate = this.getItemExpirationDate();
+    const numItemsDeleted = await this.itemDao.deleteExpiredItems(expirationDate);
+    logger.info(`Deleted ${numItemsDeleted} expired RSS Items`);
+    return;
+  }
+
   private async saveItems(feed: RssFeed, items: RssItemBase[]): Promise<Array<Nullable<RssItem>>> {
-    const savePromises = items.map(async (i) => {
-      return (await this.itemDao.getByGuid(getGuid(i))) ? this.itemDao.update(i) : this.itemDao.save(i, feed);
+    const savePromises = items.map(async (item) => {
+      if (getUnixtimeFromDate(item.published as Date) <= this.getItemExpirationDate()) {
+        return null;
+      }
+      return (await this.itemDao.getByGuid(getGuid(item))) ? this.itemDao.update(item) : this.itemDao.save(item, feed);
     });
     return await Promise.all(savePromises);
   }
@@ -249,5 +264,9 @@ export class RssModel {
       return null;
     }
     return feedResponse.data;
+  }
+
+  private getItemExpirationDate(): number {
+    return this.dateTime.dateNoWInSeconds() - this.expirationAgeInSeconds;
   }
 }

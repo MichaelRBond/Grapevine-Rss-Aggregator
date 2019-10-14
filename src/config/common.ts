@@ -9,17 +9,22 @@ interface LoggerConfig {
 
 export interface Config {
   appName: string;
+  expireItemsInSeconds: number;
   hapi: {
     host: string;
     port: number;
   };
   logger: LoggerConfig;
   mysql: ConnectionConfig;
-  schedule: string;
+  schedules: {
+    deleteExpiredItems: string;
+    rssFetch: string;
+  };
 }
 
 export const common: Config = {
   appName: "Grapevine RSS Aggregator",
+  expireItemsInSeconds: 1209600, // 2 weeks
   hapi: {
     host: "0.0.0.0",
     port: 3000,
@@ -36,5 +41,8 @@ export const common: Config = {
     port: 3306,
     user: "grapevine",
   },
-  schedule: "*/15 * * * *", // every 15 minutes
+  schedules: {
+    deleteExpiredItems: "0 1 * * 1", // 1am every Monday
+    rssFetch: "*/15 * * * *", // every 15 minutes
+  },
 };

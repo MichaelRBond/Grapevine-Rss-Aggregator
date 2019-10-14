@@ -3,6 +3,7 @@ import { GroupDao } from "../../../src/dao/group";
 import { RssFeedDao } from "../../../src/dao/rss-feed";
 import { RssItemDao } from "../../../src/dao/rss-item";
 import { ItemFlags, RssFeed, RssFeedBase, RssItem, RssItemBase, RssModel } from "../../../src/models/rss";
+import { DateTime } from "../../../src/utils/date-time";
 import { FeedParser } from "../../../src/utils/feed-parser";
 import { Http } from "../../../src/utils/http";
 import { getGuid } from "../../../src/utils/rss";
@@ -15,6 +16,7 @@ describe("Unit: RSS Model", () => {
   let groupDao: Mock<GroupDao>;
   let feedParser: Mock<FeedParser>;
   let http: Mock<Http>;
+  let dateTime: Mock<DateTime>;
   let rss: RssModel;
 
   beforeEach(() => {
@@ -23,8 +25,9 @@ describe("Unit: RSS Model", () => {
     groupDao = mock<GroupDao>();
     feedParser = mock<FeedParser>();
     http = mock<Http>();
+    dateTime = mock<DateTime>();
 
-    rss = new RssModel(feedDao, itemDao, groupDao, feedParser, http);
+    rss = new RssModel(feedDao, itemDao, groupDao, feedParser, http, dateTime, 100);
   });
 
   describe("getFeed()", () => {
@@ -143,6 +146,26 @@ describe("Unit: RSS Model", () => {
       verify(itemDao.save).called(1);
       verify(itemDao.update).called(1);
     });
+
+    it("doesn't save items older that have been expired", async () => {
+      feedDao.getFeeds = async () => generateNumOfFeeds(3);
+      feedParser.parse = async () => generateNumOfItems(2, new Date(1000));
+      http.request = async () => ({} as AxiosPromise);
+      dateTime.dateNoWInSeconds = () => 1000;
+
+      let count = 0;
+      itemDao.getByGuid = async () => {
+        return count++ % 2 === 0 ? null : {} as RssItem;
+      };
+
+      await rss.fetchFeeds();
+      verify(feedDao.getFeeds).calledOnce();
+      verify(http.request).called(3);
+      verify(feedParser.parse).called(3);
+      verify(itemDao.getByGuid).notCalled();
+      verify(itemDao.save).notCalled();
+      verify(itemDao.update).notCalled();
+    });
   });
 
   describe("getFeedItems()", () => {
@@ -228,28 +251,48 @@ describe("Unit: RSS Model", () => {
 
   describe("setItemStatus()", () => {
     it("handles the case of read", async () => {
-      await rss.setItemStatus(1, ItemFlags.read);
-      verify(itemDao.setItemStatus).calledWith(1, "read", true);
+      await rss.setItemStatus([1], ItemFlags.read);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("read");
+        expect(args[2]).toEqual(true);
+        return true;
+      });
     });
 
     it("handles the case of unread", async () => {
-      await rss.setItemStatus(1, ItemFlags.unread);
-      verify(itemDao.setItemStatus).calledWith(1, "read", false);
+      await rss.setItemStatus([1], ItemFlags.unread);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("read");
+        expect(args[2]).toEqual(false);
+        return true;
+      });
     });
 
     it("handles the case of starred", async () => {
-      await rss.setItemStatus(1, ItemFlags.starred);
-      verify(itemDao.setItemStatus).calledWith(1, "starred", true);
+      await rss.setItemStatus([1], ItemFlags.starred);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("starred");
+        expect(args[2]).toEqual(true);
+        return true;
+      });
     });
 
     it("handles the case of unstarred", async () => {
-      await rss.setItemStatus(1, ItemFlags.unstarred);
-      verify(itemDao.setItemStatus).calledWith(1, "starred", false);
+      await rss.setItemStatus([1], ItemFlags.unstarred);
+      verify(itemDao.setItemStatus).calledWithArgsLike((args) => {
+        expect(args[0]).toEqual([1]);
+        expect(args[1]).toEqual("starred");
+        expect(args[2]).toEqual(false);
+        return true;
+      });
     });
 
     it("throws an error when an invalid flag is provided", async () => {
       try {
-        await rss.setItemStatus(1, "foo" as ItemFlags);
+        await rss.setItemStatus([1], "foo" as ItemFlags);
         fail();
       } catch (err) {
         expect(err.message).toEqual("Invalid status flag provided");
@@ -278,6 +321,16 @@ describe("Unit: RSS Model", () => {
       verify(feedDao.delete).calledWith(1);
     });
   });
+
+  describe("deleteExpiredItems", async () => {
+    it("correctly calls itemDao", async () => {
+      itemDao.deleteExpiredItems = async () => 8;
+      dateTime.dateNoWInSeconds = () => 400;
+      await rss.deleteExpiredItems();
+      verify(itemDao.deleteExpiredItems).calledOnce();
+      verify(itemDao.deleteExpiredItems).calledWith(300);
+    });
+  });
 });
 
 function generateNumOfFeeds(numOfFeeds: number): RssFeed[] {
@@ -295,7 +348,7 @@ function generateNumOfFeeds(numOfFeeds: number): RssFeed[] {
   return feeds;
 }
 
-function generateNumOfItems(numOfItems: number): RssItemBase[] {
+function generateNumOfItems(numOfItems: number, published?: Date): RssItemBase[] {
   const items: RssItemBase[] = [];
   for (let i = 0; i < numOfItems; i++) {
     items.push({
@@ -307,7 +360,7 @@ function generateNumOfItems(numOfItems: number): RssItemBase[] {
       guid: getGuid({link: "foo"} as RssItemBase),
       image: null,
       link: `link-${i}`,
-      published: new Date(),
+      published: published || new Date(),
       summary: `summary-${i}`,
       title: `title-${i}`,
       updated: new Date(),

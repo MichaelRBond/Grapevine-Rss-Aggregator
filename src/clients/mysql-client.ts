@@ -61,6 +61,10 @@ export class MySqlClient {
     return this.query(sql, values);
   }
 
+  public async delete(sql: string, values?: any[]): Promise<OkPacket> {
+    return this.query(sql, values);
+  }
+
   private createPool(): void {
     if (this.pool) { return; }
     this.pool = createPool(config.mysql);
