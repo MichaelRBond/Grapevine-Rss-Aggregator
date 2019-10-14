@@ -27,7 +27,7 @@ describe("Unit: RSS Model", () => {
     http = mock<Http>();
     dateTime = mock<DateTime>();
 
-    rss = new RssModel(feedDao, itemDao, groupDao, feedParser, http, dateTime);
+    rss = new RssModel(feedDao, itemDao, groupDao, feedParser, http, dateTime, 100);
   });
 
   describe("getFeed()", () => {
@@ -145,6 +145,26 @@ describe("Unit: RSS Model", () => {
       verify(itemDao.getByGuid).called(2);
       verify(itemDao.save).called(1);
       verify(itemDao.update).called(1);
+    });
+
+    it("doesn't save items older that have been expired", async () => {
+      feedDao.getFeeds = async () => generateNumOfFeeds(3);
+      feedParser.parse = async () => generateNumOfItems(2, new Date(1000));
+      http.request = async () => ({} as AxiosPromise);
+      dateTime.dateNoWInSeconds = () => 1000;
+
+      let count = 0;
+      itemDao.getByGuid = async () => {
+        return count++ % 2 === 0 ? null : {} as RssItem;
+      };
+
+      await rss.fetchFeeds();
+      verify(feedDao.getFeeds).calledOnce();
+      verify(http.request).called(3);
+      verify(feedParser.parse).called(3);
+      verify(itemDao.getByGuid).notCalled();
+      verify(itemDao.save).notCalled();
+      verify(itemDao.update).notCalled();
     });
   });
 
@@ -306,7 +326,7 @@ describe("Unit: RSS Model", () => {
     it("correctly calls itemDao", async () => {
       itemDao.deleteExpiredItems = async () => 8;
       dateTime.dateNoWInSeconds = () => 400;
-      await rss.deleteExpiredItems(100);
+      await rss.deleteExpiredItems();
       verify(itemDao.deleteExpiredItems).calledOnce();
       verify(itemDao.deleteExpiredItems).calledWith(300);
     });
@@ -328,7 +348,7 @@ function generateNumOfFeeds(numOfFeeds: number): RssFeed[] {
   return feeds;
 }
 
-function generateNumOfItems(numOfItems: number): RssItemBase[] {
+function generateNumOfItems(numOfItems: number, published?: Date): RssItemBase[] {
   const items: RssItemBase[] = [];
   for (let i = 0; i < numOfItems; i++) {
     items.push({
@@ -340,7 +360,7 @@ function generateNumOfItems(numOfItems: number): RssItemBase[] {
       guid: getGuid({link: "foo"} as RssItemBase),
       image: null,
       link: `link-${i}`,
-      published: new Date(),
+      published: published || new Date(),
       summary: `summary-${i}`,
       title: `title-${i}`,
       updated: new Date(),

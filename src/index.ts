@@ -65,7 +65,7 @@ rssFetchJob.start();
 const deleteExpiredItemsJob = new CronJob({
   cronTime: config.schedules.deleteExpiredItems,
   onTick: async () => {
-    return await rssModel.deleteExpiredItems(config.expireItemsInSeconds);
+    return await rssModel.deleteExpiredItems();
   },
   start: false,
 });
