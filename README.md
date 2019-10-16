@@ -426,7 +426,6 @@ Payload:
 
 ## TODO
 
-- [ ] Option to run a cleanup process to remove read, unstarred, items after they are X days old.
 - [ ] Parse title from feed when adding a new feed, if none is provided
 - [ ] Download and store favicon
 - [ ] Swagger Docs

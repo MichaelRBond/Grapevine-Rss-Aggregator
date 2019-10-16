@@ -1,10 +1,10 @@
 {
   "name": "grapevine-rss-aggregator",
-  "version": "0.3",
+  "version": "0.4",
   "description": "RSS Aggregator",
   "main": "index.js",
   "author": "Michael Bond <MichaelRBond@users.noreply.github.com>",
-  "license": "GPL-3.0-or-later",
+  "license": "MIT",
   "scripts": {
     "add-account": "ts-node src/scripts/account-add.ts",
     "build": "tsc",
