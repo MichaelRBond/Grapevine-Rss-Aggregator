@@ -14,6 +14,9 @@ Grapevine RSS Aggregator is the backend service. This is the "sync" engine. Run 
 
 My hope is that other RSS readers will integrate with the Grapevine API.
 
+* [Javascript / Typescript API Client](https://github.com/MichaelRBond/grapevine-rss-client-dart) : Used in production with the [Grapevine RSS Reader](https://github.com/MichaelRBond/Grapevine-Rss-Reader)
+* [Dart API Client](https://github.com/MichaelRBond/grapevine-rss-client-dart) : Used in the [Grapevine RSS Desktop and Mobile Apps](https://github.com/MichaelRBond/Grapevine-native-app) **note: in development **
+
 ### Setup
 
 Container: [https://hub.docker.com/r/mrbond/grapevine-rss-aggregator/](https://hub.docker.com/r/mrbond/grapevine-rss-aggregator/)
