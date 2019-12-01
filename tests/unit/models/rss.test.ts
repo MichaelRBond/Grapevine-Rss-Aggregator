@@ -322,7 +322,7 @@ describe("Unit: RSS Model", () => {
     });
   });
 
-  describe("deleteExpiredItems", async () => {
+  describe("deleteExpiredItems", () => {
     it("correctly calls itemDao", async () => {
       itemDao.deleteExpiredItems = async () => 8;
       dateTime.dateNoWInSeconds = () => 400;
