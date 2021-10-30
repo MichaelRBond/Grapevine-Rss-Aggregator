@@ -1,7 +1,7 @@
 version: "3"
 services:
   mysql:
-    image: mysql:5.7
+    image: mariadb:10.6.4
     environment:
       MYSQL_ROOT_PASSWORD: 12345
       MYSQL_DATABASE: grapevine_rss
@@ -12,7 +12,7 @@ services:
     volumes:
       - mysql:/var/lib/mysql
   mysql-test:
-    image: mysql:5.7
+    image: mariadb:10.6.4
     environment:
       MYSQL_ROOT_PASSWORD: 12345
       MYSQL_DATABASE: grapevine_rss
